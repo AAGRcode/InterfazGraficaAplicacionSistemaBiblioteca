@@ -4,6 +4,8 @@
  */
 package ec.edu.ups.views;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -73,6 +75,17 @@ public class BuscarBibliotecarioView extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaBiblio1"));
+        lblNombre.setText(bundle.getString("lblNombre")); 
+        lblCedula.setText(bundle.getString("lblCedula")); 
+        lblEdad.setText(bundle.getString("lblEdad")); 
+        lblCodigo.setText(bundle.getString("lblCodigo"));
+        btnBuscar.setText(bundle.getString("btnBuscar")); 
+        btnCancelar.setText(bundle.getString("btnCancelar")); 
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,9 +108,13 @@ public class BuscarBibliotecarioView extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Busqueda de Bibliotecario");
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         lblNombre.setText("Nombre completo");
 
@@ -105,15 +122,23 @@ public class BuscarBibliotecarioView extends javax.swing.JInternalFrame {
 
         lblCodigo.setText("Codigo empleado");
 
+        txtNombre.setEditable(false);
+        txtNombre.setEnabled(false);
         txtNombre.addActionListener(this::txtNombreActionPerformed);
+
+        txtEdad.setEditable(false);
+        txtEdad.setEnabled(false);
 
         lblCedula.setText("Cedula");
 
+        txtCedula.setEditable(false);
+        txtCedula.setEnabled(false);
         txtCedula.addActionListener(this::txtCedulaActionPerformed);
 
         btnBuscar.setText("Buscar");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -126,12 +151,16 @@ public class BuscarBibliotecarioView extends javax.swing.JInternalFrame {
                     .addComponent(lblCedula)
                     .addComponent(lblEdad)
                     .addComponent(lblCodigo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtEdad, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtEdad, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                            .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(txtCodigo)))
                 .addGap(105, 105, 105))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(102, 102, 102)
@@ -189,6 +218,11 @@ public class BuscarBibliotecarioView extends javax.swing.JInternalFrame {
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCedulaActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+             
+        setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

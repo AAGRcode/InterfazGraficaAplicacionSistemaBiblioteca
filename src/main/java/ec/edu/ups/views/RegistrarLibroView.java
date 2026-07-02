@@ -4,6 +4,8 @@
  */
 package ec.edu.ups.views;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -75,7 +77,24 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
-    
+    public void limpiarCampos() {
+        txtAnioPublicacion.setText("");
+        txtCategoria.setText("");
+        txtCodigo.setText("");
+        txtTitulo.setText("");
+    }
+        
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaLibro"));
+        lblTitulo.setText(bundle.getString("lblTitulo")); 
+        lblCodigoLibro.setText(bundle.getString("lblCodigoLibro")); 
+        lblCategoria.setText(bundle.getString("lblCategoria")); 
+        lblAnioPublicacion.setText(bundle.getString("lblPublicacion"));
+        btnRegistrar.setText(bundle.getString("btnRegistrar")); 
+        btnCancelar.setText(bundle.getString("btnCancelar")); 
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,7 +107,7 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        lblCodigo = new javax.swing.JLabel();
+        lblCodigoLibro = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         txtTitulo = new javax.swing.JTextField();
         txtCategoria = new javax.swing.JTextField();
@@ -98,16 +117,21 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
         txtAnioPublicacion = new javax.swing.JTextField();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Registro de Libro");
 
-        btnRegistrar.setText("Registrar libro");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        btnRegistrar.setText("Registrar ");
         btnRegistrar.addActionListener(this::btnRegistrarActionPerformed);
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
-        lblCodigo.setText("Codigo");
+        lblCodigoLibro.setText("Codigo");
 
         txtCodigo.addActionListener(this::txtCodigoActionPerformed);
 
@@ -131,7 +155,7 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
                         .addGap(77, 77, 77)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTitulo)
-                            .addComponent(lblCodigo)
+                            .addComponent(lblCodigoLibro)
                             .addComponent(lblCategoria)
                             .addComponent(lblAnioPublicacion))
                         .addGap(40, 40, 40))
@@ -145,7 +169,7 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
                         .addGap(45, 45, 45))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodigo)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                             .addComponent(txtTitulo)
                             .addComponent(txtCategoria)
                             .addComponent(txtAnioPublicacion))
@@ -157,7 +181,7 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCodigo))
+                    .addComponent(lblCodigoLibro))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTitulo)
@@ -181,9 +205,7 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,6 +231,11 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiarCampos();      
+        setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -216,7 +243,7 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblAnioPublicacion;
     private javax.swing.JLabel lblCategoria;
-    private javax.swing.JLabel lblCodigo;
+    private javax.swing.JLabel lblCodigoLibro;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtAnioPublicacion;
     private javax.swing.JTextField txtCategoria;

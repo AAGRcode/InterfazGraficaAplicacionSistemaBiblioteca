@@ -4,6 +4,8 @@
  */
 package ec.edu.ups.views;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -75,6 +77,24 @@ public class RegistrarAutorView extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, mensaje);
     }
     
+    public void limpiarCampos() {
+        txtCodigo.setText("");
+        txtAnioNacimiento.setText("");
+        txtCodigo.setText("");
+        txtNacionalidad.setText("");
+        txtNombre.setText("");
+    }
+    
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaAutor"));
+        lblNombre.setText(bundle.getString("lblNombre")); 
+        lblCodigoAutor.setText(bundle.getString("lblCodigoAutor")); 
+        lblNacionalidad.setText(bundle.getString("lblNacionalidad")); 
+        lblAnioNacimiento.setText(bundle.getString("lblNacimiento"));
+        btnRegistrar.setText(bundle.getString("btnRegistrar")); 
+        btnCancelar.setText(bundle.getString("btnCancelar")); 
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -94,13 +114,17 @@ public class RegistrarAutorView extends javax.swing.JInternalFrame {
         txtNacionalidad = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        lblCodigo = new javax.swing.JLabel();
+        lblCodigoAutor = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Registro de Autor");
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         lblNombre.setText("Nombre completo");
 
@@ -112,11 +136,12 @@ public class RegistrarAutorView extends javax.swing.JInternalFrame {
 
         txtNacionalidad.addActionListener(this::txtNacionalidadActionPerformed);
 
-        btnRegistrar.setText("Registrar usuario");
+        btnRegistrar.setText("Registrar ");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
-        lblCodigo.setText("Codigo");
+        lblCodigoAutor.setText("Codigo");
 
         txtCodigo.addActionListener(this::txtCodigoActionPerformed);
 
@@ -128,7 +153,7 @@ public class RegistrarAutorView extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(46, 46, 46)
-                        .addComponent(lblCodigo))
+                        .addComponent(lblCodigoAutor))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(112, 112, 112)
                         .addComponent(btnRegistrar))
@@ -140,35 +165,34 @@ public class RegistrarAutorView extends javax.swing.JInternalFrame {
                             .addComponent(lblAnioNacimiento))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCancelar)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(txtAnioNacimiento)
                         .addComponent(txtNacionalidad, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnCancelar)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(105, Short.MAX_VALUE))
+                        .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCodigo))
-                .addGap(31, 31, 31)
+                .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblNombre)
-                        .addGap(38, 38, 38)
-                        .addComponent(lblNacionalidad)
-                        .addGap(40, 40, 40)
-                        .addComponent(lblAnioNacimiento))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCodigoAutor))
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNombre)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(32, 32, 32)
-                        .addComponent(txtNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(txtAnioNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNacionalidad)
+                            .addComponent(txtNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(37, 37, 37)
+                        .addComponent(lblAnioNacimiento))
+                    .addComponent(txtAnioNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
@@ -202,13 +226,18 @@ public class RegistrarAutorView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiarCampos();      
+        setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblAnioNacimiento;
-    private javax.swing.JLabel lblCodigo;
+    private javax.swing.JLabel lblCodigoAutor;
     private javax.swing.JLabel lblNacionalidad;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JTextField txtAnioNacimiento;

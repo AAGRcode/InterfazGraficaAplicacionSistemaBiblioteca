@@ -6,6 +6,8 @@ package ec.edu.ups.views;
 
 import ec.edu.ups.models.Bibliotecario;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,7 +27,12 @@ public class ListarBibliotecarioView extends javax.swing.JInternalFrame {
     }
     
     public void configurarTabla() {
-        modeloBibliotecario = new DefaultTableModel();
+        modeloBibliotecario = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; //evita que se editen las celdas
+            }
+        };
         modeloBibliotecario.addColumn("Nombre completo");
         modeloBibliotecario.addColumn("Codigo empleado");
         modeloBibliotecario.addColumn("Cedula");
@@ -45,6 +52,17 @@ public class ListarBibliotecarioView extends javax.swing.JInternalFrame {
             modeloBibliotecario.addRow(fila);
         }
     }
+    
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaBiblio4"));
+        tblBibliotecarios.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("colNombre"));
+        tblBibliotecarios.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("colCodigo"));
+        tblBibliotecarios.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("colCedula"));
+        tblBibliotecarios.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("colEdad"));
+
+        tblBibliotecarios.getTableHeader().repaint();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,9 +78,11 @@ public class ListarBibliotecarioView extends javax.swing.JInternalFrame {
         tblBibliotecarios = new javax.swing.JTable();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Lista de Bibliotecarios");
 
         tblBibliotecarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

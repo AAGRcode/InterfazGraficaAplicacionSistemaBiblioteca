@@ -47,6 +47,7 @@ public class PrestamoController {
             Prestamo prestamo = new Prestamo(0, libro, usuario, bibliotecario, fechaDevolucion);
             prestamoDAO.crear(prestamo);
             registrarPrestamoView.mostrarInformacion("Prestamo registrado exitosamente");
+            registrarPrestamoView.limpiarCampos();
             listarPrestamos();
         } else {
             registrarPrestamoView.mostrarInformacion("Usuario no encontrado");

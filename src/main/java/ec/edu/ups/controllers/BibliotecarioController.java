@@ -46,6 +46,7 @@ public class BibliotecarioController {
         Bibliotecario bibliotecario = new Bibliotecario(nombreCompleto, cedula, edad, codigoEmpleado);
         bibliotecarioDAO.crear(bibliotecario);
         registrarBibliotecarioView.mostrarInformacion("Bibliotecario registrado exitosamente");
+        registrarBibliotecarioView.limpiarCampos();
     }
 
     public void configurarEventosRegistrarBibliotecario() {
@@ -145,8 +146,11 @@ public class BibliotecarioController {
 
     public void eliminarBibliotecario() {
         String codigoEmpleado = eliminarBibliotecarioView.getTxtCodigo().getText();
-        bibliotecarioDAO.eliminar(codigoEmpleado);
-        eliminarBibliotecarioView.mostrarInformacion("Bibliotecario eliminado exitosamente");
+        boolean confirmado = eliminarBibliotecarioView.confirmarEliminacion("Esta seguro que desea eliminar al bibliotecario?");
+        if(confirmado){
+            bibliotecarioDAO.eliminar(codigoEmpleado);
+            eliminarBibliotecarioView.mostrarInformacion("Bibliotecario eliminado exitosamente");
+        }
     }
 
     public void configurarEventosEliminarBibliotecario() {

@@ -49,6 +49,6 @@ public class Bibliotecario {
 
     @Override
     public String toString() {
-        return "Bibliotecario{" + "nombre=" + nombre + ", codigoEmpleado=" + codigoEmpleado + '}';
+        return codigoEmpleado;
     }
 }

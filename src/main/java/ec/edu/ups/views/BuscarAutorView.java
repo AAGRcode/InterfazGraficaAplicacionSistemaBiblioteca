@@ -4,6 +4,8 @@
  */
 package ec.edu.ups.views;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -73,6 +75,16 @@ public class BuscarAutorView extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaAutor1"));
+        lblNombre.setText(bundle.getString("lblNombre")); 
+        lblCodigoAutor.setText(bundle.getString("lblCodigoAutor")); 
+        lblNacionalidad.setText(bundle.getString("lblNacionalidad")); 
+        lblAnioNacimiento.setText(bundle.getString("lblNacimiento"));
+        btnBuscar.setText(bundle.getString("btnBuscar")); 
+        btnCancelar.setText(bundle.getString("btnCancelar")); 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,31 +103,47 @@ public class BuscarAutorView extends javax.swing.JInternalFrame {
         txtNacionalidad = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        lblCodigo = new javax.swing.JLabel();
+        lblCodigoAutor = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Busqueda de Autor");
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         lblNombre.setText("Nombre completo");
 
         lblAnioNacimiento.setText("Año de nacimiento");
 
+        txtNombre.setEditable(false);
+        txtNombre.setEnabled(false);
         txtNombre.addActionListener(this::txtNombreActionPerformed);
+
+        txtAnioNacimiento.setEditable(false);
+        txtAnioNacimiento.setEnabled(false);
 
         lblNacionalidad.setText("Nacionalidad");
 
+        txtNacionalidad.setEditable(false);
+        txtNacionalidad.setEnabled(false);
         txtNacionalidad.addActionListener(this::txtNacionalidadActionPerformed);
 
         btnBuscar.setText("Buscar");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
-        lblCodigo.setText("Codigo");
+        lblCodigoAutor.setText("Codigo");
 
         txtCodigo.addActionListener(this::txtCodigoActionPerformed);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/biblioteca/imagen/Buscar1.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -134,13 +162,16 @@ public class BuscarAutorView extends javax.swing.JInternalFrame {
                     .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(72, 72, 72))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(148, 148, 148)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblCodigo)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addGap(148, 148, 148)
+                        .addComponent(lblCodigoAutor))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscar)))
-                .addGap(20, 20, 20)
+                .addGap(75, 75, 75)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
@@ -154,12 +185,13 @@ public class BuscarAutorView extends javax.swing.JInternalFrame {
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCodigo))
+                    .addComponent(lblCodigoAutor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscar)
-                    .addComponent(btnCancelar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                    .addComponent(btnCancelar)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -200,13 +232,19 @@ public class BuscarAutorView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+              
+        setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblAnioNacimiento;
-    private javax.swing.JLabel lblCodigo;
+    private javax.swing.JLabel lblCodigoAutor;
     private javax.swing.JLabel lblNacionalidad;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JTextField txtAnioNacimiento;

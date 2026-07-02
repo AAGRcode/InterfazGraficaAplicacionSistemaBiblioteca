@@ -4,6 +4,8 @@
  */
 package ec.edu.ups.views;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -81,6 +83,22 @@ public class EliminarLibroView extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    public boolean confirmarEliminacion(String mensaje){
+        int respuesta = JOptionPane.showConfirmDialog(this, mensaje, "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+        return respuesta == JOptionPane.YES_OPTION;
+    }
+    
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaLibro3"));
+        lblTitulo.setText(bundle.getString("lblTitulo")); 
+        lblCodigoLibro.setText(bundle.getString("lblCodigoLibro")); 
+        lblCategoria.setText(bundle.getString("lblCategoria")); 
+        lblAnioPublicacion.setText(bundle.getString("lblPublicacion"));
+        btnBuscar.setText(bundle.getString("btnBuscar")); 
+        btnCancelar.setText(bundle.getString("btnCancelar")); 
+        btnEliminar.setText(bundle.getString("btnEliminar"));
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,7 +109,7 @@ public class EliminarLibroView extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        lblCodigo = new javax.swing.JLabel();
+        lblCodigoLibro = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
@@ -104,11 +122,13 @@ public class EliminarLibroView extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Eliminacion de Libro");
 
-        lblCodigo.setText("Codigo");
+        lblCodigoLibro.setText("Codigo");
 
         btnBuscar.setText("Buscar");
 
@@ -125,6 +145,7 @@ public class EliminarLibroView extends javax.swing.JInternalFrame {
         btnEliminar.setText("Eliminar");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -138,7 +159,7 @@ public class EliminarLibroView extends javax.swing.JInternalFrame {
                 .addContainerGap(87, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblCodigo)
+                        .addComponent(lblCodigoLibro)
                         .addGap(32, 32, 32)
                         .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(96, 96, 96))
@@ -166,7 +187,7 @@ public class EliminarLibroView extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCodigo)
+                    .addComponent(lblCodigoLibro)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBuscar)
@@ -214,6 +235,11 @@ public class EliminarLibroView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCategoriaActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+             
+        setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -222,7 +248,7 @@ public class EliminarLibroView extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblAnioPublicacion;
     private javax.swing.JLabel lblCategoria;
-    private javax.swing.JLabel lblCodigo;
+    private javax.swing.JLabel lblCodigoLibro;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtAnioPublicacion;
     private javax.swing.JTextField txtCategoria;

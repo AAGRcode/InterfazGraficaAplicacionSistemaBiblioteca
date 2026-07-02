@@ -6,6 +6,8 @@ package ec.edu.ups.views;
 
 import ec.edu.ups.models.Libro;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,7 +27,12 @@ public class ListarLibroView extends javax.swing.JInternalFrame {
     }
     
     public void configurarTabla() {
-        modeloLibro = new DefaultTableModel();
+        modeloLibro = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; //evita que se editen las celdas
+            }
+        };
         modeloLibro.addColumn("Codigo");
         modeloLibro.addColumn("Titulo");
         modeloLibro.addColumn("Categoria");
@@ -45,6 +52,17 @@ public class ListarLibroView extends javax.swing.JInternalFrame {
             modeloLibro.addRow(fila);
         }
     }
+    
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaLibro4"));
+        tblLibros.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("colCodigoLibro"));
+        tblLibros.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("colTitulo"));
+        tblLibros.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("colCategoria"));
+        tblLibros.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("colPublicacion"));
+
+        tblLibros.getTableHeader().repaint();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,9 +77,11 @@ public class ListarLibroView extends javax.swing.JInternalFrame {
         tblLibros = new javax.swing.JTable();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Lista de Libros");
 
         tblLibros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

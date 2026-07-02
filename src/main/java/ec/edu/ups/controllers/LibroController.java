@@ -46,6 +46,7 @@ public class LibroController {
         Libro libro = new Libro(codigo, nombre, categoria, anioPublicacion);
         libroDAO.crear(libro);
         registrarLibroView.mostrarInformacion("Libro registrado exitosamente");
+        registrarLibroView.limpiarCampos();
     }
 
     public void configurarEventosRegistrarLibro() {
@@ -145,8 +146,11 @@ public class LibroController {
 
     public void eliminarLibro() {
         int codigo = Integer.parseInt(eliminarLibroView.getTxtCodigo().getText());
-        libroDAO.eliminar(codigo);
-        eliminarLibroView.mostrarInformacion("Libro eliminado exitosamente");
+        boolean confirmado = eliminarLibroView.confirmarEliminacion("Esta seguro que desea eliminar el libro?");
+        if(confirmado){
+            libroDAO.eliminar(codigo);
+            eliminarLibroView.mostrarInformacion("Libro eliminado exitosamente");
+        }
     }
 
     public void configurarEventosEliminarLibro() {

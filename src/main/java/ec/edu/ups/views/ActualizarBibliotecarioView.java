@@ -4,6 +4,8 @@
  */
 package ec.edu.ups.views;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -81,6 +83,17 @@ public class ActualizarBibliotecarioView extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaBiblio2"));
+        lblNombre.setText(bundle.getString("lblNombre")); 
+        lblCedula.setText(bundle.getString("lblCedula")); 
+        lblEdad.setText(bundle.getString("lblEdad")); 
+        lblCodigo.setText(bundle.getString("lblCodigo"));
+        btnBuscar.setText(bundle.getString("btnBuscar")); 
+        btnCancelar.setText(bundle.getString("btnCancelar")); 
+        btnActualizar.setText(bundle.getString("btnActualizar")); 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -104,9 +117,13 @@ public class ActualizarBibliotecarioView extends javax.swing.JInternalFrame {
         btnActualizar = new javax.swing.JButton();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Actualizacion de Bibliotecario");
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         lblNombre.setText("Nombre completo");
 
@@ -123,6 +140,7 @@ public class ActualizarBibliotecarioView extends javax.swing.JInternalFrame {
         btnBuscar.setText("Buscar");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         btnActualizar.setText("Actualizar");
 
@@ -207,6 +225,10 @@ public class ActualizarBibliotecarioView extends javax.swing.JInternalFrame {
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCedulaActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

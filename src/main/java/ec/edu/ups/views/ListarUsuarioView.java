@@ -6,6 +6,8 @@ package ec.edu.ups.views;
 
 import ec.edu.ups.models.Usuario;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,7 +27,12 @@ public class ListarUsuarioView extends javax.swing.JInternalFrame {
     }
     
     public void configurarTabla() {
-        modeloUsuario = new DefaultTableModel();
+        modeloUsuario = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; //evita que se editen las celdas
+            }
+        };
         modeloUsuario.addColumn("Nombre completo");
         modeloUsuario.addColumn("Cedula");
         modeloUsuario.addColumn("Edad");
@@ -45,6 +52,17 @@ public class ListarUsuarioView extends javax.swing.JInternalFrame {
             modeloUsuario.addRow(fila);
         }
     }
+    
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentana4"));
+        tblUsuarios.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("colNombre"));
+        tblUsuarios.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("colCedula"));
+        tblUsuarios.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("colEdad"));
+        tblUsuarios.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("colCorreo"));
+
+        tblUsuarios.getTableHeader().repaint();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,9 +77,11 @@ public class ListarUsuarioView extends javax.swing.JInternalFrame {
         tblUsuarios = new javax.swing.JTable();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Lista de Usuarios");
 
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

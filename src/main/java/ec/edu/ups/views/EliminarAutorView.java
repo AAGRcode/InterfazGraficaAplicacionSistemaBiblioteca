@@ -4,6 +4,8 @@
  */
 package ec.edu.ups.views;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -80,7 +82,23 @@ public class EliminarAutorView extends javax.swing.JInternalFrame {
     public void mostrarInformacion(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
+    
+    public boolean confirmarEliminacion(String mensaje){
+        int respuesta = JOptionPane.showConfirmDialog(this, mensaje, "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+        return respuesta == JOptionPane.YES_OPTION;
+    }
 
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaAutor3"));
+        lblNombre.setText(bundle.getString("lblNombre")); 
+        lblCodigoAutor.setText(bundle.getString("lblCodigoAutor")); 
+        lblNacionalidad.setText(bundle.getString("lblNacionalidad")); 
+        lblAnioNacimiento.setText(bundle.getString("lblNacimiento"));
+        btnBuscar.setText(bundle.getString("btnBuscar")); 
+        btnCancelar.setText(bundle.getString("btnCancelar")); 
+        btnEliminar.setText(bundle.getString("btnEliminar"));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -100,11 +118,12 @@ public class EliminarAutorView extends javax.swing.JInternalFrame {
         txtNacionalidad = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        lblCodigo = new javax.swing.JLabel();
+        lblCodigoAutor = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         btnEliminar = new javax.swing.JButton();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
@@ -113,17 +132,25 @@ public class EliminarAutorView extends javax.swing.JInternalFrame {
 
         lblAnioNacimiento.setText("Año de nacimiento");
 
+        txtNombre.setEditable(false);
+        txtNombre.setEnabled(false);
         txtNombre.addActionListener(this::txtNombreActionPerformed);
+
+        txtAnioNacimiento.setEditable(false);
+        txtAnioNacimiento.setEnabled(false);
 
         lblNacionalidad.setText("Nacionalidad");
 
+        txtNacionalidad.setEditable(false);
+        txtNacionalidad.setEnabled(false);
         txtNacionalidad.addActionListener(this::txtNacionalidadActionPerformed);
 
         btnBuscar.setText("Buscar");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
-        lblCodigo.setText("Codigo");
+        lblCodigoAutor.setText("Codigo");
 
         txtCodigo.addActionListener(this::txtCodigoActionPerformed);
 
@@ -135,7 +162,7 @@ public class EliminarAutorView extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(148, 148, 148)
-                .addComponent(lblCodigo)
+                .addComponent(lblCodigoAutor)
                 .addGap(59, 59, 59)
                 .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -170,7 +197,7 @@ public class EliminarAutorView extends javax.swing.JInternalFrame {
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCodigo))
+                    .addComponent(lblCodigoAutor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(btnBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -218,6 +245,11 @@ public class EliminarAutorView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+              
+        setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -225,7 +257,7 @@ public class EliminarAutorView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblAnioNacimiento;
-    private javax.swing.JLabel lblCodigo;
+    private javax.swing.JLabel lblCodigoAutor;
     private javax.swing.JLabel lblNacionalidad;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JTextField txtAnioNacimiento;
