@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ListarLibroView extends javax.swing.JInternalFrame {
 
+    private Locale idiomaActual = new Locale("es","EC");
     /**
      * Creates new form ListarUsuarioView
      */
@@ -54,6 +55,7 @@ public class ListarLibroView extends javax.swing.JInternalFrame {
     }
     
     public void cambiarIdioma(Locale locale){
+        this.idiomaActual = locale;
         ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
         setTitle(bundle.getString("tituloVentanaLibro4"));
         tblLibros.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("colCodigoLibro"));

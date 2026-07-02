@@ -45,7 +45,7 @@ public class LibroController {
 
         Libro libro = new Libro(codigo, nombre, categoria, anioPublicacion);
         libroDAO.crear(libro);
-        registrarLibroView.mostrarInformacion("Libro registrado exitosamente");
+        registrarLibroView.mostrarInformacion("msgLibroRegistrado");
         registrarLibroView.limpiarCampos();
     }
 
@@ -67,7 +67,7 @@ public class LibroController {
             buscarLibroView.getTxtCategoria().setText(libro.getCategoria());
             buscarLibroView.getTxtAnioPublicacion().setText(String.valueOf(libro.getAnioPublicacion()));
         } else {
-            buscarLibroView.mostrarInformacion("Libro no encontrado");
+            buscarLibroView.mostrarInformacion("msgLibroNoEncontrado");
         }
     }
 
@@ -89,7 +89,7 @@ public class LibroController {
             actualizarLibroView.getTxtCategoria().setText(libro.getCategoria());
             actualizarLibroView.getTxtAnioPublicacion().setText(String.valueOf(libro.getAnioPublicacion()));
         } else {
-            actualizarLibroView.mostrarInformacion("Libro no encontrado");
+            actualizarLibroView.mostrarInformacion("msgLibroNoEncontrado");
         }
     }
 
@@ -110,7 +110,7 @@ public class LibroController {
 
         Libro libro = new Libro(codigo, titulo, categoria, anioPublicacion);
         libroDAO.actualizar(codigo, libro);
-        actualizarLibroView.mostrarInformacion("Libro actualizado exitosamente");
+        actualizarLibroView.mostrarInformacion("msgLibroActualizado");
     }
 
     public void configurarEventosActualizarLibro() {
@@ -131,7 +131,7 @@ public class LibroController {
             eliminarLibroView.getTxtCategoria().setText(libro.getCategoria());
             eliminarLibroView.getTxtAnioPublicacion().setText(String.valueOf(libro.getAnioPublicacion()));
         } else {
-            eliminarLibroView.mostrarInformacion("Libro no encontrado");
+            eliminarLibroView.mostrarInformacion("msgLibroNoEncontrado");
         }
     }
 
@@ -146,10 +146,10 @@ public class LibroController {
 
     public void eliminarLibro() {
         int codigo = Integer.parseInt(eliminarLibroView.getTxtCodigo().getText());
-        boolean confirmado = eliminarLibroView.confirmarEliminacion("Esta seguro que desea eliminar el libro?");
+        boolean confirmado = eliminarLibroView.confirmarEliminacion("msgLibroConfirmarEliminar");
         if(confirmado){
             libroDAO.eliminar(codigo);
-            eliminarLibroView.mostrarInformacion("Libro eliminado exitosamente");
+            eliminarLibroView.mostrarInformacion("msgLibroEliminado");
         }
     }
 

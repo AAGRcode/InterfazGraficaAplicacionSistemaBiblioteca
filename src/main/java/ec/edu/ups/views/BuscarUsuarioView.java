@@ -15,7 +15,8 @@ import javax.swing.JTextField;
  * @author USUARIO
  */
 public class BuscarUsuarioView extends javax.swing.JInternalFrame {
-
+    
+    private Locale idiomaActual = new Locale("es","EC");
     /**
      * Creates new form BuscarUsuarioView
      */
@@ -75,10 +76,12 @@ public class BuscarUsuarioView extends javax.swing.JInternalFrame {
     }
     
     public void mostrarInformacion(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje);
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", idiomaActual);
+        JOptionPane.showMessageDialog(this, bundle.getString(mensaje));
     }
     
     public void cambiarIdioma(Locale locale){
+        this.idiomaActual = locale;
         ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
         setTitle(bundle.getString("tituloVentana1"));
         lblNombre.setText(bundle.getString("lblNombre")); 
