@@ -6,6 +6,8 @@ package ec.edu.ups.views;
 
 import ec.edu.ups.models.Prestamo;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,10 +23,16 @@ public class ListarPrestamoView extends javax.swing.JInternalFrame {
     
     public ListarPrestamoView() {
         initComponents();
+        configurarTabla();
     }
     
     public void configurarTabla() {
-        modeloPrestamo = new DefaultTableModel();
+        modeloPrestamo = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; //evita que se editen las celdas
+            }
+        };
         modeloPrestamo.addColumn("Id");
         modeloPrestamo.addColumn("Libro");
         modeloPrestamo.addColumn("Usuario");
@@ -39,14 +47,27 @@ public class ListarPrestamoView extends javax.swing.JInternalFrame {
         for (Prestamo prestamo : prestamos) {
             Object[] fila = {
                 prestamo.getId(),
-                prestamo.getLibro(),
-                prestamo.getUsuario(),
-                prestamo.getBibliotecario(),
+                prestamo.getLibro().getTitulo(),
+                prestamo.getUsuario().getNombreCompleto(),
+                prestamo.getBibliotecario().getNombre(),
                 prestamo.getFechaDevolucion(),
                 prestamo.isDevuelto() ? "Si" : "No"
             };
             modeloPrestamo.addRow(fila);
         }
+    }
+    
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaPrestamo2"));
+        tblPrestamos.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("colId"));
+        tblPrestamos.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("colLibro"));
+        tblPrestamos.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("colUsuario"));
+        tblPrestamos.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("colBibliotecario"));
+        tblPrestamos.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("colDevolucion"));
+        tblPrestamos.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("colDevuelto"));
+
+        tblPrestamos.getTableHeader().repaint();
     }
 
     /**
@@ -63,9 +84,11 @@ public class ListarPrestamoView extends javax.swing.JInternalFrame {
         tblPrestamos = new javax.swing.JTable();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Lista de Prestamos");
 
         tblPrestamos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

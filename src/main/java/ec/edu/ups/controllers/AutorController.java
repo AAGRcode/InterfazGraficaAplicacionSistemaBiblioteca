@@ -46,6 +46,7 @@ public class AutorController {
         Autor autor = new Autor(codigo, nombreCompleto, nacionalidad, anioNacimiento);
         autorDAO.crear(autor);
         registrarAutorView.mostrarInformacion("Autor registrado exitosamente");
+        registrarAutorView.limpiarCampos();
     }
 
     public void configurarEventosRegistrarAutor() {
@@ -145,8 +146,11 @@ public class AutorController {
 
     public void eliminarAutor() {
         int codigo = Integer.parseInt(eliminarAutorView.getTxtCodigo().getText());
-        autorDAO.eliminar(codigo);
-        eliminarAutorView.mostrarInformacion("Autor eliminado exitosamente");
+        boolean confirmado = eliminarAutorView.confirmarEliminacion("Esta seguro que desea eliminar el autor?");
+        if(confirmado){
+            autorDAO.eliminar(codigo);
+            eliminarAutorView.mostrarInformacion("Autor eliminado exitosamente");
+        }
     }
 
     public void configurarEventosEliminarAutor() {

@@ -4,6 +4,8 @@
  */
 package ec.edu.ups.views;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -73,6 +75,16 @@ public class BuscarLibroView extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaLibro1"));
+        lblTitulo.setText(bundle.getString("lblTitulo")); 
+        lblCodigoLibro.setText(bundle.getString("lblCodigoLibro")); 
+        lblCategoria.setText(bundle.getString("lblCategoria")); 
+        lblAnioPublicacion.setText(bundle.getString("lblPublicacion"));
+        btnBuscar.setText(bundle.getString("btnBuscar")); 
+        btnCancelar.setText(bundle.getString("btnCancelar")); 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -83,7 +95,7 @@ public class BuscarLibroView extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        lblCodigo = new javax.swing.JLabel();
+        lblCodigoLibro = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -95,25 +107,37 @@ public class BuscarLibroView extends javax.swing.JInternalFrame {
         txtAnioPublicacion = new javax.swing.JTextField();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Busqueda de Libro");
 
-        lblCodigo.setText("Codigo");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        lblCodigoLibro.setText("Codigo");
 
         btnBuscar.setText("Buscar");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         lblTitulo.setText("Titulo");
 
+        txtTitulo.setEditable(false);
+        txtTitulo.setEnabled(false);
         txtTitulo.addActionListener(this::txtTituloActionPerformed);
 
         lblCategoria.setText("Categoria");
 
+        txtCategoria.setEditable(false);
+        txtCategoria.setEnabled(false);
         txtCategoria.addActionListener(this::txtCategoriaActionPerformed);
 
         lblAnioPublicacion.setText("Año publicacion");
+
+        txtAnioPublicacion.setEditable(false);
+        txtAnioPublicacion.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -129,7 +153,7 @@ public class BuscarLibroView extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblCodigo)
+                        .addComponent(lblCodigoLibro)
                         .addGap(32, 32, 32)
                         .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(96, 96, 96))
@@ -152,7 +176,7 @@ public class BuscarLibroView extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCodigo)
+                    .addComponent(lblCodigoLibro)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -198,6 +222,11 @@ public class BuscarLibroView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCategoriaActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+              
+        setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -205,7 +234,7 @@ public class BuscarLibroView extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblAnioPublicacion;
     private javax.swing.JLabel lblCategoria;
-    private javax.swing.JLabel lblCodigo;
+    private javax.swing.JLabel lblCodigoLibro;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtAnioPublicacion;
     private javax.swing.JTextField txtCategoria;

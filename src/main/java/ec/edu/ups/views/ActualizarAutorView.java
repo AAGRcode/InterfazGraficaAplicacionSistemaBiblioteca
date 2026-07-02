@@ -4,6 +4,8 @@
  */
 package ec.edu.ups.views;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -81,6 +83,17 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaAutor2"));
+        lblNombre.setText(bundle.getString("lblNombre")); 
+        lblCodigoAutor.setText(bundle.getString("lblCodigoAutor")); 
+        lblNacionalidad.setText(bundle.getString("lblNacionalidad")); 
+        lblAnioNacimiento.setText(bundle.getString("lblNacimiento"));
+        btnBuscar.setText(bundle.getString("btnBuscar")); 
+        btnCancelar.setText(bundle.getString("btnCancelar")); 
+        btnActualizar.setText(bundle.getString("btnActualizar"));
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -100,13 +113,17 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        lblCodigo = new javax.swing.JLabel();
+        lblCodigoAutor = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Actualizacion de Autor");
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         lblNombre.setText("Nombre completo");
 
@@ -123,8 +140,9 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
         btnActualizar.setText("Actualizar");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
-        lblCodigo.setText("Codigo");
+        lblCodigoAutor.setText("Codigo");
 
         txtCodigo.addActionListener(this::txtCodigoActionPerformed);
 
@@ -135,12 +153,10 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(83, 83, 83)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblNombre)
-                        .addGap(3, 3, 3))
+                    .addComponent(lblNombre)
                     .addComponent(lblNacionalidad)
                     .addComponent(lblAnioNacimiento))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(txtAnioNacimiento)
                     .addComponent(txtNacionalidad, javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,7 +169,7 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
                         .addComponent(btnBuscar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(148, 148, 148)
-                        .addComponent(lblCodigo)
+                        .addComponent(lblCodigoAutor)
                         .addGap(59, 59, 59)
                         .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -171,7 +187,7 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCodigo))
+                    .addComponent(lblCodigoAutor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(btnBuscar)
                 .addGap(33, 33, 33)
@@ -222,6 +238,11 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+  
+        setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
@@ -229,7 +250,7 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblAnioNacimiento;
-    private javax.swing.JLabel lblCodigo;
+    private javax.swing.JLabel lblCodigoAutor;
     private javax.swing.JLabel lblNacionalidad;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JTextField txtAnioNacimiento;

@@ -6,6 +6,8 @@ package ec.edu.ups.views;
 
 import ec.edu.ups.models.Autor;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,7 +27,12 @@ public class ListarAutorView extends javax.swing.JInternalFrame {
     }
     
     public void configurarTabla() {
-        modeloAutor = new DefaultTableModel();
+        modeloAutor = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; //evita que se editen las celdas
+            }
+        };
         modeloAutor.addColumn("Codigo");
         modeloAutor.addColumn("Nombre completo");
         modeloAutor.addColumn("Nacionalidad");
@@ -45,6 +52,17 @@ public class ListarAutorView extends javax.swing.JInternalFrame {
             modeloAutor.addRow(fila);
         }
     }
+    
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaAutor4"));
+        tblAutores.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("colCodigoAutor"));
+        tblAutores.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("colNombre"));
+        tblAutores.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("colNacionalidad"));
+        tblAutores.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("colNacimiento"));
+
+        tblAutores.getTableHeader().repaint();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,9 +78,11 @@ public class ListarAutorView extends javax.swing.JInternalFrame {
         tblAutores = new javax.swing.JTable();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Lista de Autores");
 
         tblAutores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

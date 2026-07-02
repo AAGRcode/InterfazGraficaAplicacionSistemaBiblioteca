@@ -4,6 +4,8 @@
  */
 package ec.edu.ups.views;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -73,7 +75,24 @@ public class RegistrarBibliotecarioView extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, mensaje);
     }
     
+    public void limpiarCampos() {
+        txtCedula.setText("");
+        txtCodigoEmpleado.setText("");
+        txtEdad.setText("");
+        txtNombre.setText("");
+    }
     
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaBiblio"));
+        lblNombre.setText(bundle.getString("lblNombre")); 
+        lblCedula.setText(bundle.getString("lblCedula")); 
+        lblEdad.setText(bundle.getString("lblEdad")); 
+        lblCodigo.setText(bundle.getString("lblCodigo"));
+        btnRegistrar.setText(bundle.getString("btnRegistrar")); 
+        btnCancelar.setText(bundle.getString("btnCancelar")); 
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -87,7 +106,7 @@ public class RegistrarBibliotecarioView extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         lblNombre = new javax.swing.JLabel();
         lblEdad = new javax.swing.JLabel();
-        lblCorreo = new javax.swing.JLabel();
+        lblCodigo = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         txtEdad = new javax.swing.JTextField();
         txtCodigoEmpleado = new javax.swing.JTextField();
@@ -97,15 +116,19 @@ public class RegistrarBibliotecarioView extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Registro de Bibliotecario");
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         lblNombre.setText("Nombre completo");
 
         lblEdad.setText("Edad");
 
-        lblCorreo.setText("Codigo empleado");
+        lblCodigo.setText("Codigo empleado");
 
         txtNombre.addActionListener(this::txtNombreActionPerformed);
 
@@ -113,10 +136,11 @@ public class RegistrarBibliotecarioView extends javax.swing.JInternalFrame {
 
         txtCedula.addActionListener(this::txtCedulaActionPerformed);
 
-        btnRegistrar.setText("Registrar bibliotecario");
+        btnRegistrar.setText("Registrar ");
         btnRegistrar.addActionListener(this::btnRegistrarActionPerformed);
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -130,7 +154,7 @@ public class RegistrarBibliotecarioView extends javax.swing.JInternalFrame {
                             .addComponent(lblNombre)
                             .addComponent(lblCedula)
                             .addComponent(lblEdad)
-                            .addComponent(lblCorreo)))
+                            .addComponent(lblCodigo)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(112, 112, 112)
                         .addComponent(btnRegistrar)))
@@ -161,7 +185,7 @@ public class RegistrarBibliotecarioView extends javax.swing.JInternalFrame {
                     .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCorreo)
+                    .addComponent(lblCodigo)
                     .addComponent(txtCodigoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -196,13 +220,18 @@ public class RegistrarBibliotecarioView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiarCampos();      
+        setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCedula;
-    private javax.swing.JLabel lblCorreo;
+    private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblEdad;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JTextField txtCedula;

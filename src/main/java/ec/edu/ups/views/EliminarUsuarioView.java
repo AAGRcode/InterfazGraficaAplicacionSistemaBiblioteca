@@ -4,6 +4,8 @@
  */
 package ec.edu.ups.views;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -88,6 +90,23 @@ public class EliminarUsuarioView extends javax.swing.JInternalFrame {
     public void mostrarInformacion(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
+    
+    public boolean confirmarEliminacion(String mensaje){
+        int respuesta = JOptionPane.showConfirmDialog(this, mensaje, "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+        return respuesta == JOptionPane.YES_OPTION;
+    }
+    
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentana3"));
+        lblNombre.setText(bundle.getString("lblNombre")); 
+        lblCedula.setText(bundle.getString("lblCedula")); 
+        lblEdad.setText(bundle.getString("lblEdad")); 
+        lblCorreo.setText(bundle.getString("lblCorreo"));
+        btnBuscar.setText(bundle.getString("btnBuscar")); 
+        btnCancelar.setText(bundle.getString("btnCancelar")); 
+        btnEliminar.setText(bundle.getString("btnEliminar")); 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -113,29 +132,42 @@ public class EliminarUsuarioView extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Eliminacion de Usuario");
 
         lblCedulaBuscada.setText("Cedula");
 
         lblNombre.setText("Nombre completo");
 
+        txtNombre.setEditable(false);
+        txtNombre.setEnabled(false);
         txtNombre.addActionListener(this::txtNombreActionPerformed);
 
         lblCedula.setText("Cedula");
 
+        txtCedula.setEditable(false);
+        txtCedula.setEnabled(false);
         txtCedula.addActionListener(this::txtCedulaActionPerformed);
 
         lblEdad.setText("Edad");
 
+        txtEdad.setEditable(false);
+        txtEdad.setEnabled(false);
+
         lblCorreo.setText("Correo electronico");
+
+        txtCorreo.setEditable(false);
+        txtCorreo.setEnabled(false);
 
         btnBuscar.setText("Buscar");
 
         btnEliminar.setText("Eliminar");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -229,6 +261,10 @@ public class EliminarUsuarioView extends javax.swing.JInternalFrame {
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCedulaActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -4,6 +4,8 @@
  */
 package ec.edu.ups.views;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -91,6 +93,17 @@ public class RegistrarDevolucionView extends javax.swing.JInternalFrame {
         txtDevolucion.setText("");
     }
 
+   public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaPrestamo1"));
+        lblUsuario.setText(bundle.getString("lblUsuario")); 
+        lblLibro.setText(bundle.getString("lblLibro")); 
+        lblCodigoDevolucion.setText(bundle.getString("lblCodigoDevolucion")); 
+        lblDevolucion.setText(bundle.getString("lblDevolucion"));
+        btnRegistrar.setText(bundle.getString("btnRegistrar")); 
+        btnCancelar.setText(bundle.getString("btnCancelar")); 
+        btnBuscar.setText(bundle.getString("btnBuscar")); 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,7 +114,7 @@ public class RegistrarDevolucionView extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        lblCedula = new javax.swing.JLabel();
+        lblCodigoDevolucion = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         lblLibro = new javax.swing.JLabel();
         txtLibro = new javax.swing.JTextField();
@@ -113,7 +126,16 @@ public class RegistrarDevolucionView extends javax.swing.JInternalFrame {
         btnRegistrar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
-        lblCedula.setText("Codigo");
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Registro de Devolucion");
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        lblCodigoDevolucion.setText("Codigo");
 
         lblLibro.setText("Libro");
 
@@ -128,6 +150,7 @@ public class RegistrarDevolucionView extends javax.swing.JInternalFrame {
         btnRegistrar.setText("Registrar");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -153,7 +176,7 @@ public class RegistrarDevolucionView extends javax.swing.JInternalFrame {
                 .addContainerGap(94, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblCedula)
+                        .addComponent(lblCodigoDevolucion)
                         .addGap(32, 32, 32)
                         .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(96, 96, 96))
@@ -168,7 +191,7 @@ public class RegistrarDevolucionView extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCedula)
+                    .addComponent(lblCodigoDevolucion)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnBuscar)
@@ -209,13 +232,18 @@ public class RegistrarDevolucionView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLibroActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiarCampos();      
+        setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblCedula;
+    private javax.swing.JLabel lblCodigoDevolucion;
     private javax.swing.JLabel lblDevolucion;
     private javax.swing.JLabel lblLibro;
     private javax.swing.JLabel lblUsuario;

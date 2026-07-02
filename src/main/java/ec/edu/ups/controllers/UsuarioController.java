@@ -46,6 +46,7 @@ public class UsuarioController {
         Usuario usuario = new Usuario(nombreCompleto, cedula, edad, correoElectronico);
         usuarioDAO.crear(usuario);
         registrarUsuarioView.mostrarInformacion("Usuario registrado exitosamente");
+        registrarUsuarioView.limpiarCampos();
     }
 
     public void configurarEventosRegistrarUsuario() {
@@ -146,8 +147,12 @@ public class UsuarioController {
 
     public void eliminarUsuario() {
         String cedula = eliminarUsuarioView.getTxtCedulaBuscada().getText();
-        usuarioDAO.eliminar(cedula);
-        eliminarUsuarioView.mostrarInformacion("Usuario eliminado exitosamente");
+        boolean confirmado = eliminarUsuarioView.confirmarEliminacion("Esta seguro que desea eliminar al usuario?");
+        if(confirmado){
+            usuarioDAO.eliminar(cedula);
+            eliminarUsuarioView.mostrarInformacion("Usuario eliminado exitosamente");
+        }
+        
     }
 
     public void configurarEventosEliminarUsuario() {

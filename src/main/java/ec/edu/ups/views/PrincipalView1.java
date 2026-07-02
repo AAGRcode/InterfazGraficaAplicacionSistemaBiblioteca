@@ -19,12 +19,15 @@ import ec.edu.ups.controllers.BibliotecarioController;
 import ec.edu.ups.controllers.LibroController;
 import ec.edu.ups.controllers.PrestamoController;
 import ec.edu.ups.controllers.UsuarioController;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  *
  * @author USUARIO
  */
 public class PrincipalView1 extends javax.swing.JFrame {
+
     private UsuarioDAO usuarioDAO;
     private RegistrarUsuarioView registrarUsuarioView;
     private BuscarUsuarioView buscarUsuarioView;
@@ -62,85 +65,122 @@ public class PrincipalView1 extends javax.swing.JFrame {
     private RegistrarDevolucionView registrarDevolucionView;
     private ListarPrestamoView listarPrestamoView;
     private PrestamoController prestamoController;
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PrincipalView1.class.getName());
+
+    public void cambiarIdioma(Locale locale) {
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        usuarioMenu.setText(bundle.getString("usuarioMenu"));
+        registrarUsuario.setText(bundle.getString("registrarUsuario"));
+        buscarUsuario.setText(bundle.getString("buscarUsuario"));
+        actualizarUsuario.setText(bundle.getString("actualizarUsuario"));
+        eliminarUsuario.setText(bundle.getString("eliminarUsuario"));
+        listarUsuario.setText(bundle.getString("listarUsuario"));
+        bibliotecarioMenu.setText(bundle.getString("bibliotecarioMenu"));
+        registrarBibliotecario.setText(bundle.getString("registrarBibliotecario"));
+        buscarBibliotecario.setText(bundle.getString("buscarBibliotecario"));
+        actualizarBibliotecario.setText(bundle.getString("actualizarBibliotecario"));
+        eliminarBibliotecario.setText(bundle.getString("eliminarBibliotecario"));
+        listarBibliotecario.setText(bundle.getString("listarBibliotecario"));
+        autorMenu.setText(bundle.getString("autorMenu"));
+        registrarAutor.setText(bundle.getString("registrarAutor"));
+        buscarAutor.setText(bundle.getString("buscarAutor"));
+        actualizarAutor.setText(bundle.getString("actualizarAutor"));
+        eliminarAutor.setText(bundle.getString("eliminarAutor"));
+        listarAutor.setText(bundle.getString("listarAutor"));
+        libroMenu.setText(bundle.getString("libroMenu"));
+        registrarLibro.setText(bundle.getString("registrarLibro"));
+        buscarLibro.setText(bundle.getString("buscarLibro"));
+        actualizarLibro.setText(bundle.getString("actualizarLibro"));
+        eliminarLibro.setText(bundle.getString("eliminarLibro"));
+        listarLibro.setText(bundle.getString("listarLibro"));
+        prestamoMenu.setText(bundle.getString("prestamoMenu"));
+        registrarPrestamo.setText(bundle.getString("registrarPrestamo"));
+        registrarDevolucion.setText(bundle.getString("registrarDevolucion"));
+        listarPrestamo.setText(bundle.getString("listarPrestamo"));
+        idiomaMenu.setText(bundle.getString("idiomaMenu"));
+        EspaniolMenu.setText(bundle.getString("idiomaEspanolMenuItem"));
+        InglesMenu.setText(bundle.getString("idiomaInglesMenuItem"));
+    }
 
     /**
      * Creates new form PrincipalView1
      */
     public PrincipalView1() {
         initComponents();
+        setLocationRelativeTo(null);
+        setExtendedState(MAXIMIZED_BOTH);
         usuarioDAO = new UsuarioDAOMemoria();
-    bibliotecarioDAO = new BibliotecarioDAOMemoria();
-    autorDAO = new AutorDAOMemoria();
-    libroDAO = new LibroDAOMemoria();
-    prestamoDAO = new PrestamoDAOMemoria();
+        bibliotecarioDAO = new BibliotecarioDAOMemoria();
+        autorDAO = new AutorDAOMemoria();
+        libroDAO = new LibroDAOMemoria();
+        prestamoDAO = new PrestamoDAOMemoria();
 
-    registrarUsuarioView = new RegistrarUsuarioView();
-    buscarUsuarioView = new BuscarUsuarioView();
-    actualizarUsuarioView = new ActualizarUsuarioView();
-    eliminarUsuarioView = new EliminarUsuarioView();
-    listarUsuarioView = new ListarUsuarioView();
+        registrarUsuarioView = new RegistrarUsuarioView();
+        buscarUsuarioView = new BuscarUsuarioView();
+        actualizarUsuarioView = new ActualizarUsuarioView();
+        eliminarUsuarioView = new EliminarUsuarioView();
+        listarUsuarioView = new ListarUsuarioView();
 
-    desktopPane.add(registrarUsuarioView);
-    desktopPane.add(buscarUsuarioView);
-    desktopPane.add(actualizarUsuarioView);
-    desktopPane.add(eliminarUsuarioView);
-    desktopPane.add(listarUsuarioView);
+        desktopPane.add(registrarUsuarioView);
+        desktopPane.add(buscarUsuarioView);
+        desktopPane.add(actualizarUsuarioView);
+        desktopPane.add(eliminarUsuarioView);
+        desktopPane.add(listarUsuarioView);
 
-    usuarioController = new UsuarioController(usuarioDAO, registrarUsuarioView, buscarUsuarioView, actualizarUsuarioView, eliminarUsuarioView, listarUsuarioView);
+        usuarioController = new UsuarioController(usuarioDAO, registrarUsuarioView, buscarUsuarioView, actualizarUsuarioView, eliminarUsuarioView, listarUsuarioView);
 
-    registrarBibliotecarioView = new RegistrarBibliotecarioView();
-    buscarBibliotecarioView = new BuscarBibliotecarioView();
-    actualizarBibliotecarioView = new ActualizarBibliotecarioView();
-    eliminarBibliotecarioView = new EliminarBibliotecarioView();
-    listarBibliotecarioView = new ListarBibliotecarioView();
+        registrarBibliotecarioView = new RegistrarBibliotecarioView();
+        buscarBibliotecarioView = new BuscarBibliotecarioView();
+        actualizarBibliotecarioView = new ActualizarBibliotecarioView();
+        eliminarBibliotecarioView = new EliminarBibliotecarioView();
+        listarBibliotecarioView = new ListarBibliotecarioView();
 
-    desktopPane.add(registrarBibliotecarioView);
-    desktopPane.add(buscarBibliotecarioView);
-    desktopPane.add(actualizarBibliotecarioView);
-    desktopPane.add(eliminarBibliotecarioView);
-    desktopPane.add(listarBibliotecarioView);
+        desktopPane.add(registrarBibliotecarioView);
+        desktopPane.add(buscarBibliotecarioView);
+        desktopPane.add(actualizarBibliotecarioView);
+        desktopPane.add(eliminarBibliotecarioView);
+        desktopPane.add(listarBibliotecarioView);
 
-    bibliotecarioController = new BibliotecarioController(bibliotecarioDAO, registrarBibliotecarioView, buscarBibliotecarioView, actualizarBibliotecarioView, eliminarBibliotecarioView, listarBibliotecarioView);
+        bibliotecarioController = new BibliotecarioController(bibliotecarioDAO, registrarBibliotecarioView, buscarBibliotecarioView, actualizarBibliotecarioView, eliminarBibliotecarioView, listarBibliotecarioView);
 
-    registrarAutorView = new RegistrarAutorView();
-    buscarAutorView = new BuscarAutorView();
-    actualizarAutorView = new ActualizarAutorView();
-    eliminarAutorView = new EliminarAutorView();
-    listarAutorView = new ListarAutorView();
+        registrarAutorView = new RegistrarAutorView();
+        buscarAutorView = new BuscarAutorView();
+        actualizarAutorView = new ActualizarAutorView();
+        eliminarAutorView = new EliminarAutorView();
+        listarAutorView = new ListarAutorView();
 
-    desktopPane.add(registrarAutorView);
-    desktopPane.add(buscarAutorView);
-    desktopPane.add(actualizarAutorView);
-    desktopPane.add(eliminarAutorView);
-    desktopPane.add(listarAutorView);
+        desktopPane.add(registrarAutorView);
+        desktopPane.add(buscarAutorView);
+        desktopPane.add(actualizarAutorView);
+        desktopPane.add(eliminarAutorView);
+        desktopPane.add(listarAutorView);
 
-    autorController = new AutorController(autorDAO, registrarAutorView, buscarAutorView, actualizarAutorView, eliminarAutorView, listarAutorView);
+        autorController = new AutorController(autorDAO, registrarAutorView, buscarAutorView, actualizarAutorView, eliminarAutorView, listarAutorView);
 
-    registrarLibroView = new RegistrarLibroView();
-    buscarLibroView = new BuscarLibroView();
-    actualizarLibroView = new ActualizarLibroView();
-    eliminarLibroView = new EliminarLibroView();
-    listarLibroView = new ListarLibroView();
+        registrarLibroView = new RegistrarLibroView();
+        buscarLibroView = new BuscarLibroView();
+        actualizarLibroView = new ActualizarLibroView();
+        eliminarLibroView = new EliminarLibroView();
+        listarLibroView = new ListarLibroView();
 
-    desktopPane.add(registrarLibroView);
-    desktopPane.add(buscarLibroView);
-    desktopPane.add(actualizarLibroView);
-    desktopPane.add(eliminarLibroView);
-    desktopPane.add(listarLibroView);
+        desktopPane.add(registrarLibroView);
+        desktopPane.add(buscarLibroView);
+        desktopPane.add(actualizarLibroView);
+        desktopPane.add(eliminarLibroView);
+        desktopPane.add(listarLibroView);
 
-    libroController = new LibroController(libroDAO, registrarLibroView, buscarLibroView, actualizarLibroView, eliminarLibroView, listarLibroView);
+        libroController = new LibroController(libroDAO, registrarLibroView, buscarLibroView, actualizarLibroView, eliminarLibroView, listarLibroView);
 
-    registrarPrestamoView = new RegistrarPrestamoView();
-    registrarDevolucionView = new RegistrarDevolucionView();
-    listarPrestamoView = new ListarPrestamoView();
+        registrarPrestamoView = new RegistrarPrestamoView();
+        registrarDevolucionView = new RegistrarDevolucionView();
+        listarPrestamoView = new ListarPrestamoView();
 
-    desktopPane.add(registrarPrestamoView);
-    desktopPane.add(registrarDevolucionView);
-    desktopPane.add(listarPrestamoView);
+        desktopPane.add(registrarPrestamoView);
+        desktopPane.add(registrarDevolucionView);
+        desktopPane.add(listarPrestamoView);
 
-    prestamoController = new PrestamoController(prestamoDAO, usuarioDAO, registrarPrestamoView, registrarDevolucionView, listarPrestamoView);
+        prestamoController = new PrestamoController(prestamoDAO, usuarioDAO, registrarPrestamoView, registrarDevolucionView, listarPrestamoView);
     }
 
     /**
@@ -153,390 +193,388 @@ public class PrincipalView1 extends javax.swing.JFrame {
     private void initComponents() {
 
         desktopPane = new javax.swing.JDesktopPane();
+        lblFondo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        UsuarioMenu = new javax.swing.JMenu();
-        RegistrarUsuario = new javax.swing.JMenuItem();
-        BuscarUsuario = new javax.swing.JMenuItem();
-        ActualizarUsuario = new javax.swing.JMenuItem();
-        EliminarUsuario = new javax.swing.JMenuItem();
-        ListarUsuario = new javax.swing.JMenuItem();
-        BibliotecarioMenu = new javax.swing.JMenu();
-        RegistrarBibliotecario = new javax.swing.JMenuItem();
-        BuscarBibliotecario = new javax.swing.JMenuItem();
-        ActualizarBibliotecario = new javax.swing.JMenuItem();
-        EliminarBibliotecario = new javax.swing.JMenuItem();
-        ListarBibliotecario = new javax.swing.JMenuItem();
-        AutorMenu = new javax.swing.JMenu();
-        RegistrarAutor = new javax.swing.JMenuItem();
-        BuscarAutor = new javax.swing.JMenuItem();
-        ActualizarAutor = new javax.swing.JMenuItem();
-        EliminarAutor = new javax.swing.JMenuItem();
-        ListarAutor = new javax.swing.JMenuItem();
-        LibroMenu = new javax.swing.JMenu();
-        RegistrarLibro = new javax.swing.JMenuItem();
-        BuscarLibro = new javax.swing.JMenuItem();
-        ActualizarLibro = new javax.swing.JMenuItem();
-        EliminarLibro = new javax.swing.JMenuItem();
-        ListarLibro = new javax.swing.JMenuItem();
-        PrestamoMenu = new javax.swing.JMenu();
-        RegistrarPrestamo = new javax.swing.JMenuItem();
-        RegistrarDevolucion = new javax.swing.JMenuItem();
-        ListarPrestamo = new javax.swing.JMenuItem();
-        IdiomaMenu = new javax.swing.JMenu();
+        usuarioMenu = new javax.swing.JMenu();
+        registrarUsuario = new javax.swing.JMenuItem();
+        buscarUsuario = new javax.swing.JMenuItem();
+        actualizarUsuario = new javax.swing.JMenuItem();
+        eliminarUsuario = new javax.swing.JMenuItem();
+        listarUsuario = new javax.swing.JMenuItem();
+        bibliotecarioMenu = new javax.swing.JMenu();
+        registrarBibliotecario = new javax.swing.JMenuItem();
+        buscarBibliotecario = new javax.swing.JMenuItem();
+        actualizarBibliotecario = new javax.swing.JMenuItem();
+        eliminarBibliotecario = new javax.swing.JMenuItem();
+        listarBibliotecario = new javax.swing.JMenuItem();
+        autorMenu = new javax.swing.JMenu();
+        registrarAutor = new javax.swing.JMenuItem();
+        buscarAutor = new javax.swing.JMenuItem();
+        actualizarAutor = new javax.swing.JMenuItem();
+        eliminarAutor = new javax.swing.JMenuItem();
+        listarAutor = new javax.swing.JMenuItem();
+        libroMenu = new javax.swing.JMenu();
+        registrarLibro = new javax.swing.JMenuItem();
+        buscarLibro = new javax.swing.JMenuItem();
+        actualizarLibro = new javax.swing.JMenuItem();
+        eliminarLibro = new javax.swing.JMenuItem();
+        listarLibro = new javax.swing.JMenuItem();
+        prestamoMenu = new javax.swing.JMenu();
+        registrarPrestamo = new javax.swing.JMenuItem();
+        registrarDevolucion = new javax.swing.JMenuItem();
+        listarPrestamo = new javax.swing.JMenuItem();
+        idiomaMenu = new javax.swing.JMenu();
         EspaniolMenu = new javax.swing.JMenuItem();
         InglesMenu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        desktopPane.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                desktopPaneComponentResized(evt);
+            }
+        });
+
+        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/biblioteca/imagen/Biblioteca.jpg"))); // NOI18N
+
+        desktopPane.setLayer(lblFondo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout desktopPaneLayout = new javax.swing.GroupLayout(desktopPane);
         desktopPane.setLayout(desktopPaneLayout);
         desktopPaneLayout.setHorizontalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(lblFondo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 465, Short.MAX_VALUE)
         );
         desktopPaneLayout.setVerticalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
+            .addComponent(lblFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 347, Short.MAX_VALUE)
         );
 
-        UsuarioMenu.setText("Usuario");
+        getContentPane().add(desktopPane, java.awt.BorderLayout.CENTER);
 
-        RegistrarUsuario.setText("Registrar");
-        RegistrarUsuario.addActionListener(this::RegistrarUsuarioActionPerformed);
-        UsuarioMenu.add(RegistrarUsuario);
+        usuarioMenu.setText("Usuario");
 
-        BuscarUsuario.setText("Buscar");
-        BuscarUsuario.addActionListener(this::BuscarUsuarioActionPerformed);
-        UsuarioMenu.add(BuscarUsuario);
+        registrarUsuario.setText("Registrar");
+        registrarUsuario.addActionListener(this::registrarUsuarioActionPerformed);
+        usuarioMenu.add(registrarUsuario);
 
-        ActualizarUsuario.setText("Actualizar");
-        ActualizarUsuario.addActionListener(this::ActualizarUsuarioActionPerformed);
-        UsuarioMenu.add(ActualizarUsuario);
+        buscarUsuario.setText("Buscar");
+        buscarUsuario.addActionListener(this::buscarUsuarioActionPerformed);
+        usuarioMenu.add(buscarUsuario);
 
-        EliminarUsuario.setText("Eliminar");
-        EliminarUsuario.addActionListener(this::EliminarUsuarioActionPerformed);
-        UsuarioMenu.add(EliminarUsuario);
+        actualizarUsuario.setText("Actualizar");
+        actualizarUsuario.addActionListener(this::actualizarUsuarioActionPerformed);
+        usuarioMenu.add(actualizarUsuario);
 
-        ListarUsuario.setText("Listar");
-        ListarUsuario.addActionListener(this::ListarUsuarioActionPerformed);
-        UsuarioMenu.add(ListarUsuario);
+        eliminarUsuario.setText("Eliminar");
+        eliminarUsuario.addActionListener(this::eliminarUsuarioActionPerformed);
+        usuarioMenu.add(eliminarUsuario);
 
-        jMenuBar1.add(UsuarioMenu);
+        listarUsuario.setText("Listar");
+        listarUsuario.addActionListener(this::listarUsuarioActionPerformed);
+        usuarioMenu.add(listarUsuario);
 
-        BibliotecarioMenu.setText("Bibliotecario");
+        jMenuBar1.add(usuarioMenu);
 
-        RegistrarBibliotecario.setText("Registrar");
-        RegistrarBibliotecario.addActionListener(this::RegistrarBibliotecarioActionPerformed);
-        BibliotecarioMenu.add(RegistrarBibliotecario);
+        bibliotecarioMenu.setText("Bibliotecario");
 
-        BuscarBibliotecario.setText("Buscar");
-        BuscarBibliotecario.addActionListener(this::BuscarBibliotecarioActionPerformed);
-        BibliotecarioMenu.add(BuscarBibliotecario);
+        registrarBibliotecario.setText("Registrar");
+        registrarBibliotecario.addActionListener(this::registrarBibliotecarioActionPerformed);
+        bibliotecarioMenu.add(registrarBibliotecario);
 
-        ActualizarBibliotecario.setText("Actualizar");
-        ActualizarBibliotecario.addActionListener(this::ActualizarBibliotecarioActionPerformed);
-        BibliotecarioMenu.add(ActualizarBibliotecario);
+        buscarBibliotecario.setText("Buscar");
+        buscarBibliotecario.addActionListener(this::buscarBibliotecarioActionPerformed);
+        bibliotecarioMenu.add(buscarBibliotecario);
 
-        EliminarBibliotecario.setText("Eliminar");
-        EliminarBibliotecario.addActionListener(this::EliminarBibliotecarioActionPerformed);
-        BibliotecarioMenu.add(EliminarBibliotecario);
+        actualizarBibliotecario.setText("Actualizar");
+        actualizarBibliotecario.addActionListener(this::actualizarBibliotecarioActionPerformed);
+        bibliotecarioMenu.add(actualizarBibliotecario);
 
-        ListarBibliotecario.setText("Listar");
-        ListarBibliotecario.addActionListener(this::ListarBibliotecarioActionPerformed);
-        BibliotecarioMenu.add(ListarBibliotecario);
+        eliminarBibliotecario.setText("Eliminar");
+        eliminarBibliotecario.addActionListener(this::eliminarBibliotecarioActionPerformed);
+        bibliotecarioMenu.add(eliminarBibliotecario);
 
-        jMenuBar1.add(BibliotecarioMenu);
+        listarBibliotecario.setText("Listar");
+        listarBibliotecario.addActionListener(this::listarBibliotecarioActionPerformed);
+        bibliotecarioMenu.add(listarBibliotecario);
 
-        AutorMenu.setText("Autor");
+        jMenuBar1.add(bibliotecarioMenu);
 
-        RegistrarAutor.setText("Registrar");
-        RegistrarAutor.addActionListener(this::RegistrarAutorActionPerformed);
-        AutorMenu.add(RegistrarAutor);
+        autorMenu.setText("Autor");
 
-        BuscarAutor.setText("Buscar");
-        BuscarAutor.addActionListener(this::BuscarAutorActionPerformed);
-        AutorMenu.add(BuscarAutor);
+        registrarAutor.setText("Registrar");
+        registrarAutor.addActionListener(this::registrarAutorActionPerformed);
+        autorMenu.add(registrarAutor);
 
-        ActualizarAutor.setText("Actualizar");
-        ActualizarAutor.addActionListener(this::ActualizarAutorActionPerformed);
-        AutorMenu.add(ActualizarAutor);
+        buscarAutor.setText("Buscar");
+        buscarAutor.addActionListener(this::buscarAutorActionPerformed);
+        autorMenu.add(buscarAutor);
 
-        EliminarAutor.setText("Eliminar");
-        EliminarAutor.addActionListener(this::EliminarAutorActionPerformed);
-        AutorMenu.add(EliminarAutor);
+        actualizarAutor.setText("Actualizar");
+        actualizarAutor.addActionListener(this::actualizarAutorActionPerformed);
+        autorMenu.add(actualizarAutor);
 
-        ListarAutor.setText("Listar");
-        ListarAutor.addActionListener(this::ListarAutorActionPerformed);
-        AutorMenu.add(ListarAutor);
+        eliminarAutor.setText("Eliminar");
+        eliminarAutor.addActionListener(this::eliminarAutorActionPerformed);
+        autorMenu.add(eliminarAutor);
 
-        jMenuBar1.add(AutorMenu);
+        listarAutor.setText("Listar");
+        listarAutor.addActionListener(this::listarAutorActionPerformed);
+        autorMenu.add(listarAutor);
 
-        LibroMenu.setText("Libro");
+        jMenuBar1.add(autorMenu);
 
-        RegistrarLibro.setText("Registrar");
-        RegistrarLibro.addActionListener(this::RegistrarLibroActionPerformed);
-        LibroMenu.add(RegistrarLibro);
+        libroMenu.setText("Libro");
 
-        BuscarLibro.setText("Buscar");
-        BuscarLibro.addActionListener(this::BuscarLibroActionPerformed);
-        LibroMenu.add(BuscarLibro);
+        registrarLibro.setText("Registrar");
+        registrarLibro.addActionListener(this::registrarLibroActionPerformed);
+        libroMenu.add(registrarLibro);
 
-        ActualizarLibro.setText("Actualizar");
-        ActualizarLibro.addActionListener(this::ActualizarLibroActionPerformed);
-        LibroMenu.add(ActualizarLibro);
+        buscarLibro.setText("Buscar");
+        buscarLibro.addActionListener(this::buscarLibroActionPerformed);
+        libroMenu.add(buscarLibro);
 
-        EliminarLibro.setText("Eliminar");
-        EliminarLibro.addActionListener(this::EliminarLibroActionPerformed);
-        LibroMenu.add(EliminarLibro);
+        actualizarLibro.setText("Actualizar");
+        actualizarLibro.addActionListener(this::actualizarLibroActionPerformed);
+        libroMenu.add(actualizarLibro);
 
-        ListarLibro.setText("Listar");
-        ListarLibro.addActionListener(this::ListarLibroActionPerformed);
-        LibroMenu.add(ListarLibro);
+        eliminarLibro.setText("Eliminar");
+        eliminarLibro.addActionListener(this::eliminarLibroActionPerformed);
+        libroMenu.add(eliminarLibro);
 
-        jMenuBar1.add(LibroMenu);
+        listarLibro.setText("Listar");
+        listarLibro.addActionListener(this::listarLibroActionPerformed);
+        libroMenu.add(listarLibro);
 
-        PrestamoMenu.setText("Prestamo");
+        jMenuBar1.add(libroMenu);
 
-        RegistrarPrestamo.setText("Registrar");
-        RegistrarPrestamo.addActionListener(this::RegistrarPrestamoActionPerformed);
-        PrestamoMenu.add(RegistrarPrestamo);
+        prestamoMenu.setText("Prestamo");
 
-        RegistrarDevolucion.setText("Devolver");
-        RegistrarDevolucion.addActionListener(this::RegistrarDevolucionActionPerformed);
-        PrestamoMenu.add(RegistrarDevolucion);
+        registrarPrestamo.setText("Registrar");
+        registrarPrestamo.addActionListener(this::registrarPrestamoActionPerformed);
+        prestamoMenu.add(registrarPrestamo);
 
-        ListarPrestamo.setText("Listar");
-        ListarPrestamo.addActionListener(this::ListarPrestamoActionPerformed);
-        PrestamoMenu.add(ListarPrestamo);
+        registrarDevolucion.setText("Devolver");
+        registrarDevolucion.addActionListener(this::registrarDevolucionActionPerformed);
+        prestamoMenu.add(registrarDevolucion);
 
-        jMenuBar1.add(PrestamoMenu);
+        listarPrestamo.setText("Listar");
+        listarPrestamo.addActionListener(this::listarPrestamoActionPerformed);
+        prestamoMenu.add(listarPrestamo);
 
-        IdiomaMenu.setText("Idioma");
+        jMenuBar1.add(prestamoMenu);
+
+        idiomaMenu.setText("Idioma");
 
         EspaniolMenu.setText("Español");
         EspaniolMenu.addActionListener(this::EspaniolMenuActionPerformed);
-        IdiomaMenu.add(EspaniolMenu);
+        idiomaMenu.add(EspaniolMenu);
 
         InglesMenu.setText("Ingles");
         InglesMenu.addActionListener(this::InglesMenuActionPerformed);
-        IdiomaMenu.add(InglesMenu);
+        idiomaMenu.add(InglesMenu);
 
-        jMenuBar1.add(IdiomaMenu);
+        jMenuBar1.add(idiomaMenu);
 
         setJMenuBar(jMenuBar1);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane)
-        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void RegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarUsuarioActionPerformed
-        if (!registrarUsuarioView.isVisible()) {
-            desktopPane.remove(registrarUsuarioView);
-            registrarUsuarioView.setVisible(true);
-            desktopPane.add(registrarUsuarioView);
-        }
-    }//GEN-LAST:event_RegistrarUsuarioActionPerformed
+    private void registrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarUsuarioActionPerformed
+        registrarUsuarioView.setVisible(true);
+        registrarUsuarioView.moveToFront();
+    }//GEN-LAST:event_registrarUsuarioActionPerformed
 
-    private void BuscarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarUsuarioActionPerformed
-        if (!buscarUsuarioView.isVisible()) {
-            desktopPane.remove(buscarUsuarioView);
-            buscarUsuarioView.setVisible(true);
-            desktopPane.add(buscarUsuarioView);
-        }
-    }//GEN-LAST:event_BuscarUsuarioActionPerformed
+    private void buscarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarUsuarioActionPerformed
+        buscarUsuarioView.setVisible(true);
+        buscarUsuarioView.moveToFront();
+    }//GEN-LAST:event_buscarUsuarioActionPerformed
 
-    private void ActualizarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarUsuarioActionPerformed
-        if (!actualizarUsuarioView.isVisible()) {
-            desktopPane.remove(actualizarUsuarioView);
-            actualizarUsuarioView.setVisible(true);
-            desktopPane.add(actualizarUsuarioView);
-        }
-    }//GEN-LAST:event_ActualizarUsuarioActionPerformed
+    private void actualizarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarUsuarioActionPerformed
+        actualizarUsuarioView.setVisible(true);
+        actualizarUsuarioView.moveToFront();
+    }//GEN-LAST:event_actualizarUsuarioActionPerformed
 
-    private void EliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarUsuarioActionPerformed
-        if (!eliminarUsuarioView.isVisible()) {
-            desktopPane.remove(eliminarUsuarioView);
-            eliminarUsuarioView.setVisible(true);
-            desktopPane.add(eliminarUsuarioView);
-        }
-    }//GEN-LAST:event_EliminarUsuarioActionPerformed
+    private void eliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarUsuarioActionPerformed
+        eliminarUsuarioView.setVisible(true);
+        eliminarUsuarioView.moveToFront();
+    }//GEN-LAST:event_eliminarUsuarioActionPerformed
 
-    private void ListarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarUsuarioActionPerformed
+    private void listarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarUsuarioActionPerformed
         usuarioController.listarUsuarios();
-        if (!listarUsuarioView.isVisible()) {
-            desktopPane.remove(listarUsuarioView);
-            listarUsuarioView.setVisible(true);
-            desktopPane.add(listarUsuarioView);
-        }
-    }//GEN-LAST:event_ListarUsuarioActionPerformed
+        listarUsuarioView.setVisible(true);
+        listarUsuarioView.moveToFront();
+    }//GEN-LAST:event_listarUsuarioActionPerformed
 
-    private void RegistrarBibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarBibliotecarioActionPerformed
-        if (!registrarBibliotecarioView.isVisible()) {
-            desktopPane.remove(registrarBibliotecarioView);
-            registrarBibliotecarioView.setVisible(true);
-            desktopPane.add(registrarBibliotecarioView);
-        }
-    }//GEN-LAST:event_RegistrarBibliotecarioActionPerformed
+    private void registrarBibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarBibliotecarioActionPerformed
+        registrarBibliotecarioView.setVisible(true);
+        registrarBibliotecarioView.moveToFront();
+    }//GEN-LAST:event_registrarBibliotecarioActionPerformed
 
-    private void BuscarBibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarBibliotecarioActionPerformed
-        if (!buscarBibliotecarioView.isVisible()) {
-            desktopPane.remove(buscarBibliotecarioView);
-            buscarBibliotecarioView.setVisible(true);
-            desktopPane.add(buscarBibliotecarioView);
-        }
-    }//GEN-LAST:event_BuscarBibliotecarioActionPerformed
+    private void buscarBibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBibliotecarioActionPerformed
+        buscarBibliotecarioView.setVisible(true);
+        buscarBibliotecarioView.moveToFront();
+    }//GEN-LAST:event_buscarBibliotecarioActionPerformed
 
-    private void ActualizarBibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarBibliotecarioActionPerformed
-        if (!actualizarBibliotecarioView.isVisible()) {
-            desktopPane.remove(actualizarBibliotecarioView);
-            actualizarBibliotecarioView.setVisible(true);
-            desktopPane.add(actualizarBibliotecarioView);
-        }
-    }//GEN-LAST:event_ActualizarBibliotecarioActionPerformed
+    private void actualizarBibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarBibliotecarioActionPerformed
+       actualizarBibliotecarioView.setVisible(true);
+       actualizarBibliotecarioView.moveToFront();
+    }//GEN-LAST:event_actualizarBibliotecarioActionPerformed
 
-    private void EliminarBibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarBibliotecarioActionPerformed
-        if (!eliminarBibliotecarioView.isVisible()) {
-            desktopPane.remove(eliminarBibliotecarioView);
-            eliminarBibliotecarioView.setVisible(true);
-            desktopPane.add(eliminarBibliotecarioView);
-        }
-    }//GEN-LAST:event_EliminarBibliotecarioActionPerformed
+    private void eliminarBibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBibliotecarioActionPerformed
+        eliminarBibliotecarioView.setVisible(true);
+        eliminarBibliotecarioView.moveToFront();
+    }//GEN-LAST:event_eliminarBibliotecarioActionPerformed
 
-    private void ListarBibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarBibliotecarioActionPerformed
+    private void listarBibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarBibliotecarioActionPerformed
         bibliotecarioController.listarBibliotecarios();
-        if (!listarBibliotecarioView.isVisible()) {
-            desktopPane.remove(listarBibliotecarioView);
-            listarBibliotecarioView.setVisible(true);
-            desktopPane.add(listarBibliotecarioView);
-        }
-    }//GEN-LAST:event_ListarBibliotecarioActionPerformed
+        listarBibliotecarioView.setVisible(true);
+        listarBibliotecarioView.moveToFront();
+        
+    }//GEN-LAST:event_listarBibliotecarioActionPerformed
 
-    private void RegistrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarAutorActionPerformed
-        if (!registrarAutorView.isVisible()) {
-            desktopPane.remove(registrarAutorView);
-            registrarAutorView.setVisible(true);
-            desktopPane.add(registrarAutorView);
-        }
-    }//GEN-LAST:event_RegistrarAutorActionPerformed
+    private void registrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarAutorActionPerformed
+        registrarAutorView.setVisible(true);
+        registrarAutorView.moveToFront();
+        
+    }//GEN-LAST:event_registrarAutorActionPerformed
 
-    private void BuscarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarAutorActionPerformed
-        if (!buscarAutorView.isVisible()) {
-            desktopPane.remove(buscarAutorView);
-            buscarAutorView.setVisible(true);
-            desktopPane.add(buscarAutorView);
-        }
-    }//GEN-LAST:event_BuscarAutorActionPerformed
+    private void buscarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarAutorActionPerformed
+        buscarAutorView.setVisible(true);
+        buscarAutorView.moveToFront();
+    }//GEN-LAST:event_buscarAutorActionPerformed
 
-    private void ActualizarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarAutorActionPerformed
-        if (!actualizarAutorView.isVisible()) {
-            desktopPane.remove(actualizarAutorView);
-            actualizarAutorView.setVisible(true);
-            desktopPane.add(actualizarAutorView);
-        }
-    }//GEN-LAST:event_ActualizarAutorActionPerformed
+    private void actualizarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarAutorActionPerformed
+        actualizarAutorView.setVisible(true);
+        actualizarAutorView.moveToFront();
+        
+    }//GEN-LAST:event_actualizarAutorActionPerformed
 
-    private void EliminarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarAutorActionPerformed
-        if (!eliminarAutorView.isVisible()) {
-            desktopPane.remove(eliminarAutorView);
-            eliminarAutorView.setVisible(true);
-            desktopPane.add(eliminarAutorView);
-        }
-    }//GEN-LAST:event_EliminarAutorActionPerformed
+    private void eliminarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarAutorActionPerformed
+        eliminarAutorView.setVisible(true);
+        eliminarAutorView.moveToFront();
+        
+    }//GEN-LAST:event_eliminarAutorActionPerformed
 
-    private void ListarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarAutorActionPerformed
+    private void listarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarAutorActionPerformed
         autorController.listarAutores();
-        if (!listarAutorView.isVisible()) {
-            desktopPane.remove(listarAutorView);
-            listarAutorView.setVisible(true);
-            desktopPane.add(listarAutorView);
-        }
-    }//GEN-LAST:event_ListarAutorActionPerformed
+        listarAutorView.setVisible(true);
+        listarAutorView.moveToFront();
+    }//GEN-LAST:event_listarAutorActionPerformed
 
-    private void RegistrarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarLibroActionPerformed
-        if (!registrarLibroView.isVisible()) {
-            desktopPane.remove(registrarLibroView);
-            registrarLibroView.setVisible(true);
-            desktopPane.add(registrarLibroView);
-        }
-    }//GEN-LAST:event_RegistrarLibroActionPerformed
+    private void registrarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarLibroActionPerformed
+        registrarLibroView.setVisible(true);
+        registrarLibroView.moveToFront();
+    }//GEN-LAST:event_registrarLibroActionPerformed
 
-    private void BuscarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarLibroActionPerformed
-        if (!buscarLibroView.isVisible()) {
-            desktopPane.remove(buscarLibroView);
-            buscarLibroView.setVisible(true);
-            desktopPane.add(buscarLibroView);
-        }
-    }//GEN-LAST:event_BuscarLibroActionPerformed
+    private void buscarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarLibroActionPerformed
+        buscarLibroView.setVisible(true);
+        buscarLibroView.moveToFront();
+        
+    }//GEN-LAST:event_buscarLibroActionPerformed
 
-    private void ActualizarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarLibroActionPerformed
-        if (!actualizarLibroView.isVisible()) {
-            desktopPane.remove(actualizarLibroView);
-            actualizarLibroView.setVisible(true);
-            desktopPane.add(actualizarLibroView);
-        }
-    }//GEN-LAST:event_ActualizarLibroActionPerformed
+    private void actualizarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarLibroActionPerformed
+        actualizarLibroView.setVisible(true);
+        actualizarLibroView.moveToFront();
+    }//GEN-LAST:event_actualizarLibroActionPerformed
 
-    private void EliminarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarLibroActionPerformed
-        if (!eliminarLibroView.isVisible()) {
-            desktopPane.remove(eliminarLibroView);
-            eliminarLibroView.setVisible(true);
-            desktopPane.add(eliminarLibroView);
-        }
-    }//GEN-LAST:event_EliminarLibroActionPerformed
+    private void eliminarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarLibroActionPerformed
+        eliminarLibroView.setVisible(true);
+        eliminarLibroView.moveToFront();
+       
+    }//GEN-LAST:event_eliminarLibroActionPerformed
 
-    private void ListarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarLibroActionPerformed
+    private void listarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarLibroActionPerformed
         libroController.listarLibros();
-        if (!listarLibroView.isVisible()) {
-            desktopPane.remove(listarLibroView);
-            listarLibroView.setVisible(true);
-            desktopPane.add(listarLibroView);
-        }
-    }//GEN-LAST:event_ListarLibroActionPerformed
+        listarLibroView.setVisible(true);
+        listarLibroView.moveToFront();
+        
+    }//GEN-LAST:event_listarLibroActionPerformed
 
-    private void RegistrarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarPrestamoActionPerformed
+    private void registrarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarPrestamoActionPerformed
         registrarPrestamoView.cargarLibros(libroDAO.listar());
         registrarPrestamoView.cargarBibliotecarios(bibliotecarioDAO.listar());
-        if (!registrarPrestamoView.isVisible()) {
-            desktopPane.remove(registrarPrestamoView);
-            registrarPrestamoView.setVisible(true);
-            desktopPane.add(registrarPrestamoView);
-        }
-    }//GEN-LAST:event_RegistrarPrestamoActionPerformed
+        registrarPrestamoView.setVisible(true);
+        registrarPrestamoView.moveToFront();
+        
+    }//GEN-LAST:event_registrarPrestamoActionPerformed
 
-    private void RegistrarDevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarDevolucionActionPerformed
-        if (!registrarDevolucionView.isVisible()) {
-            desktopPane.remove(registrarDevolucionView);
-            registrarDevolucionView.setVisible(true);
-            desktopPane.add(registrarDevolucionView);
-        }
-    }//GEN-LAST:event_RegistrarDevolucionActionPerformed
+    private void registrarDevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarDevolucionActionPerformed
+        registrarDevolucionView.setVisible(true);
+        registrarDevolucionView.moveToFront();
+        
+    }//GEN-LAST:event_registrarDevolucionActionPerformed
 
-    private void ListarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarPrestamoActionPerformed
+    private void listarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarPrestamoActionPerformed
         prestamoController.listarPrestamos();
-        if (!listarPrestamoView.isVisible()) {
-            desktopPane.remove(listarPrestamoView);
-            listarPrestamoView.setVisible(true);
-            desktopPane.add(listarPrestamoView);
-        }
-    }//GEN-LAST:event_ListarPrestamoActionPerformed
+        listarPrestamoView.setVisible(true);
+        listarPrestamoView.moveToFront();
+        
+    }//GEN-LAST:event_listarPrestamoActionPerformed
 
     private void EspaniolMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EspaniolMenuActionPerformed
-        // TODO add your handling code here:
+        Locale locale = new Locale("es", "EC");
+        cambiarIdioma(locale);
+        registrarUsuarioView.cambiarIdioma(locale);
+        buscarUsuarioView.cambiarIdioma(locale);
+        actualizarUsuarioView.cambiarIdioma(locale);
+        eliminarUsuarioView.cambiarIdioma(locale);
+        listarUsuarioView.cambiarIdioma(locale);
+        registrarBibliotecarioView.cambiarIdioma(locale);
+        buscarBibliotecarioView.cambiarIdioma(locale);
+        actualizarBibliotecarioView.cambiarIdioma(locale);
+        eliminarBibliotecarioView.cambiarIdioma(locale);
+        listarBibliotecarioView.cambiarIdioma(locale);
+        registrarAutorView.cambiarIdioma(locale);
+        buscarAutorView.cambiarIdioma(locale);
+        actualizarAutorView.cambiarIdioma(locale);
+        eliminarAutorView.cambiarIdioma(locale);
+        listarAutorView.cambiarIdioma(locale);
+        registrarLibroView.cambiarIdioma(locale);
+        buscarLibroView.cambiarIdioma(locale);
+        actualizarLibroView.cambiarIdioma(locale);
+        eliminarLibroView.cambiarIdioma(locale);
+        listarLibroView.cambiarIdioma(locale);
+        registrarPrestamoView.cambiarIdioma(locale);
+        registrarDevolucionView.cambiarIdioma(locale);
+        listarPrestamoView.cambiarIdioma(locale);
     }//GEN-LAST:event_EspaniolMenuActionPerformed
 
     private void InglesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InglesMenuActionPerformed
-        // TODO add your handling code here:
+        Locale locale = new Locale("en", "US");
+        cambiarIdioma(locale);
+        registrarUsuarioView.cambiarIdioma(locale);
+        buscarUsuarioView.cambiarIdioma(locale);
+        actualizarUsuarioView.cambiarIdioma(locale);
+        eliminarUsuarioView.cambiarIdioma(locale);
+        listarUsuarioView.cambiarIdioma(locale);
+        registrarBibliotecarioView.cambiarIdioma(locale);
+        buscarBibliotecarioView.cambiarIdioma(locale);
+        actualizarBibliotecarioView.cambiarIdioma(locale);
+        eliminarBibliotecarioView.cambiarIdioma(locale);
+        listarBibliotecarioView.cambiarIdioma(locale);
+        registrarAutorView.cambiarIdioma(locale);
+        buscarAutorView.cambiarIdioma(locale);
+        actualizarAutorView.cambiarIdioma(locale);
+        eliminarAutorView.cambiarIdioma(locale);
+        listarAutorView.cambiarIdioma(locale);
+        registrarLibroView.cambiarIdioma(locale);
+        buscarLibroView.cambiarIdioma(locale);
+        actualizarLibroView.cambiarIdioma(locale);
+        eliminarLibroView.cambiarIdioma(locale);
+        listarLibroView.cambiarIdioma(locale);
+        registrarPrestamoView.cambiarIdioma(locale);
+        registrarDevolucionView.cambiarIdioma(locale);
+        listarPrestamoView.cambiarIdioma(locale);
     }//GEN-LAST:event_InglesMenuActionPerformed
+
+    private void desktopPaneComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_desktopPaneComponentResized
+        lblFondo.setBounds(0, 0, desktopPane.getWidth(), desktopPane.getHeight());
+        java.awt.Image imagenOriginal = new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/biblioteca/imagen/Biblioteca.jpg")).getImage();
+        java.awt.Image imagenEscalada = imagenOriginal.getScaledInstance(desktopPane.getWidth(), desktopPane.getHeight(), java.awt.Image.SCALE_SMOOTH);
+        lblFondo.setIcon(new javax.swing.ImageIcon(imagenEscalada));
+    }//GEN-LAST:event_desktopPaneComponentResized
 
     /**
      * @param args the command line arguments
@@ -564,38 +602,39 @@ public class PrincipalView1 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem ActualizarAutor;
-    private javax.swing.JMenuItem ActualizarBibliotecario;
-    private javax.swing.JMenuItem ActualizarLibro;
-    private javax.swing.JMenuItem ActualizarUsuario;
-    private javax.swing.JMenu AutorMenu;
-    private javax.swing.JMenu BibliotecarioMenu;
-    private javax.swing.JMenuItem BuscarAutor;
-    private javax.swing.JMenuItem BuscarBibliotecario;
-    private javax.swing.JMenuItem BuscarLibro;
-    private javax.swing.JMenuItem BuscarUsuario;
-    private javax.swing.JMenuItem EliminarAutor;
-    private javax.swing.JMenuItem EliminarBibliotecario;
-    private javax.swing.JMenuItem EliminarLibro;
-    private javax.swing.JMenuItem EliminarUsuario;
     private javax.swing.JMenuItem EspaniolMenu;
-    private javax.swing.JMenu IdiomaMenu;
     private javax.swing.JMenuItem InglesMenu;
-    private javax.swing.JMenu LibroMenu;
-    private javax.swing.JMenuItem ListarAutor;
-    private javax.swing.JMenuItem ListarBibliotecario;
-    private javax.swing.JMenuItem ListarLibro;
-    private javax.swing.JMenuItem ListarPrestamo;
-    private javax.swing.JMenuItem ListarUsuario;
-    private javax.swing.JMenu PrestamoMenu;
-    private javax.swing.JMenuItem RegistrarAutor;
-    private javax.swing.JMenuItem RegistrarBibliotecario;
-    private javax.swing.JMenuItem RegistrarDevolucion;
-    private javax.swing.JMenuItem RegistrarLibro;
-    private javax.swing.JMenuItem RegistrarPrestamo;
-    private javax.swing.JMenuItem RegistrarUsuario;
-    private javax.swing.JMenu UsuarioMenu;
+    private javax.swing.JMenuItem actualizarAutor;
+    private javax.swing.JMenuItem actualizarBibliotecario;
+    private javax.swing.JMenuItem actualizarLibro;
+    private javax.swing.JMenuItem actualizarUsuario;
+    private javax.swing.JMenu autorMenu;
+    private javax.swing.JMenu bibliotecarioMenu;
+    private javax.swing.JMenuItem buscarAutor;
+    private javax.swing.JMenuItem buscarBibliotecario;
+    private javax.swing.JMenuItem buscarLibro;
+    private javax.swing.JMenuItem buscarUsuario;
     private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JMenuItem eliminarAutor;
+    private javax.swing.JMenuItem eliminarBibliotecario;
+    private javax.swing.JMenuItem eliminarLibro;
+    private javax.swing.JMenuItem eliminarUsuario;
+    private javax.swing.JMenu idiomaMenu;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel lblFondo;
+    private javax.swing.JMenu libroMenu;
+    private javax.swing.JMenuItem listarAutor;
+    private javax.swing.JMenuItem listarBibliotecario;
+    private javax.swing.JMenuItem listarLibro;
+    private javax.swing.JMenuItem listarPrestamo;
+    private javax.swing.JMenuItem listarUsuario;
+    private javax.swing.JMenu prestamoMenu;
+    private javax.swing.JMenuItem registrarAutor;
+    private javax.swing.JMenuItem registrarBibliotecario;
+    private javax.swing.JMenuItem registrarDevolucion;
+    private javax.swing.JMenuItem registrarLibro;
+    private javax.swing.JMenuItem registrarPrestamo;
+    private javax.swing.JMenuItem registrarUsuario;
+    private javax.swing.JMenu usuarioMenu;
     // End of variables declaration//GEN-END:variables
 }

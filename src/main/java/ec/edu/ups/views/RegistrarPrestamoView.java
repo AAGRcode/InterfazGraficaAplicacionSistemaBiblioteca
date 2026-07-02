@@ -7,6 +7,8 @@ package ec.edu.ups.views;
 import ec.edu.ups.models.Bibliotecario;
 import ec.edu.ups.models.Libro;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -93,6 +95,22 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
     public void mostrarInformacion(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje);
     }
+    
+    public void limpiarCampos() {
+        txtCedula.setText("");
+        txtDevolucion.setText("");
+    }
+    
+    public void cambiarIdioma(Locale locale){
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
+        setTitle(bundle.getString("tituloVentanaPrestamo"));
+        lblCedulaUsuario.setText(bundle.getString("lblCedulaUsuario")); 
+        lblLibro.setText(bundle.getString("lblLibro")); 
+        lblBibliotecario.setText(bundle.getString("lblBibliotecario")); 
+        lblDevolucion.setText(bundle.getString("lblDevolucion"));
+        btnRegistrar.setText(bundle.getString("btnRegistrar")); 
+        btnCancelar.setText(bundle.getString("btnCancelar")); 
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -104,35 +122,40 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        lblNombre = new javax.swing.JLabel();
-        lblEdad = new javax.swing.JLabel();
-        lblCorreo = new javax.swing.JLabel();
+        lblCedulaUsuario = new javax.swing.JLabel();
+        lblBibliotecario = new javax.swing.JLabel();
+        lblDevolucion = new javax.swing.JLabel();
         txtCedula = new javax.swing.JTextField();
         txtDevolucion = new javax.swing.JTextField();
-        lblCedula = new javax.swing.JLabel();
+        lblLibro = new javax.swing.JLabel();
         btnRegistrar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         cmbLibro = new javax.swing.JComboBox<>();
         cmbBibliotecario = new javax.swing.JComboBox<>();
 
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Registro de Prestamo");
 
-        lblNombre.setText("Cedula del usuario");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblEdad.setText("Bibliotecario");
+        lblCedulaUsuario.setText("Cedula del usuario");
 
-        lblCorreo.setText("Fecha devolucion");
+        lblBibliotecario.setText("Bibliotecario");
+
+        lblDevolucion.setText("Fecha devolucion");
 
         txtCedula.addActionListener(this::txtCedulaActionPerformed);
 
-        lblCedula.setText("Libro");
+        lblLibro.setText("Libro");
 
-        btnRegistrar.setText("Registrar prestamo");
+        btnRegistrar.setText("Registrar ");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         cmbLibro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbLibro.addActionListener(this::cmbLibroActionPerformed);
@@ -146,10 +169,10 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombre)
-                    .addComponent(lblCedula)
-                    .addComponent(lblEdad)
-                    .addComponent(lblCorreo))
+                    .addComponent(lblCedulaUsuario)
+                    .addComponent(lblLibro)
+                    .addComponent(lblBibliotecario)
+                    .addComponent(lblDevolucion))
                 .addGap(93, 93, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(txtDevolucion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
@@ -169,19 +192,19 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombre)
+                    .addComponent(lblCedulaUsuario)
                     .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCedula)
+                    .addComponent(lblLibro)
                     .addComponent(cmbLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEdad)
+                    .addComponent(lblBibliotecario)
                     .addComponent(cmbBibliotecario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCorreo)
+                    .addComponent(lblDevolucion)
                     .addComponent(txtDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -212,6 +235,11 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbLibroActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiarCampos();      
+        setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -219,10 +247,10 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cmbBibliotecario;
     private javax.swing.JComboBox<String> cmbLibro;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblCedula;
-    private javax.swing.JLabel lblCorreo;
-    private javax.swing.JLabel lblEdad;
-    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblBibliotecario;
+    private javax.swing.JLabel lblCedulaUsuario;
+    private javax.swing.JLabel lblDevolucion;
+    private javax.swing.JLabel lblLibro;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtDevolucion;
     // End of variables declaration//GEN-END:variables
