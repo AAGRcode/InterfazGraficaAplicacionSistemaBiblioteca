@@ -16,6 +16,7 @@ import javax.swing.JTextField;
  */
 public class EliminarLibroView extends javax.swing.JInternalFrame {
 
+    private Locale idiomaActual = new Locale("es","EC");
     /**
      * Creates new form EliminarUsuarioView
      */
@@ -80,15 +81,18 @@ public class EliminarLibroView extends javax.swing.JInternalFrame {
     }
     
     public void mostrarInformacion(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje);
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", idiomaActual);
+        JOptionPane.showMessageDialog(this, bundle.getString(mensaje));
     }
 
     public boolean confirmarEliminacion(String mensaje){
-        int respuesta = JOptionPane.showConfirmDialog(this, mensaje, "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", idiomaActual);
+        int respuesta = JOptionPane.showConfirmDialog(this, bundle.getString(mensaje), bundle.getString("tituloConfirmarEliminacion"), JOptionPane.YES_NO_OPTION);
         return respuesta == JOptionPane.YES_OPTION;
     }
     
     public void cambiarIdioma(Locale locale){
+        this.idiomaActual = locale;
         ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
         setTitle(bundle.getString("tituloVentanaLibro3"));
         lblTitulo.setText(bundle.getString("lblTitulo")); 

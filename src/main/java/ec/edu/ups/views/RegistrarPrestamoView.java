@@ -21,6 +21,7 @@ import javax.swing.JTextField;
  */
 public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
 
+    private Locale idiomaActual = new Locale("es","EC");
     /**
      * Creates new form CrearUsuarioView
      */
@@ -93,7 +94,8 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
     }
     
     public void mostrarInformacion(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje);
+        ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", idiomaActual);
+        JOptionPane.showMessageDialog(this, bundle.getString(mensaje));
     }
     
     public void limpiarCampos() {
@@ -102,6 +104,7 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
     }
     
     public void cambiarIdioma(Locale locale){
+        this.idiomaActual = locale;
         ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", locale);
         setTitle(bundle.getString("tituloVentanaPrestamo"));
         lblCedulaUsuario.setText(bundle.getString("lblCedulaUsuario")); 

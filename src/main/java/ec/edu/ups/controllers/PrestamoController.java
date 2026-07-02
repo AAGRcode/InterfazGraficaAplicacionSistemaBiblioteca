@@ -46,11 +46,11 @@ public class PrestamoController {
         if (usuario != null) {
             Prestamo prestamo = new Prestamo(0, libro, usuario, bibliotecario, fechaDevolucion);
             prestamoDAO.crear(prestamo);
-            registrarPrestamoView.mostrarInformacion("Prestamo registrado exitosamente");
+            registrarPrestamoView.mostrarInformacion("msgPrestamoRegistrado");
             registrarPrestamoView.limpiarCampos();
             listarPrestamos();
         } else {
-            registrarPrestamoView.mostrarInformacion("Usuario no encontrado");
+            registrarPrestamoView.mostrarInformacion("msgPrestamoUsuarioNoEncontrado");
         }
     }
 
@@ -69,14 +69,14 @@ public class PrestamoController {
 
         if (prestamo != null) {
             if (prestamo.isDevuelto()) {
-                registrarDevolucionView.mostrarInformacion("Este prestamo ya fue devuelto");
+                registrarDevolucionView.mostrarInformacion("msgPrestamoYaDevuelto");
             } else {
                 registrarDevolucionView.getTxtLibro().setText(prestamo.getLibro().getTitulo());
                 registrarDevolucionView.getTxtUsuario().setText(prestamo.getUsuario().toString());
                 registrarDevolucionView.getTxtDevolucion().setText(prestamo.getFechaDevolucion());
             }
         } else {
-            registrarDevolucionView.mostrarInformacion("Prestamo no encontrado");
+            registrarDevolucionView.mostrarInformacion("msgPrestamoNoEncontrado");
         }
     }
 
@@ -96,11 +96,11 @@ public class PrestamoController {
         if (prestamo != null) {
             prestamo.setDevuelto(true);
             prestamoDAO.actualizar(id, prestamo);
-            registrarDevolucionView.mostrarInformacion("Devolucion registrada exitosamente");
+            registrarDevolucionView.mostrarInformacion("msgDevolucionRegistrad");
             registrarDevolucionView.limpiarCampos();
             listarPrestamos();
         } else {
-            registrarDevolucionView.mostrarInformacion("Prestamo no encontrado");
+            registrarDevolucionView.mostrarInformacion("msgPrestamoNoEncontrado");
         }
     }
 

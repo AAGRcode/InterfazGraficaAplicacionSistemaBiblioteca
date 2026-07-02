@@ -45,7 +45,7 @@ public class AutorController {
 
         Autor autor = new Autor(codigo, nombreCompleto, nacionalidad, anioNacimiento);
         autorDAO.crear(autor);
-        registrarAutorView.mostrarInformacion("Autor registrado exitosamente");
+        registrarAutorView.mostrarInformacion("msgAutorRegistrado");
         registrarAutorView.limpiarCampos();
     }
 
@@ -67,7 +67,7 @@ public class AutorController {
             buscarAutorView.getTxtNacionalidad().setText(autor.getNacionalidad());
             buscarAutorView.getTxtAnioNacimiento().setText(String.valueOf(autor.getAnioNacimiento()));
         } else {
-            buscarAutorView.mostrarInformacion("Autor no encontrado");
+            buscarAutorView.mostrarInformacion("msgAutorNoEncontrado");
         }
     }
 
@@ -89,7 +89,7 @@ public class AutorController {
             actualizarAutorView.getTxtNacionalidad().setText(autor.getNacionalidad());
             actualizarAutorView.getTxtAnioNacimiento().setText(String.valueOf(autor.getAnioNacimiento()));
         } else {
-            actualizarAutorView.mostrarInformacion("Autor no encontrado");
+            actualizarAutorView.mostrarInformacion("msgAutorNoEncontrado");
         }
     }
 
@@ -110,7 +110,7 @@ public class AutorController {
 
         Autor autor = new Autor(codigo, nombreCompleto, nacionalidad, anioNacimiento);
         autorDAO.actualizar(codigo, autor);
-        actualizarAutorView.mostrarInformacion("Autor actualizado exitosamente");
+        actualizarAutorView.mostrarInformacion("msgAutorActualizado");
     }
 
     public void configurarEventosActualizarAutor() {
@@ -131,7 +131,7 @@ public class AutorController {
             eliminarAutorView.getTxtNacionalidad().setText(autor.getNacionalidad());
             eliminarAutorView.getTxtAnioNacimiento().setText(String.valueOf(autor.getAnioNacimiento()));
         } else {
-            eliminarAutorView.mostrarInformacion("Autor no encontrado");
+            eliminarAutorView.mostrarInformacion("msgAutorNoEncontrado");
         }
     }
 
@@ -146,10 +146,10 @@ public class AutorController {
 
     public void eliminarAutor() {
         int codigo = Integer.parseInt(eliminarAutorView.getTxtCodigo().getText());
-        boolean confirmado = eliminarAutorView.confirmarEliminacion("Esta seguro que desea eliminar el autor?");
+        boolean confirmado = eliminarAutorView.confirmarEliminacion("msgAutorConfirmarEliminar");
         if(confirmado){
             autorDAO.eliminar(codigo);
-            eliminarAutorView.mostrarInformacion("Autor eliminado exitosamente");
+            eliminarAutorView.mostrarInformacion("msgAutorEliminado");
         }
     }
 

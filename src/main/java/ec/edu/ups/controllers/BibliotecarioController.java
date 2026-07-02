@@ -45,7 +45,7 @@ public class BibliotecarioController {
 
         Bibliotecario bibliotecario = new Bibliotecario(nombreCompleto, cedula, edad, codigoEmpleado);
         bibliotecarioDAO.crear(bibliotecario);
-        registrarBibliotecarioView.mostrarInformacion("Bibliotecario registrado exitosamente");
+        registrarBibliotecarioView.mostrarInformacion("msgBibliotecarioRegistrado");
         registrarBibliotecarioView.limpiarCampos();
     }
 
@@ -67,7 +67,7 @@ public class BibliotecarioController {
             buscarBibliotecarioView.getTxtCedula().setText(bibliotecario.getCedula());
             buscarBibliotecarioView.getTxtEdad().setText(String.valueOf(bibliotecario.getEdad()));
         } else {
-            buscarBibliotecarioView.mostrarInformacion("Bibliotecario no encontrado");
+            buscarBibliotecarioView.mostrarInformacion("msgBibliotecarioNoEncontrado");
         }
     }
 
@@ -89,7 +89,7 @@ public class BibliotecarioController {
             actualizarBibliotecarioView.getTxtCedula().setText(bibliotecario.getCedula());
             actualizarBibliotecarioView.getTxtEdad().setText(String.valueOf(bibliotecario.getEdad()));
         } else {
-            actualizarBibliotecarioView.mostrarInformacion("Bibliotecario no encontrado");
+            actualizarBibliotecarioView.mostrarInformacion("msgBibliotecarioNoEncontrado");
         }
     }
 
@@ -110,7 +110,7 @@ public class BibliotecarioController {
 
         Bibliotecario bibliotecario = new Bibliotecario(nombreCompleto, cedula, edad, codigoEmpleado);
         bibliotecarioDAO.actualizar(codigoEmpleado, bibliotecario);
-        actualizarBibliotecarioView.mostrarInformacion("Bibliotecario actualizado exitosamente");
+        actualizarBibliotecarioView.mostrarInformacion("msgBibliotecarioActualizado");
     }
 
     public void configurarEventosActualizarBibliotecario() {
@@ -131,7 +131,7 @@ public class BibliotecarioController {
             eliminarBibliotecarioView.getTxtCedula().setText(bibliotecario.getCedula());
             eliminarBibliotecarioView.getTxtEdad().setText(String.valueOf(bibliotecario.getEdad()));
         } else {
-            eliminarBibliotecarioView.mostrarInformacion("Bibliotecario no encontrado");
+            eliminarBibliotecarioView.mostrarInformacion("msgBibliotecarioNoEncontrado");
         }
     }
 
@@ -146,10 +146,10 @@ public class BibliotecarioController {
 
     public void eliminarBibliotecario() {
         String codigoEmpleado = eliminarBibliotecarioView.getTxtCodigo().getText();
-        boolean confirmado = eliminarBibliotecarioView.confirmarEliminacion("Esta seguro que desea eliminar al bibliotecario?");
+        boolean confirmado = eliminarBibliotecarioView.confirmarEliminacion("msgBibliotecarioConfirmarEliminar");
         if(confirmado){
             bibliotecarioDAO.eliminar(codigoEmpleado);
-            eliminarBibliotecarioView.mostrarInformacion("Bibliotecario eliminado exitosamente");
+            eliminarBibliotecarioView.mostrarInformacion("msgBibliotecarioEliminado");
         }
     }
 

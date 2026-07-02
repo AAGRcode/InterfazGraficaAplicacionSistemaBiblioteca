@@ -45,7 +45,7 @@ public class UsuarioController {
 
         Usuario usuario = new Usuario(nombreCompleto, cedula, edad, correoElectronico);
         usuarioDAO.crear(usuario);
-        registrarUsuarioView.mostrarInformacion("Usuario registrado exitosamente");
+        registrarUsuarioView.mostrarInformacion("msgUsuarioRegistrado");
         registrarUsuarioView.limpiarCampos();
     }
 
@@ -67,7 +67,7 @@ public class UsuarioController {
             buscarUsuarioView.getTxtEdad().setText(String.valueOf(usuario.getEdad()));
             buscarUsuarioView.getTxtCorreo().setText(usuario.getCorreoElectronico());
         } else {
-            buscarUsuarioView.mostrarInformacion("Usuario no encontrado");
+            buscarUsuarioView.mostrarInformacion("msgUsuarioNoEncontrado");
         }
     }
 
@@ -89,7 +89,7 @@ public class UsuarioController {
             actualizarUsuarioView.getTxtEdad().setText(String.valueOf(usuario.getEdad()));
             actualizarUsuarioView.getTxtCorreo().setText(usuario.getCorreoElectronico());
         } else {
-            actualizarUsuarioView.mostrarInformacion("Usuario no encontrado");
+            actualizarUsuarioView.mostrarInformacion("msgUsuarioNoEncontrado");
         }
     }
 
@@ -110,7 +110,7 @@ public class UsuarioController {
 
         Usuario usuario = new Usuario(nombreCompleto, cedula, edad, correoElectronico);
         usuarioDAO.actualizar(cedula, usuario);
-        actualizarUsuarioView.mostrarInformacion("Usuario actualizado exitosamente");
+        actualizarUsuarioView.mostrarInformacion("msgUsuarioActualizado");
     }
 
     public void configurarEventosActualizarUsuario() {
@@ -132,7 +132,7 @@ public class UsuarioController {
             eliminarUsuarioView.getTxtEdad().setText(String.valueOf(usuario.getEdad()));
             eliminarUsuarioView.getTxtCorreo().setText(usuario.getCorreoElectronico());
         } else {
-            eliminarUsuarioView.mostrarInformacion("Usuario no encontrado");
+            eliminarUsuarioView.mostrarInformacion("msgUsuarioNoEncontrado");
         }
     }
 
@@ -147,10 +147,10 @@ public class UsuarioController {
 
     public void eliminarUsuario() {
         String cedula = eliminarUsuarioView.getTxtCedulaBuscada().getText();
-        boolean confirmado = eliminarUsuarioView.confirmarEliminacion("Esta seguro que desea eliminar al usuario?");
+        boolean confirmado = eliminarUsuarioView.confirmarEliminacion("msgUsuarioConfirmarEliminar");
         if(confirmado){
             usuarioDAO.eliminar(cedula);
-            eliminarUsuarioView.mostrarInformacion("Usuario eliminado exitosamente");
+            eliminarUsuarioView.mostrarInformacion("msgUsuarioEliminado");
         }
         
     }
