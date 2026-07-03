@@ -135,6 +135,7 @@ public class EliminarAutorView extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Eliminacion de Autor");
 
         jPanel1.setBackground(new java.awt.Color(240, 247, 251));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(169, 204, 227)));
