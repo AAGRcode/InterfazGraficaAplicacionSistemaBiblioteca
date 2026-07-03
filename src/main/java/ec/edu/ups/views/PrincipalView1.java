@@ -19,6 +19,11 @@ import ec.edu.ups.controllers.BibliotecarioController;
 import ec.edu.ups.controllers.LibroController;
 import ec.edu.ups.controllers.PrestamoController;
 import ec.edu.ups.controllers.UsuarioController;
+import ec.edu.ups.models.Autor;
+import ec.edu.ups.models.Bibliotecario;
+import ec.edu.ups.models.Libro;
+import ec.edu.ups.models.Prestamo;
+import ec.edu.ups.models.Usuario;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -115,6 +120,7 @@ public class PrincipalView1 extends javax.swing.JFrame {
         autorDAO = new AutorDAOMemoria();
         libroDAO = new LibroDAOMemoria();
         prestamoDAO = new PrestamoDAOMemoria();
+        cargarDatosPrueba();
 
         registrarUsuarioView = new RegistrarUsuarioView();
         buscarUsuarioView = new BuscarUsuarioView();
@@ -181,7 +187,58 @@ public class PrincipalView1 extends javax.swing.JFrame {
         desktopPane.add(listarPrestamoView);
 
         prestamoController = new PrestamoController(prestamoDAO, usuarioDAO, registrarPrestamoView, registrarDevolucionView, listarPrestamoView);
+        
     }
+    private void cargarDatosPrueba() {
+        Autor autor1 = new Autor(1, "Gabriel Garcia Marquez", "Colombiana", 1927);
+        Autor autor2 = new Autor(2, "Isabel Allende", "Chilena", 1942);
+        Autor autor3 = new Autor(3, "Mario Vargas Llosa", "Peruana", 1936);
+        Autor autor4 = new Autor(4, "Jorge Luis Borges", "Argentina", 1899);
+
+        autorDAO.crear(autor1);
+        autorDAO.crear(autor2);
+        autorDAO.crear(autor3);
+        autorDAO.crear(autor4);
+
+        Bibliotecario bibliotecario1 = new Bibliotecario("Maria Fernanda Lopez", "0102030405", 29, "EMP001");
+        Bibliotecario bibliotecario2 = new Bibliotecario("Carlos Andres Ruiz", "0203040506", 34, "EMP002");
+        Bibliotecario bibliotecario3 = new Bibliotecario("Sandra Patricia Vera", "0304050607", 41, "EMP003");
+
+        bibliotecarioDAO.crear(bibliotecario1);
+        bibliotecarioDAO.crear(bibliotecario2);
+        bibliotecarioDAO.crear(bibliotecario3);
+
+        Usuario usuario1 = new Usuario("Axel Torres Mendoza", "0910111213", 21, "axel.torres@ups.edu.ec");
+        Usuario usuario2 = new Usuario("Paula Ines Chavez", "0911121314", 23, "paula.chavez@ups.edu.ec");
+        Usuario usuario3 = new Usuario("Diego Alejandro Soto", "0912131415", 19, "diego.soto@ups.edu.ec");
+        Usuario usuario4 = new Usuario("Camila Fernanda Rios", "0913141516", 25, "camila.rios@ups.edu.ec");
+
+        usuarioDAO.crear(usuario1);
+        usuarioDAO.crear(usuario2);
+        usuarioDAO.crear(usuario3);
+        usuarioDAO.crear(usuario4);
+
+        Libro libro1 = new Libro(1, "Cien años de soledad", "Novela", 1967, autor1);
+        Libro libro2 = new Libro(2, "La casa de los espiritus", "Novela", 1982, autor2);
+        Libro libro3 = new Libro(3, "La ciudad y los perros", "Novela", 1963, autor3);
+        Libro libro4 = new Libro(4, "Ficciones", "Cuento", 1944, autor4);
+        Libro libro5 = new Libro(5, "El amor en los tiempos del colera", "Novela", 1985, autor1);
+
+        libroDAO.crear(libro1);
+        libroDAO.crear(libro2);
+        libroDAO.crear(libro3);
+        libroDAO.crear(libro4);
+        libroDAO.crear(libro5);
+
+        Prestamo prestamo1 = new Prestamo(0, libro1, usuario1, bibliotecario1, "20/07/2026");
+        Prestamo prestamo2 = new Prestamo(0, libro2, usuario2, bibliotecario2, "25/07/2026");
+        Prestamo prestamo3 = new Prestamo(0, libro3, usuario3, bibliotecario1, "15/07/2026");
+        prestamo3.setDevuelto(true);
+
+        prestamoDAO.crear(prestamo1);
+        prestamoDAO.crear(prestamo2);
+        prestamoDAO.crear(prestamo3);
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -405,6 +462,7 @@ public class PrincipalView1 extends javax.swing.JFrame {
         usuarioController.listarUsuarios();
         listarUsuarioView.setVisible(true);
         listarUsuarioView.moveToFront();
+        
     }//GEN-LAST:event_listarUsuarioActionPerformed
 
     private void registrarBibliotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarBibliotecarioActionPerformed
@@ -464,8 +522,10 @@ public class PrincipalView1 extends javax.swing.JFrame {
     }//GEN-LAST:event_listarAutorActionPerformed
 
     private void registrarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarLibroActionPerformed
+        registrarLibroView.cargarAutores(autorDAO.listar());
         registrarLibroView.setVisible(true);
         registrarLibroView.moveToFront();
+        
     }//GEN-LAST:event_registrarLibroActionPerformed
 
     private void buscarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarLibroActionPerformed
@@ -475,6 +535,7 @@ public class PrincipalView1 extends javax.swing.JFrame {
     }//GEN-LAST:event_buscarLibroActionPerformed
 
     private void actualizarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarLibroActionPerformed
+        actualizarLibroView.cargarAutores(autorDAO.listar());
         actualizarLibroView.setVisible(true);
         actualizarLibroView.moveToFront();
     }//GEN-LAST:event_actualizarLibroActionPerformed
@@ -516,6 +577,7 @@ public class PrincipalView1 extends javax.swing.JFrame {
     private void EspaniolMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EspaniolMenuActionPerformed
         Locale locale = new Locale("es", "EC");
         cambiarIdioma(locale);
+        prestamoController.setIdiomaActual(locale);
         registrarUsuarioView.cambiarIdioma(locale);
         buscarUsuarioView.cambiarIdioma(locale);
         actualizarUsuarioView.cambiarIdioma(locale);
@@ -544,6 +606,7 @@ public class PrincipalView1 extends javax.swing.JFrame {
     private void InglesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InglesMenuActionPerformed
         Locale locale = new Locale("en", "US");
         cambiarIdioma(locale);
+        prestamoController.setIdiomaActual(locale);
         registrarUsuarioView.cambiarIdioma(locale);
         buscarUsuarioView.cambiarIdioma(locale);
         actualizarUsuarioView.cambiarIdioma(locale);

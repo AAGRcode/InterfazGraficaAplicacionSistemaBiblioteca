@@ -1,6 +1,7 @@
 package ec.edu.ups.controllers;
 
 import ec.edu.ups.biblioteca.dao.LibroDAO;
+import ec.edu.ups.models.Autor;
 import ec.edu.ups.models.Libro;
 import ec.edu.ups.views.ActualizarLibroView;
 import ec.edu.ups.views.BuscarLibroView;
@@ -42,8 +43,9 @@ public class LibroController {
         String nombre = registrarLibroView.getTxtTitulo().getText();
         String categoria = registrarLibroView.getTxtCategoria().getText();
         int anioPublicacion = Integer.parseInt(registrarLibroView.getTxtAnioPublicacion().getText());
+        Autor autor = (Autor) registrarLibroView.getCmbAutor().getSelectedItem();
 
-        Libro libro = new Libro(codigo, nombre, categoria, anioPublicacion);
+        Libro libro = new Libro(codigo, nombre, categoria, anioPublicacion, autor);
         libroDAO.crear(libro);
         registrarLibroView.mostrarInformacion("msgLibroRegistrado");
         registrarLibroView.limpiarCampos();
@@ -64,8 +66,10 @@ public class LibroController {
 
         if (libro != null) {
             buscarLibroView.getTxtTitulo().setText(libro.getTitulo());
+            buscarLibroView.getTxtAutor().setText(libro.getAutor().getNombre());
             buscarLibroView.getTxtCategoria().setText(libro.getCategoria());
             buscarLibroView.getTxtAnioPublicacion().setText(String.valueOf(libro.getAnioPublicacion()));
+            
         } else {
             buscarLibroView.mostrarInformacion("msgLibroNoEncontrado");
         }
@@ -88,6 +92,7 @@ public class LibroController {
             actualizarLibroView.getTxtTitulo().setText(libro.getTitulo());
             actualizarLibroView.getTxtCategoria().setText(libro.getCategoria());
             actualizarLibroView.getTxtAnioPublicacion().setText(String.valueOf(libro.getAnioPublicacion()));
+            actualizarLibroView.getCmbAutor().setSelectedItem(libro.getAutor());
         } else {
             actualizarLibroView.mostrarInformacion("msgLibroNoEncontrado");
         }
@@ -107,8 +112,9 @@ public class LibroController {
         String titulo = actualizarLibroView.getTxtTitulo().getText();
         String categoria = actualizarLibroView.getTxtCategoria().getText();
         int anioPublicacion = Integer.parseInt(actualizarLibroView.getTxtAnioPublicacion().getText());
+        Autor autor = (Autor) registrarLibroView.getCmbAutor().getSelectedItem();
 
-        Libro libro = new Libro(codigo, titulo, categoria, anioPublicacion);
+        Libro libro = new Libro(codigo, titulo, categoria, anioPublicacion, autor);
         libroDAO.actualizar(codigo, libro);
         actualizarLibroView.mostrarInformacion("msgLibroActualizado");
     }
@@ -128,6 +134,7 @@ public class LibroController {
 
         if (libro != null) {
             eliminarLibroView.getTxtTitulo().setText(libro.getTitulo());
+            eliminarLibroView.getTxtAutor().setText(libro.getAutor().getNombre());
             eliminarLibroView.getTxtCategoria().setText(libro.getCategoria());
             eliminarLibroView.getTxtAnioPublicacion().setText(String.valueOf(libro.getAnioPublicacion()));
         } else {

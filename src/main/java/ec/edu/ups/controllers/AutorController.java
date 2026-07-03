@@ -40,7 +40,7 @@ public class AutorController {
     public void registrarAutor() {
         int codigo = Integer.parseInt(registrarAutorView.getTxtCodigo().getText());
         String nombreCompleto = registrarAutorView.getTxtNombre().getText();
-        String nacionalidad = registrarAutorView.getTxtNacionalidad().getText();
+        String nacionalidad = (String) registrarAutorView.getCmbNacionalidad().getSelectedItem();
         int anioNacimiento = Integer.parseInt(registrarAutorView.getTxtAnioNacimiento().getText());
 
         Autor autor = new Autor(codigo, nombreCompleto, nacionalidad, anioNacimiento);
@@ -86,7 +86,7 @@ public class AutorController {
 
         if (autor != null) {
             actualizarAutorView.getTxtNombre().setText(autor.getNombre());
-            actualizarAutorView.getTxtNacionalidad().setText(autor.getNacionalidad());
+            actualizarAutorView.getCmbNacionalidad().setSelectedItem(autor.getNacionalidad());
             actualizarAutorView.getTxtAnioNacimiento().setText(String.valueOf(autor.getAnioNacimiento()));
         } else {
             actualizarAutorView.mostrarInformacion("msgAutorNoEncontrado");
@@ -105,7 +105,7 @@ public class AutorController {
     public void actualizarAutor() {
         int codigo = Integer.parseInt(actualizarAutorView.getTxtCodigo().getText());
         String nombreCompleto = actualizarAutorView.getTxtNombre().getText();
-        String nacionalidad = actualizarAutorView.getTxtNacionalidad().getText();
+        String nacionalidad = (String) actualizarAutorView.getCmbNacionalidad().getSelectedItem();
         int anioNacimiento = Integer.parseInt(actualizarAutorView.getTxtAnioNacimiento().getText());
 
         Autor autor = new Autor(codigo, nombreCompleto, nacionalidad, anioNacimiento);

@@ -36,6 +36,7 @@ public class ListarLibroView extends javax.swing.JInternalFrame {
         };
         modeloLibro.addColumn("Codigo");
         modeloLibro.addColumn("Titulo");
+        modeloLibro.addColumn("Autor");
         modeloLibro.addColumn("Categoria");
         modeloLibro.addColumn("Año publicacion");
         tblLibros.setModel(modeloLibro);
@@ -47,6 +48,7 @@ public class ListarLibroView extends javax.swing.JInternalFrame {
             Object[] fila = {
                 libro.getCodigo(),
                 libro.getTitulo(),
+                libro.getAutor(),
                 libro.getCategoria(),
                 libro.getAnioPublicacion()
             };

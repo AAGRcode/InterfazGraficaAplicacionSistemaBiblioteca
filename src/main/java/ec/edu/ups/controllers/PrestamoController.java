@@ -12,6 +12,7 @@ import ec.edu.ups.views.RegistrarPrestamoView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
@@ -21,6 +22,7 @@ public class PrestamoController {
     private RegistrarPrestamoView registrarPrestamoView;
     private RegistrarDevolucionView registrarDevolucionView;
     private ListarPrestamoView listarPrestamoView;
+    private Locale idiomaActual = new Locale("es","EC");
 
     public PrestamoController(PrestamoDAO prestamoDAO, UsuarioDAO usuarioDAO,
             RegistrarPrestamoView registrarPrestamoView, RegistrarDevolucionView registrarDevolucionView,
@@ -36,12 +38,31 @@ public class PrestamoController {
         configurarEventosListarPrestamos();
     }
 
+    public Locale getIdiomaActual() {
+        return idiomaActual;
+    }
+
+    public void setIdiomaActual(Locale idiomaActual) {
+        this.idiomaActual = idiomaActual;
+    }
+    
     public void registrarPrestamo() {
+        
         String cedula = registrarPrestamoView.getTxtCedula().getText();
         Usuario usuario = usuarioDAO.buscar(cedula);
         Libro libro = (Libro) registrarPrestamoView.getCmbLibro().getSelectedItem();
         Bibliotecario bibliotecario = (Bibliotecario) registrarPrestamoView.getCmbBibliotecario().getSelectedItem();
-        String fechaDevolucion = registrarPrestamoView.getTxtDevolucion().getText();
+        String dia = (String) registrarPrestamoView.getCmbDia().getSelectedItem();
+        String mes = (String) registrarPrestamoView.getCmbMes().getSelectedItem();
+        String anio = (String) registrarPrestamoView.getCmbAño().getSelectedItem();
+        String fechaDevolucion;
+        if (idiomaActual.getLanguage().equals("en")){
+            fechaDevolucion = mes+ "/" + dia + "/" + anio;
+        }else {
+            fechaDevolucion = dia + "/" + mes + "/" + anio;
+        }
+        
+        
 
         if (usuario != null) {
             Prestamo prestamo = new Prestamo(0, libro, usuario, bibliotecario, fechaDevolucion);

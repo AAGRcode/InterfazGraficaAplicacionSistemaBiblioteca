@@ -5,14 +5,16 @@ public class Libro {
     private String titulo;
     private String categoria;
     private int anioPublicacion;
+    private Autor autor;
 
     public Libro() {}
 
-    public Libro(int codigo, String titulo, String categoria, int anioPublicacion) {
+    public Libro(int codigo, String titulo, String categoria, int anioPublicacion, Autor autor) {
         this.codigo = codigo;
         this.titulo = titulo;
         this.categoria = categoria;
         this.anioPublicacion = anioPublicacion;
+        this.autor = autor;
     }
 
     public int getCodigo() {
@@ -42,10 +44,20 @@ public class Libro {
     public int getAnioPublicacion() {
         return anioPublicacion;
     }
+    
 
     public void setAnioPublicacion(int anioPublicacion) {
         this.anioPublicacion = anioPublicacion;
     }
+
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
+    }
+    
 
     @Override
     public String toString() {

@@ -6,7 +6,9 @@ package ec.edu.ups.views;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -22,6 +24,7 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
      */
     public ActualizarAutorView() {
         initComponents();
+        cargarNacionalidades();
     }
 
     public JButton getBtnActualizar() {
@@ -64,14 +67,6 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
         this.txtCodigo = txtCodigo;
     }
 
-    public JTextField getTxtNacionalidad() {
-        return txtNacionalidad;
-    }
-
-    public void setTxtNacionalidad(JTextField txtNacionalidad) {
-        this.txtNacionalidad = txtNacionalidad;
-    }
-
     public JTextField getTxtNombre() {
         return txtNombre;
     }
@@ -79,6 +74,25 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
     public void setTxtNombre(JTextField txtNombre) {
         this.txtNombre = txtNombre;
     }
+
+    public JComboBox<String> getCmbNacionalidad() {
+        return cmbNacionalidad;
+    }
+
+    public void setCmbNacionalidad(JComboBox<String> cmbNacionalidad) {
+        this.cmbNacionalidad = cmbNacionalidad;
+    }
+    private void cargarNacionalidades() {
+        String[] nacionalidades = {
+            "Ecuatoriana", "Colombiana", "Peruana", "Argentina", "Chilena",
+            "Mexicana", "Espanola", "Estadounidense", "Brasilena", "Venezolana",
+            "Boliviana", "Uruguaya", "Paraguaya", "Cubana", "Francesa",
+            "Italiana", "Alemana", "Britanica", "Japonesa", "China"
+        };
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>(nacionalidades);
+        cmbNacionalidad.setModel(modelo);
+    }
+    
     
     public void mostrarInformacion(String mensaje) {
         ResourceBundle bundle = ResourceBundle.getBundle("ec.edu.ups.biblioteca.i18n.mensajes", idiomaActual);
@@ -112,12 +126,12 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
         txtNombre = new javax.swing.JTextField();
         txtAnioNacimiento = new javax.swing.JTextField();
         lblNacionalidad = new javax.swing.JLabel();
-        txtNacionalidad = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         lblCodigoAutor = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
+        cmbNacionalidad = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -136,8 +150,6 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
 
         lblNacionalidad.setText("Nacionalidad");
 
-        txtNacionalidad.addActionListener(this::txtNacionalidadActionPerformed);
-
         btnBuscar.setText("Buscar");
 
         btnActualizar.setText("Actualizar");
@@ -149,6 +161,8 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
 
         txtCodigo.addActionListener(this::txtCodigoActionPerformed);
 
+        cmbNacionalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -159,11 +173,11 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
                     .addComponent(lblNombre)
                     .addComponent(lblNacionalidad)
                     .addComponent(lblAnioNacimiento))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(txtAnioNacimiento)
-                    .addComponent(txtNacionalidad, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                    .addComponent(cmbNacionalidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(72, 72, 72))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,7 +214,7 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNacionalidad)
-                    .addComponent(txtNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAnioNacimiento)
@@ -233,10 +247,6 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void txtNacionalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNacionalidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNacionalidadActionPerformed
-
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoActionPerformed
@@ -251,6 +261,7 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JComboBox<String> cmbNacionalidad;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblAnioNacimiento;
     private javax.swing.JLabel lblCodigoAutor;
@@ -258,7 +269,6 @@ public class ActualizarAutorView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblNombre;
     private javax.swing.JTextField txtAnioNacimiento;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtNacionalidad;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
