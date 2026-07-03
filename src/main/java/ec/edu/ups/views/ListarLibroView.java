@@ -62,8 +62,9 @@ public class ListarLibroView extends javax.swing.JInternalFrame {
         setTitle(bundle.getString("tituloVentanaLibro4"));
         tblLibros.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("colCodigoLibro"));
         tblLibros.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("colTitulo"));
-        tblLibros.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("colCategoria"));
-        tblLibros.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("colPublicacion"));
+        tblLibros.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("colAutor"));
+        tblLibros.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("colCategoria"));
+        tblLibros.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("colPublicacion"));
 
         tblLibros.getTableHeader().repaint();
     }
@@ -80,6 +81,7 @@ public class ListarLibroView extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLibros = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(223, 237, 246));
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
@@ -87,6 +89,11 @@ public class ListarLibroView extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Lista de Libros");
 
+        jPanel1.setBackground(new java.awt.Color(240, 247, 251));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(169, 204, 227)));
+
+        tblLibros.setBackground(new java.awt.Color(240, 247, 251));
+        tblLibros.setForeground(new java.awt.Color(46, 58, 70));
         tblLibros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -98,6 +105,9 @@ public class ListarLibroView extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblLibros.setGridColor(new java.awt.Color(169, 204, 227));
+        tblLibros.setSelectionBackground(new java.awt.Color(174, 214, 241));
+        tblLibros.setSelectionForeground(new java.awt.Color(21, 67, 96));
         jScrollPane1.setViewportView(tblLibros);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -107,7 +117,7 @@ public class ListarLibroView extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -5,6 +5,9 @@
 package ec.edu.ups.views;
 
 import ec.edu.ups.models.Prestamo;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -51,11 +54,26 @@ public class ListarPrestamoView extends javax.swing.JInternalFrame {
                 prestamo.getLibro().getTitulo(),
                 prestamo.getUsuario().getNombreCompleto(),
                 prestamo.getBibliotecario().getNombre(),
-                prestamo.getFechaDevolucion(),
+                formatearFecha(prestamo.getFechaDevolucion()),
                 prestamo.isDevuelto() ? "Si" : "No"
             };
             modeloPrestamo.addRow(fila);
         }
+    }
+    
+    private String formatearFecha(String fecha) {
+        String[] partes = fecha.split("/");
+        int dia = Integer.parseInt(partes[0]);
+        int mes = Integer.parseInt(partes[1]);
+        int anio = Integer.parseInt(partes[2]);
+
+        Calendar calendario = Calendar.getInstance();
+        calendario.set(anio, mes - 1, dia);
+        Date fechaFinal = calendario.getTime();
+
+        String patron = idiomaActual.getLanguage().equals("en") ? "MM/dd/yyyy" : "dd/MM/yyyy";
+        SimpleDateFormat formatoSalida = new SimpleDateFormat(patron, idiomaActual);
+        return formatoSalida.format(fechaFinal);
     }
     
     public void cambiarIdioma(Locale locale){
@@ -85,6 +103,7 @@ public class ListarPrestamoView extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPrestamos = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(223, 237, 246));
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
@@ -92,6 +111,11 @@ public class ListarPrestamoView extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Lista de Prestamos");
 
+        jPanel1.setBackground(new java.awt.Color(240, 247, 251));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(169, 204, 227)));
+
+        tblPrestamos.setBackground(new java.awt.Color(240, 247, 251));
+        tblPrestamos.setForeground(new java.awt.Color(46, 58, 70));
         tblPrestamos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -103,6 +127,9 @@ public class ListarPrestamoView extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblPrestamos.setGridColor(new java.awt.Color(169, 204, 227));
+        tblPrestamos.setSelectionBackground(new java.awt.Color(174, 214, 241));
+        tblPrestamos.setSelectionForeground(new java.awt.Color(21, 67, 96));
         jScrollPane1.setViewportView(tblPrestamos);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -112,7 +139,7 @@ public class ListarPrestamoView extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

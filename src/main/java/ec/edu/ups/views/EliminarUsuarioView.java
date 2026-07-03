@@ -107,6 +107,7 @@ public class EliminarUsuarioView extends javax.swing.JInternalFrame {
         lblCedula.setText(bundle.getString("lblCedula")); 
         lblEdad.setText(bundle.getString("lblEdad")); 
         lblCorreo.setText(bundle.getString("lblCorreo"));
+        lblCedulaBuscada.setText(bundle.getString("lblCedulaBuscada"));
         btnBuscar.setText(bundle.getString("btnBuscar")); 
         btnCancelar.setText(bundle.getString("btnCancelar")); 
         btnEliminar.setText(bundle.getString("btnEliminar")); 
@@ -134,7 +135,11 @@ public class EliminarUsuarioView extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(223, 237, 246));
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
@@ -142,51 +147,86 @@ public class EliminarUsuarioView extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Eliminacion de Usuario");
 
+        jPanel1.setBackground(new java.awt.Color(240, 247, 251));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(169, 204, 227)));
+
+        lblCedulaBuscada.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCedulaBuscada.setForeground(new java.awt.Color(46, 58, 70));
         lblCedulaBuscada.setText("Cedula");
 
+        txtCedulaBuscada.setForeground(new java.awt.Color(46, 58, 70));
+
+        lblNombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblNombre.setForeground(new java.awt.Color(46, 58, 70));
         lblNombre.setText("Nombre completo");
 
         txtNombre.setEditable(false);
+        txtNombre.setBackground(new java.awt.Color(227, 236, 242));
+        txtNombre.setForeground(new java.awt.Color(51, 65, 77));
         txtNombre.setEnabled(false);
         txtNombre.addActionListener(this::txtNombreActionPerformed);
 
+        lblCedula.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCedula.setForeground(new java.awt.Color(46, 58, 70));
         lblCedula.setText("Cedula");
 
         txtCedula.setEditable(false);
+        txtCedula.setBackground(new java.awt.Color(227, 236, 242));
+        txtCedula.setForeground(new java.awt.Color(51, 65, 77));
         txtCedula.setEnabled(false);
         txtCedula.addActionListener(this::txtCedulaActionPerformed);
 
+        lblEdad.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblEdad.setForeground(new java.awt.Color(46, 58, 70));
         lblEdad.setText("Edad");
 
         txtEdad.setEditable(false);
+        txtEdad.setBackground(new java.awt.Color(227, 236, 242));
+        txtEdad.setForeground(new java.awt.Color(51, 65, 77));
         txtEdad.setEnabled(false);
 
+        lblCorreo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCorreo.setForeground(new java.awt.Color(46, 58, 70));
         lblCorreo.setText("Correo electronico");
 
         txtCorreo.setEditable(false);
+        txtCorreo.setBackground(new java.awt.Color(227, 236, 242));
+        txtCorreo.setForeground(new java.awt.Color(51, 65, 77));
         txtCorreo.setEnabled(false);
 
+        btnBuscar.setBackground(new java.awt.Color(174, 214, 241));
+        btnBuscar.setForeground(new java.awt.Color(21, 67, 96));
         btnBuscar.setText("Buscar");
 
+        btnEliminar.setBackground(new java.awt.Color(213, 216, 220));
+        btnEliminar.setForeground(new java.awt.Color(77, 86, 86));
         btnEliminar.setText("Eliminar");
 
+        btnCancelar.setBackground(new java.awt.Color(213, 216, 220));
+        btnCancelar.setForeground(new java.awt.Color(77, 86, 86));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/biblioteca/imagen/Cancelar.png"))); // NOI18N
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/biblioteca/imagen/Eliminar.png"))); // NOI18N
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/biblioteca/imagen/Buscar.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(109, Short.MAX_VALUE)
+                .addContainerGap(100, Short.MAX_VALUE)
                 .addComponent(lblCedulaBuscada)
                 .addGap(32, 32, 32)
                 .addComponent(txtCedulaBuscada, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(96, 96, 96))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNombre)
                             .addComponent(lblCedula)
@@ -199,14 +239,20 @@ public class EliminarUsuarioView extends javax.swing.JInternalFrame {
                             .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar)
-                        .addGap(75, 75, 75)
+                        .addGap(45, 45, 45)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(155, 155, 155)
+                .addGap(125, 125, 125)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -218,28 +264,37 @@ public class EliminarUsuarioView extends javax.swing.JInternalFrame {
                     .addComponent(lblCedulaBuscada)
                     .addComponent(txtCedulaBuscada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnBuscar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnBuscar)
+                    .addComponent(jLabel4))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombre)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCedula)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEdad)
-                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCorreo)
-                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnEliminar))
-                .addGap(14, 14, 14))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(14, 14, 14))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNombre)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCedula)
+                            .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEdad)
+                            .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCorreo)
+                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCancelar)
+                            .addComponent(btnEliminar)
+                            .addComponent(jLabel3))
+                        .addGap(13, 13, 13))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -275,6 +330,9 @@ public class EliminarUsuarioView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblCedulaBuscada;
