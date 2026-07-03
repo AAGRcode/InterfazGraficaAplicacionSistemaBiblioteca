@@ -114,6 +114,7 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
         lblCodigoLibro.setText(bundle.getString("lblCodigoLibro")); 
         lblCategoria.setText(bundle.getString("lblCategoria")); 
         lblAnioPublicacion.setText(bundle.getString("lblPublicacion"));
+        lblAutor.setText(bundle.getString("lblAutor"));
         btnBuscar.setText(bundle.getString("btnBuscar")); 
         btnCancelar.setText(bundle.getString("btnCancelar")); 
         btnActualizar.setText(bundle.getString("btnActualizar"));
