@@ -78,6 +78,7 @@ public class ListarUsuarioView extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(223, 237, 246));
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setIconifiable(true);
@@ -85,6 +86,11 @@ public class ListarUsuarioView extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Lista de Usuarios");
 
+        jPanel1.setBackground(new java.awt.Color(240, 247, 251));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(169, 204, 227)));
+
+        tblUsuarios.setBackground(new java.awt.Color(240, 247, 251));
+        tblUsuarios.setForeground(new java.awt.Color(46, 58, 70));
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -96,6 +102,9 @@ public class ListarUsuarioView extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblUsuarios.setGridColor(new java.awt.Color(169, 204, 227));
+        tblUsuarios.setSelectionBackground(new java.awt.Color(174, 214, 241));
+        tblUsuarios.setSelectionForeground(new java.awt.Color(21, 67, 96));
         jScrollPane1.setViewportView(tblUsuarios);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -105,7 +114,7 @@ public class ListarUsuarioView extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
