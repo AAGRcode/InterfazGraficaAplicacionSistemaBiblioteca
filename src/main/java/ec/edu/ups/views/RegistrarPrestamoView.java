@@ -27,6 +27,7 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
      */
     public RegistrarPrestamoView() {
         initComponents();
+        llenarCombosFecha();
     }
 
     public JButton getBtnCancelar() {
@@ -67,15 +68,49 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
 
     public void setTxtCedula(JTextField txtCedula) {
         this.txtCedula = txtCedula;
+        
+        
     }
 
-    public JTextField getTxtDevolucion() {
-        return txtDevolucion;
+    public JComboBox<String> getCmbAño() {
+        return cmbAño;
     }
 
-    public void setTxtDevolucion(JTextField txtDevolucion) {
-        this.txtDevolucion = txtDevolucion;
+    public void setCmbAño(JComboBox<String> cmbAño) {
+        this.cmbAño = cmbAño;
     }
+
+    public JComboBox<String> getCmbDia() {
+        return cmbDia;
+    }
+
+    public void setCmbDia(JComboBox<String> cmbDia) {
+        this.cmbDia = cmbDia;
+    }
+
+    public JComboBox<String> getCmbMes() {
+        return cmbMes;
+    }
+
+    public void setCmbMes(JComboBox<String> cmbMes) {
+        this.cmbMes = cmbMes;
+    }
+    
+    private void llenarCombosFecha() {
+        cmbDia.removeAllItems();
+        cmbMes.removeAllItems();
+        cmbAño.removeAllItems();
+        for (int i = 1; i <= 31; i++) {
+            cmbDia.addItem(String.format("%02d", i));
+        }
+        for (int i = 1; i <= 12; i++) {
+            cmbMes.addItem(String.format("%02d", i));
+        }
+        for (int i = 2026; i <= 2035; i++) {
+            cmbAño.addItem(String.valueOf(i));
+        }
+    }
+
     
     public void cargarLibros(List<Libro> libros) {
     DefaultComboBoxModel<Libro> modelo = new DefaultComboBoxModel<>();
@@ -100,8 +135,9 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
     
     public void limpiarCampos() {
         txtCedula.setText("");
-        txtDevolucion.setText("");
+        
     }
+    
     
     public void cambiarIdioma(Locale locale){
         this.idiomaActual = locale;
@@ -129,12 +165,17 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
         lblBibliotecario = new javax.swing.JLabel();
         lblDevolucion = new javax.swing.JLabel();
         txtCedula = new javax.swing.JTextField();
-        txtDevolucion = new javax.swing.JTextField();
         lblLibro = new javax.swing.JLabel();
         btnRegistrar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         cmbLibro = new javax.swing.JComboBox<>();
         cmbBibliotecario = new javax.swing.JComboBox<>();
+        lblDia = new javax.swing.JLabel();
+        lblMes = new javax.swing.JLabel();
+        lblAño = new javax.swing.JLabel();
+        cmbDia = new javax.swing.JComboBox<>();
+        cmbMes = new javax.swing.JComboBox<>();
+        cmbAño = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -165,6 +206,18 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
 
         cmbBibliotecario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        lblDia.setText("Dia");
+
+        lblMes.setText("Mes");
+
+        lblAño.setText("Año");
+
+        cmbDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbAño.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -176,19 +229,40 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
                     .addComponent(lblLibro)
                     .addComponent(lblBibliotecario)
                     .addComponent(lblDevolucion))
-                .addGap(93, 93, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtDevolucion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbLibro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbBibliotecario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(105, 105, 105))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(110, 110, 110)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbLibro, 0, 117, Short.MAX_VALUE)
+                            .addComponent(cmbBibliotecario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(105, 105, 105))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(68, 68, 68)
+                                .addComponent(lblDia)
+                                .addGap(55, 55, 55)
+                                .addComponent(lblMes))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(cmbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblAño)
+                                .addGap(56, 56, 56))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(cmbAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31))))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnRegistrar)
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addComponent(btnCancelar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(88, 88, 88))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,15 +279,22 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBibliotecario)
                     .addComponent(cmbBibliotecario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDevolucion)
-                    .addComponent(txtDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(lblDia)
+                    .addComponent(lblMes)
+                    .addComponent(lblAño))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegistrar)
-                    .addComponent(btnCancelar))
-                .addContainerGap(17, Short.MAX_VALUE))
+                    .addComponent(cmbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnRegistrar))
+                .addGap(26, 26, 26))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -247,14 +328,19 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRegistrar;
+    private javax.swing.JComboBox<String> cmbAño;
     private javax.swing.JComboBox<String> cmbBibliotecario;
+    private javax.swing.JComboBox<String> cmbDia;
     private javax.swing.JComboBox<String> cmbLibro;
+    private javax.swing.JComboBox<String> cmbMes;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblAño;
     private javax.swing.JLabel lblBibliotecario;
     private javax.swing.JLabel lblCedulaUsuario;
     private javax.swing.JLabel lblDevolucion;
+    private javax.swing.JLabel lblDia;
     private javax.swing.JLabel lblLibro;
+    private javax.swing.JLabel lblMes;
     private javax.swing.JTextField txtCedula;
-    private javax.swing.JTextField txtDevolucion;
     // End of variables declaration//GEN-END:variables
 }
