@@ -1,6 +1,9 @@
 package ec.edu.ups.controllers;
 
 import ec.edu.ups.biblioteca.dao.UsuarioDAO;
+import ec.edu.ups.biblioteca.exceptions.CampoVacioException;
+import ec.edu.ups.biblioteca.exceptions.DatoInvalidoException;
+import ec.edu.ups.biblioteca.exceptions.TextoInvalidoException;
 import ec.edu.ups.models.Usuario;
 import ec.edu.ups.views.ActualizarUsuarioView;
 import ec.edu.ups.views.BuscarUsuarioView;
@@ -38,15 +41,51 @@ public class UsuarioController {
     }
 
     public void registrarUsuario() {
-        String nombreCompleto = registrarUsuarioView.getTxtNombre().getText();
-        String cedula = registrarUsuarioView.getTxtCedula().getText();
-        int edad = Integer.parseInt(registrarUsuarioView.getTxtEdad().getText());
-        String correoElectronico = registrarUsuarioView.getTxtCorreo().getText();
-
-        Usuario usuario = new Usuario(nombreCompleto, cedula, edad, correoElectronico);
-        usuarioDAO.crear(usuario);
-        registrarUsuarioView.mostrarInformacion("msgUsuarioRegistrado");
-        registrarUsuarioView.limpiarCampos();
+        try{
+            String nombreCompleto = registrarUsuarioView.getTxtNombre().getText();
+            String cedula = registrarUsuarioView.getTxtCedula().getText();
+            String edadTexto = registrarUsuarioView.getTxtEdad().getText();
+            String correoElectronico = registrarUsuarioView.getTxtCorreo().getText();
+            
+            validarCamposUsuario(nombreCompleto, cedula, edadTexto, correoElectronico);
+            
+            int edad = Integer.parseInt(edadTexto.trim());
+            Usuario usuario = new Usuario(nombreCompleto, cedula, edad, correoElectronico);
+            usuarioDAO.crear(usuario);
+            registrarUsuarioView.mostrarInformacion("msgUsuarioRegistrado");
+            registrarUsuarioView.limpiarCampos();
+        }catch(CampoVacioException ex1){
+            registrarUsuarioView.mostrarInformacion(ex1.getMessage());
+        }catch(TextoInvalidoException ex2){
+            registrarUsuarioView.mostrarInformacion(ex2.getMessage());
+        }catch(DatoInvalidoException ex3){
+            registrarUsuarioView.mostrarInformacion(ex3.getMessage());
+        } 
+    }
+    
+    public void validarCamposUsuario(String nombreCompleto, String cedula, String edadTexto, String correoElectronico)
+            throws CampoVacioException, TextoInvalidoException, DatoInvalidoException{
+        if (cedula == null || cedula.trim().isEmpty()) {
+            throw new CampoVacioException("msgUsuarioCedulaVacio");
+        }
+        if (nombreCompleto == null || nombreCompleto.trim().isEmpty()) {
+            throw new CampoVacioException("msgUsuarioNombreVacio");
+        }
+        if (edadTexto == null || edadTexto.trim().isEmpty()) {
+            throw new CampoVacioException("msgUsuarioEdadVacio");
+        }
+        if (correoElectronico == null || correoElectronico.trim().isEmpty()) {
+            throw new CampoVacioException("msgUsuarioCorreoVacio");
+        }
+        if (contieneNumeros(nombreCompleto)) {
+                throw new TextoInvalidoException("msgUsuarioNombreNumeros");
+           }
+        if (!esNumeroEntero(cedula.trim())) {
+            throw new DatoInvalidoException("msgUsuarioCedulaInvalida");
+        }
+        if (!esNumeroEntero(edadTexto.trim())) {
+            throw new DatoInvalidoException("msgUsuarioEdadInvalida");
+        }
     }
 
     public void configurarEventosRegistrarUsuario() {
@@ -59,15 +98,27 @@ public class UsuarioController {
     }
 
     public void buscarUsuario() {
-        String cedula = buscarUsuarioView.getTxtCedula().getText();
-        Usuario usuario = usuarioDAO.buscar(cedula);
+        try{
+            String cedula = buscarUsuarioView.getTxtCedula().getText();
+            if (cedula == null || cedula.trim().isEmpty()) {
+                throw new CampoVacioException("msgUsuarioCedulaVacio");
+            }
+            if (!esNumeroEntero(cedula.trim())) {
+                throw new DatoInvalidoException("msgUsuarioCedulaInvalida");
+            }
+            Usuario usuario = usuarioDAO.buscar(cedula.trim());
 
-        if (usuario != null) {
-            buscarUsuarioView.getTxtNombre().setText(usuario.getNombreCompleto());
-            buscarUsuarioView.getTxtEdad().setText(String.valueOf(usuario.getEdad()));
-            buscarUsuarioView.getTxtCorreo().setText(usuario.getCorreoElectronico());
-        } else {
-            buscarUsuarioView.mostrarInformacion("msgUsuarioNoEncontrado");
+            if (usuario != null) {
+                buscarUsuarioView.getTxtNombre().setText(usuario.getNombreCompleto());
+                buscarUsuarioView.getTxtEdad().setText(String.valueOf(usuario.getEdad()));
+                buscarUsuarioView.getTxtCorreo().setText(usuario.getCorreoElectronico());
+            } else {
+                buscarUsuarioView.mostrarInformacion("msgUsuarioNoEncontrado");
+            }
+        }catch (CampoVacioException ex1) {
+            buscarUsuarioView.mostrarInformacion(ex1.getMessage());
+        } catch (DatoInvalidoException ex2) {
+            buscarUsuarioView.mostrarInformacion(ex2.getMessage());
         }
     }
 
@@ -81,16 +132,29 @@ public class UsuarioController {
     }
 
     public void buscarUsuarioActualizar() {
-        String cedula = actualizarUsuarioView.getTxtCedula().getText();
-        Usuario usuario = usuarioDAO.buscar(cedula);
+        try{
+            String cedula = actualizarUsuarioView.getTxtCedula().getText();
+            if (cedula == null || cedula.trim().isEmpty()) {
+                throw new CampoVacioException("msgUsuarioCedulaVacio");
+            }
+            if (!esNumeroEntero(cedula.trim())) {
+                throw new DatoInvalidoException("msgUsuarioCedulaInvalida");
+            }
+            Usuario usuario = usuarioDAO.buscar(cedula.trim());
 
-        if (usuario != null) {
-            actualizarUsuarioView.getTxtNombre().setText(usuario.getNombreCompleto());
-            actualizarUsuarioView.getTxtEdad().setText(String.valueOf(usuario.getEdad()));
-            actualizarUsuarioView.getTxtCorreo().setText(usuario.getCorreoElectronico());
-        } else {
-            actualizarUsuarioView.mostrarInformacion("msgUsuarioNoEncontrado");
+            if (usuario != null) {
+                actualizarUsuarioView.getTxtNombre().setText(usuario.getNombreCompleto());
+                actualizarUsuarioView.getTxtEdad().setText(String.valueOf(usuario.getEdad()));
+                actualizarUsuarioView.getTxtCorreo().setText(usuario.getCorreoElectronico());
+            } else {
+                actualizarUsuarioView.mostrarInformacion("msgUsuarioNoEncontrado");
+            }
+        }catch (CampoVacioException ex1) {
+            actualizarUsuarioView.mostrarInformacion(ex1.getMessage());
+        } catch (DatoInvalidoException ex2) {
+            actualizarUsuarioView.mostrarInformacion(ex2.getMessage());
         }
+        
     }
 
     public void configurarEventosBuscarActualizar() {
@@ -103,14 +167,25 @@ public class UsuarioController {
     }
 
     public void actualizarUsuario() {
-        String cedula = actualizarUsuarioView.getTxtCedula().getText();
-        String nombreCompleto = actualizarUsuarioView.getTxtNombre().getText();
-        int edad = Integer.parseInt(actualizarUsuarioView.getTxtEdad().getText());
-        String correoElectronico = actualizarUsuarioView.getTxtCorreo().getText();
-
-        Usuario usuario = new Usuario(nombreCompleto, cedula, edad, correoElectronico);
-        usuarioDAO.actualizar(cedula, usuario);
-        actualizarUsuarioView.mostrarInformacion("msgUsuarioActualizado");
+        try{
+            String nombreCompleto = actualizarUsuarioView.getTxtNombre().getText();
+            String cedula = actualizarUsuarioView.getTxtCedula().getText();
+            String edadTexto = actualizarUsuarioView.getTxtEdad().getText();
+            String correoElectronico = actualizarUsuarioView.getTxtCorreo().getText();
+            
+            validarCamposUsuario(nombreCompleto, cedula, edadTexto, correoElectronico);
+            
+            int edad = Integer.parseInt(edadTexto.trim());
+            Usuario usuario = new Usuario(nombreCompleto, cedula, edad, correoElectronico);
+            usuarioDAO.actualizar(cedula, usuario);
+            actualizarUsuarioView.mostrarInformacion("msgUsuarioActualizado");
+        }catch(CampoVacioException ex1){
+            actualizarUsuarioView.mostrarInformacion(ex1.getMessage());
+        }catch(TextoInvalidoException ex2){
+            actualizarUsuarioView.mostrarInformacion(ex2.getMessage());
+        }catch(DatoInvalidoException ex3){
+            actualizarUsuarioView.mostrarInformacion(ex3.getMessage());
+        } 
     }
 
     public void configurarEventosActualizarUsuario() {
@@ -123,17 +198,29 @@ public class UsuarioController {
     }
 
     public void buscarUsuarioEliminar() {
-        String cedula = eliminarUsuarioView.getTxtCedulaBuscada().getText();
-        Usuario usuario = usuarioDAO.buscar(cedula);
+        try{
+            String cedula = eliminarUsuarioView.getTxtCedulaBuscada().getText();
+            if (cedula == null || cedula.trim().isEmpty()) {
+                throw new CampoVacioException("msgUsuarioCedulaVacio");
+            }
+            if (!esNumeroEntero(cedula.trim())) {
+                throw new DatoInvalidoException("msgUsuarioCedulaInvalida");
+            }
+            Usuario usuario = usuarioDAO.buscar(cedula.trim());
 
-        if (usuario != null) {
-            eliminarUsuarioView.getTxtCedula().setText(usuario.getCedula());
-            eliminarUsuarioView.getTxtNombre().setText(usuario.getNombreCompleto());
-            eliminarUsuarioView.getTxtEdad().setText(String.valueOf(usuario.getEdad()));
-            eliminarUsuarioView.getTxtCorreo().setText(usuario.getCorreoElectronico());
-        } else {
-            eliminarUsuarioView.mostrarInformacion("msgUsuarioNoEncontrado");
-        }
+            if (usuario != null) {
+                eliminarUsuarioView.getTxtCedula().setText(usuario.getCedula());
+                eliminarUsuarioView.getTxtNombre().setText(usuario.getNombreCompleto());
+                eliminarUsuarioView.getTxtEdad().setText(String.valueOf(usuario.getEdad()));
+                eliminarUsuarioView.getTxtCorreo().setText(usuario.getCorreoElectronico());
+            } else {
+                eliminarUsuarioView.mostrarInformacion("msgUsuarioNoEncontrado");
+            }
+        }catch (CampoVacioException ex1) {
+            eliminarUsuarioView.mostrarInformacion(ex1.getMessage());
+        } catch (DatoInvalidoException ex2) {
+            eliminarUsuarioView.mostrarInformacion(ex2.getMessage());
+        } 
     }
 
     public void configurarEventosBuscarEliminar() {
@@ -146,13 +233,24 @@ public class UsuarioController {
     }
 
     public void eliminarUsuario() {
-        String cedula = eliminarUsuarioView.getTxtCedulaBuscada().getText();
-        boolean confirmado = eliminarUsuarioView.confirmarEliminacion("msgUsuarioConfirmarEliminar");
-        if(confirmado){
-            usuarioDAO.eliminar(cedula);
-            eliminarUsuarioView.mostrarInformacion("msgUsuarioEliminado");
-        }
-        
+        try{
+            String cedula = eliminarUsuarioView.getTxtCedulaBuscada().getText();
+            if (cedula == null || cedula.trim().isEmpty()) {
+                throw new CampoVacioException("msgUsuarioCedulaVacio");
+            }
+            if (!esNumeroEntero(cedula.trim())) {
+                throw new DatoInvalidoException("msgUsuarioCedulaInvalida");
+            }
+            boolean confirmado = eliminarUsuarioView.confirmarEliminacion("msgUsuarioConfirmarEliminar");
+            if (confirmado) {
+                usuarioDAO.eliminar(cedula.trim());
+                eliminarUsuarioView.mostrarInformacion("msgUsuarioEliminado");
+            }
+        }catch (CampoVacioException ex1) {
+            eliminarUsuarioView.mostrarInformacion(ex1.getMessage());
+        } catch (DatoInvalidoException ex2) {
+            eliminarUsuarioView.mostrarInformacion(ex2.getMessage());
+        }    
     }
 
     public void configurarEventosEliminarUsuario() {
@@ -181,5 +279,28 @@ public class UsuarioController {
                 listarUsuarios();
             }
         });
+    }
+    
+    public boolean contieneNumeros(String texto){
+        for(int i=0; i< texto.length(); i++){
+            char caracter= texto.charAt(i);
+            if(Character.isDigit(caracter)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean esNumeroEntero(String texto){
+        if(texto.isEmpty()){
+            return false;
+        }
+        for(int i=0; i<texto.length(); i++){
+            char caracter= texto.charAt(i);
+            if(!Character.isDigit(caracter)){
+                return false;
+            }
+        }
+        return true;
     }
 }

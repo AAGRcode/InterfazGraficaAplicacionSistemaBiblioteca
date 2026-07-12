@@ -1,6 +1,9 @@
 package ec.edu.ups.controllers;
 
 import ec.edu.ups.biblioteca.dao.LibroDAO;
+import ec.edu.ups.biblioteca.exceptions.CampoVacioException;
+import ec.edu.ups.biblioteca.exceptions.DatoInvalidoException;
+import ec.edu.ups.biblioteca.exceptions.TextoInvalidoException;
 import ec.edu.ups.models.Autor;
 import ec.edu.ups.models.Libro;
 import ec.edu.ups.views.ActualizarLibroView;
@@ -15,6 +18,7 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
 public class LibroController {
+
     private LibroDAO libroDAO;
     private RegistrarLibroView registrarLibroView;
     private BuscarLibroView buscarLibroView;
@@ -39,16 +43,51 @@ public class LibroController {
     }
 
     public void registrarLibro() {
-        int codigo = Integer.parseInt(registrarLibroView.getTxtCodigo().getText());
-        String nombre = registrarLibroView.getTxtTitulo().getText();
-        String categoria = registrarLibroView.getTxtCategoria().getText();
-        int anioPublicacion = Integer.parseInt(registrarLibroView.getTxtAnioPublicacion().getText());
-        Autor autor = (Autor) registrarLibroView.getCmbAutor().getSelectedItem();
+        try {
+            String codigoTexto = registrarLibroView.getTxtCodigo().getText();
+            String nombre = registrarLibroView.getTxtTitulo().getText();
+            String anioTexto = registrarLibroView.getTxtAnioPublicacion().getText();
+            Autor autor = (Autor) registrarLibroView.getCmbAutor().getSelectedItem();
+            String categoria = (String) registrarLibroView.getCmbCategoria().getSelectedItem();
 
-        Libro libro = new Libro(codigo, nombre, categoria, anioPublicacion, autor);
-        libroDAO.crear(libro);
-        registrarLibroView.mostrarInformacion("msgLibroRegistrado");
-        registrarLibroView.limpiarCampos();
+            validarCamposLibro(codigoTexto, nombre, anioTexto);
+
+            int codigo = Integer.parseInt(codigoTexto.trim());
+            int anioPublicacion = Integer.parseInt(anioTexto.trim());
+            Libro libro = new Libro(codigo, nombre, categoria, anioPublicacion, autor);
+            libroDAO.crear(libro);
+            registrarLibroView.mostrarInformacion("msgLibroRegistrado");
+            registrarLibroView.limpiarCampos();
+        } catch (CampoVacioException ex1) {
+            registrarLibroView.mostrarInformacion(ex1.getMessage());
+        } catch (TextoInvalidoException ex2) {
+            registrarLibroView.mostrarInformacion(ex2.getMessage());
+        } catch (DatoInvalidoException ex3) {
+            registrarLibroView.mostrarInformacion(ex3.getMessage());
+        }
+
+    }
+
+    public void validarCamposLibro(String codigoTexto, String nombre, String anioTexto)
+            throws CampoVacioException, TextoInvalidoException, DatoInvalidoException {
+        if (codigoTexto == null || codigoTexto.trim().isEmpty()) {
+            throw new CampoVacioException("msgLibroCodigoVacio");
+        }
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new CampoVacioException("msgLibroTituloVacio");
+        }
+        if (anioTexto == null || anioTexto.trim().isEmpty()) {
+            throw new CampoVacioException("msgLibroAnioVacio");
+        }
+        if (contieneNumeros(nombre)) {
+            throw new TextoInvalidoException("msgLibroTituloNumeros");
+        }
+        if (!esNumeroEntero(codigoTexto.trim())) {
+            throw new DatoInvalidoException("msgLibroCodigoInvalido");
+        }
+        if (!esNumeroEntero(anioTexto.trim())) {
+            throw new DatoInvalidoException("msgLibroAnioInvalido");
+        }
     }
 
     public void configurarEventosRegistrarLibro() {
@@ -59,19 +98,31 @@ public class LibroController {
             }
         });
     }
-    
-    public void buscarLibro() {
-        int codigo = Integer.parseInt(buscarLibroView.getTxtCodigo().getText());
-        Libro libro = libroDAO.buscar(codigo);
 
-        if (libro != null) {
-            buscarLibroView.getTxtTitulo().setText(libro.getTitulo());
-            buscarLibroView.getTxtAutor().setText(libro.getAutor().getNombre());
-            buscarLibroView.getTxtCategoria().setText(libro.getCategoria());
-            buscarLibroView.getTxtAnioPublicacion().setText(String.valueOf(libro.getAnioPublicacion()));
-            
-        } else {
-            buscarLibroView.mostrarInformacion("msgLibroNoEncontrado");
+    public void buscarLibro() {
+        try {
+            String codigoTexto = buscarLibroView.getTxtCodigo().getText();
+            if (codigoTexto == null || codigoTexto.trim().isEmpty()) {
+                throw new CampoVacioException("msgLibroCodigoVacio");
+            }
+            if (!esNumeroEntero(codigoTexto.trim())) {
+                throw new DatoInvalidoException("msgLibroCodigoInvalido");
+            }
+            int codigo = Integer.parseInt(codigoTexto.trim());
+            Libro libro = libroDAO.buscar(codigo);
+            if (libro != null) {
+                buscarLibroView.getTxtTitulo().setText(libro.getTitulo());
+                buscarLibroView.getTxtAutor().setText(libro.getAutor().getNombre());
+                buscarLibroView.getTxtCategoria().setText(libro.getCategoria());
+                buscarLibroView.getTxtAnioPublicacion().setText(String.valueOf(libro.getAnioPublicacion()));
+
+            } else {
+                buscarLibroView.mostrarInformacion("msgLibroNoEncontrado");
+            }
+        } catch (CampoVacioException ex1) {
+            buscarLibroView.mostrarInformacion(ex1.getMessage());
+        } catch (DatoInvalidoException ex2) {
+            buscarLibroView.mostrarInformacion(ex2.getMessage());
         }
     }
 
@@ -85,17 +136,31 @@ public class LibroController {
     }
 
     public void buscarLibroActualizar() {
-        int codigo = Integer.parseInt(actualizarLibroView.getTxtCodigo().getText());
-        Libro libro = libroDAO.buscar(codigo);
+        try {
+            String codigoTexto = actualizarLibroView.getTxtCodigo().getText();
+            if (codigoTexto == null || codigoTexto.trim().isEmpty()) {
+                throw new CampoVacioException("msgLibroCodigoVacio");
+            }
+            if (!esNumeroEntero(codigoTexto.trim())) {
+                throw new DatoInvalidoException("msgLibroCodigoInvalido");
+            }
+            int codigo = Integer.parseInt(codigoTexto.trim());
+            Libro libro = libroDAO.buscar(codigo);
 
-        if (libro != null) {
-            actualizarLibroView.getTxtTitulo().setText(libro.getTitulo());
-            actualizarLibroView.getTxtCategoria().setText(libro.getCategoria());
-            actualizarLibroView.getTxtAnioPublicacion().setText(String.valueOf(libro.getAnioPublicacion()));
-            actualizarLibroView.getCmbAutor().setSelectedItem(libro.getAutor());
-        } else {
-            actualizarLibroView.mostrarInformacion("msgLibroNoEncontrado");
+            if (libro != null) {
+                actualizarLibroView.getTxtTitulo().setText(libro.getTitulo());
+                actualizarLibroView.getCmbCategoria().setSelectedItem(libro.getCategoria());
+                actualizarLibroView.getTxtAnioPublicacion().setText(String.valueOf(libro.getAnioPublicacion()));
+                actualizarLibroView.getCmbAutor().setSelectedItem(libro.getAutor());
+            } else {
+                actualizarLibroView.mostrarInformacion("msgLibroNoEncontrado");
+            }
+        } catch (CampoVacioException ex1) {
+            actualizarLibroView.mostrarInformacion(ex1.getMessage());
+        } catch (DatoInvalidoException ex2) {
+            actualizarLibroView.mostrarInformacion(ex2.getMessage());
         }
+
     }
 
     public void configurarEventosBuscarActualizar() {
@@ -108,15 +173,27 @@ public class LibroController {
     }
 
     public void actualizarLibro() {
-        int codigo = Integer.parseInt(actualizarLibroView.getTxtCodigo().getText());
-        String titulo = actualizarLibroView.getTxtTitulo().getText();
-        String categoria = actualizarLibroView.getTxtCategoria().getText();
-        int anioPublicacion = Integer.parseInt(actualizarLibroView.getTxtAnioPublicacion().getText());
-        Autor autor = (Autor) registrarLibroView.getCmbAutor().getSelectedItem();
+        try {
+            String codigoTexto = actualizarLibroView.getTxtCodigo().getText();
+            String nombre = actualizarLibroView.getTxtTitulo().getText();
+            String anioTexto = actualizarLibroView.getTxtAnioPublicacion().getText();
+            Autor autor = (Autor) registrarLibroView.getCmbAutor().getSelectedItem();
+            String categoria = (String) actualizarLibroView.getCmbCategoria().getSelectedItem();
 
-        Libro libro = new Libro(codigo, titulo, categoria, anioPublicacion, autor);
-        libroDAO.actualizar(codigo, libro);
-        actualizarLibroView.mostrarInformacion("msgLibroActualizado");
+            validarCamposLibro(codigoTexto, nombre, anioTexto);
+            int codigo = Integer.parseInt(codigoTexto.trim());
+            int anioPublicacion = Integer.parseInt(anioTexto.trim());
+            Libro libro = new Libro(codigo, nombre, categoria, anioPublicacion, autor);
+            libroDAO.actualizar(codigo, libro);
+            actualizarLibroView.mostrarInformacion("msgLibroActualizado");
+        } catch (CampoVacioException ex1) {
+            actualizarLibroView.mostrarInformacion(ex1.getMessage());
+        } catch (TextoInvalidoException ex2) {
+            actualizarLibroView.mostrarInformacion(ex2.getMessage());
+        } catch (DatoInvalidoException ex3) {
+            actualizarLibroView.mostrarInformacion(ex3.getMessage());
+        }
+
     }
 
     public void configurarEventosActualizarLibro() {
@@ -129,16 +206,28 @@ public class LibroController {
     }
 
     public void buscarLibroEliminar() {
-        int codigo = Integer.parseInt(eliminarLibroView.getTxtCodigo().getText());
-        Libro libro = libroDAO.buscar(codigo);
-
-        if (libro != null) {
-            eliminarLibroView.getTxtTitulo().setText(libro.getTitulo());
-            eliminarLibroView.getTxtAutor().setText(libro.getAutor().getNombre());
-            eliminarLibroView.getTxtCategoria().setText(libro.getCategoria());
-            eliminarLibroView.getTxtAnioPublicacion().setText(String.valueOf(libro.getAnioPublicacion()));
-        } else {
-            eliminarLibroView.mostrarInformacion("msgLibroNoEncontrado");
+        try {
+            String codigoTexto = eliminarLibroView.getTxtCodigo().getText();
+            if (codigoTexto == null || codigoTexto.trim().isEmpty()) {
+                throw new CampoVacioException("msgLibroCodigoVacio");
+            }
+            if (!esNumeroEntero(codigoTexto.trim())) {
+                throw new DatoInvalidoException("msgLibroCodigoInvalido");
+            }
+            int codigo = Integer.parseInt(codigoTexto.trim());
+            Libro libro = libroDAO.buscar(codigo);
+            if (libro != null) {
+                eliminarLibroView.getTxtTitulo().setText(libro.getTitulo());
+                eliminarLibroView.getTxtAutor().setText(libro.getAutor().getNombre());
+                eliminarLibroView.getTxtCategoria().setText(libro.getCategoria());
+                eliminarLibroView.getTxtAnioPublicacion().setText(String.valueOf(libro.getAnioPublicacion()));
+            } else {
+                eliminarLibroView.mostrarInformacion("msgLibroNoEncontrado");
+            }
+        } catch (CampoVacioException ex1) {
+            eliminarLibroView.mostrarInformacion(ex1.getMessage());
+        } catch (DatoInvalidoException ex2) {
+            eliminarLibroView.mostrarInformacion(ex2.getMessage());
         }
     }
 
@@ -152,11 +241,24 @@ public class LibroController {
     }
 
     public void eliminarLibro() {
-        int codigo = Integer.parseInt(eliminarLibroView.getTxtCodigo().getText());
-        boolean confirmado = eliminarLibroView.confirmarEliminacion("msgLibroConfirmarEliminar");
-        if(confirmado){
-            libroDAO.eliminar(codigo);
-            eliminarLibroView.mostrarInformacion("msgLibroEliminado");
+        try {
+            String codigoTexto = eliminarLibroView.getTxtCodigo().getText();
+            if (codigoTexto == null || codigoTexto.trim().isEmpty()) {
+                throw new CampoVacioException("msgLibroCodigoVacio");
+            }
+            if (!esNumeroEntero(codigoTexto.trim())) {
+                throw new DatoInvalidoException("msgLibroCodigoInvalido");
+            }
+            int codigo = Integer.parseInt(codigoTexto.trim());
+            boolean confirmado = eliminarLibroView.confirmarEliminacion("msgLibroConfirmarEliminar");
+            if (confirmado) {
+                libroDAO.eliminar(codigo);
+                eliminarLibroView.mostrarInformacion("msgLibroEliminado");
+            }
+        } catch (CampoVacioException ex1) {
+            eliminarLibroView.mostrarInformacion(ex1.getMessage());
+        } catch (DatoInvalidoException ex2) {
+            eliminarLibroView.mostrarInformacion(ex2.getMessage());
         }
     }
 
@@ -186,5 +288,28 @@ public class LibroController {
                 listarLibros();
             }
         });
+    }
+
+    public boolean contieneNumeros(String texto) {
+        for (int i = 0; i < texto.length(); i++) {
+            char caracter = texto.charAt(i);
+            if (Character.isDigit(caracter)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean esNumeroEntero(String texto) {
+        if (texto.isEmpty()) {
+            return false;
+        }
+        for (int i = 0; i < texto.length(); i++) {
+            char caracter = texto.charAt(i);
+            if (!Character.isDigit(caracter)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -26,6 +26,7 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
      */
     public ActualizarLibroView() {
         initComponents();
+        cargarCategorias();
     }
 
     public JButton getBtnActualizar() {
@@ -60,14 +61,6 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
         this.txtAnioPublicacion = txtAnioPublicacion;
     }
 
-    public JTextField getTxtCategoria() {
-        return txtCategoria;
-    }
-
-    public void setTxtCategoria(JTextField txtCategoria) {
-        this.txtCategoria = txtCategoria;
-    }
-
     public JTextField getTxtCodigo() {
         return txtCodigo;
     }
@@ -91,6 +84,15 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
     public void setCmbAutor(JComboBox<String> cmbAutor) {
         this.cmbAutor = cmbAutor;
     }
+
+    public JComboBox<String> getCmbCategoria() {
+        return cmbCategoria;
+    }
+
+    public void setCmbCategoria(JComboBox<String> cmbCategoria) {
+        this.cmbCategoria = cmbCategoria;
+    }
+    
     
     public void cargarAutores(List<Autor> autores) {
         DefaultComboBoxModel<Autor> modelo = new DefaultComboBoxModel<>();
@@ -98,6 +100,17 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
             modelo.addElement(autor);
         }
         cmbAutor.setModel((javax.swing.ComboBoxModel) modelo);
+    }
+    
+     private void cargarCategorias() {
+        String[] categorias = {
+            "Fantasia", "Ciencia Ficcion", "Novela", "Suspenso", "Thriller",
+            "Romance", "Terror", "Distopia", "Biografias", "Autobiografias",
+            "Historia", "Ensayo", "Poesia", "Literatura Infantil", "Libros Academicos",
+            "Teatro", "Libros de Autoayuda", "Libro"
+        };
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>(categorias);
+        cmbCategoria.setModel(modelo);
     }
 
     
@@ -135,7 +148,6 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
         lblTitulo = new javax.swing.JLabel();
         txtTitulo = new javax.swing.JTextField();
         lblCategoria = new javax.swing.JLabel();
-        txtCategoria = new javax.swing.JTextField();
         lblAnioPublicacion = new javax.swing.JLabel();
         txtAnioPublicacion = new javax.swing.JTextField();
         btnActualizar = new javax.swing.JButton();
@@ -145,6 +157,7 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        cmbCategoria = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(223, 237, 246));
         setClosable(true);
@@ -178,9 +191,6 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
         lblCategoria.setForeground(new java.awt.Color(46, 58, 70));
         lblCategoria.setText("Categoria");
 
-        txtCategoria.setForeground(new java.awt.Color(46, 58, 70));
-        txtCategoria.addActionListener(this::txtCategoriaActionPerformed);
-
         lblAnioPublicacion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblAnioPublicacion.setForeground(new java.awt.Color(46, 58, 70));
         lblAnioPublicacion.setText("Año publicacion");
@@ -209,12 +219,14 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/biblioteca/imagen/Cancelar.png"))); // NOI18N
 
+        cmbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(99, Short.MAX_VALUE)
+                .addContainerGap(173, Short.MAX_VALUE)
                 .addComponent(lblCodigoLibro)
                 .addGap(32, 32, 32)
                 .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,34 +242,33 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
                         .addGap(47, 47, 47)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblAnioPublicacion)
                                 .addGap(41, 41, 41)
-                                .addComponent(txtAnioPublicacion))
+                                .addComponent(txtAnioPublicacion, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnActualizar)
                                 .addGap(45, 45, 45)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCancelar)
-                                .addGap(0, 90, Short.MAX_VALUE))
+                                .addComponent(btnCancelar))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblCategoria)
                                     .addComponent(lblAutor))
                                 .addGap(75, 75, 75)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCategoria)
-                                    .addComponent(cmbAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addContainerGap())
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cmbAutor, 0, 225, Short.MAX_VALUE)
+                                    .addComponent(cmbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addContainerGap(28, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(76, 76, 76)
                     .addComponent(lblTitulo)
-                    .addGap(96, 96, 96)
-                    .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                    .addContainerGap()))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(30, 30, 30)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,15 +291,11 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(34, 34, 34)
-                                .addComponent(lblCategoria)
-                                .addGap(23, 23, 23))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)))
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCategoria)
+                            .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblAnioPublicacion, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtAnioPublicacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -316,9 +323,7 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -327,10 +332,6 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
     private void txtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTituloActionPerformed
-
-    private void txtCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCategoriaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCategoriaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
           
@@ -347,6 +348,7 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox<String> cmbAutor;
+    private javax.swing.JComboBox<String> cmbCategoria;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -357,7 +359,6 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblCodigoLibro;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtAnioPublicacion;
-    private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables

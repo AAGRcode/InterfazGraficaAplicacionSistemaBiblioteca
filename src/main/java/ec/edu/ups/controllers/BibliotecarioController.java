@@ -1,6 +1,9 @@
 package ec.edu.ups.controllers;
 
 import ec.edu.ups.biblioteca.dao.BibliotecarioDAO;
+import ec.edu.ups.biblioteca.exceptions.CampoVacioException;
+import ec.edu.ups.biblioteca.exceptions.DatoInvalidoException;
+import ec.edu.ups.biblioteca.exceptions.TextoInvalidoException;
 import ec.edu.ups.models.Bibliotecario;
 import ec.edu.ups.views.ActualizarBibliotecarioView;
 import ec.edu.ups.views.BuscarBibliotecarioView;
@@ -38,15 +41,51 @@ public class BibliotecarioController {
     }
 
     public void registrarBibliotecario() {
-        String nombreCompleto = registrarBibliotecarioView.getTxtNombre().getText();
-        String cedula = registrarBibliotecarioView.getTxtCedula().getText();
-        int edad = Integer.parseInt(registrarBibliotecarioView.getTxtEdad().getText());
-        String codigoEmpleado = registrarBibliotecarioView.getTxtCodigoEmpleado().getText();
-
-        Bibliotecario bibliotecario = new Bibliotecario(nombreCompleto, cedula, edad, codigoEmpleado);
-        bibliotecarioDAO.crear(bibliotecario);
-        registrarBibliotecarioView.mostrarInformacion("msgBibliotecarioRegistrado");
-        registrarBibliotecarioView.limpiarCampos();
+        try{
+            String nombreCompleto = registrarBibliotecarioView.getTxtNombre().getText();
+            String cedula = registrarBibliotecarioView.getTxtCedula().getText();
+            String edadTexto = registrarBibliotecarioView.getTxtEdad().getText();
+            String codigoEmpleado = registrarBibliotecarioView.getTxtCodigoEmpleado().getText();
+            
+            validarCamposBibliotecario(nombreCompleto, cedula, edadTexto, codigoEmpleado);
+            
+            int edad = Integer.parseInt(edadTexto.trim());
+            Bibliotecario bibliotecario = new Bibliotecario(nombreCompleto, cedula, edad, codigoEmpleado);
+            bibliotecarioDAO.crear(bibliotecario);
+            registrarBibliotecarioView.mostrarInformacion("msgBibliotecarioRegistrado");
+            registrarBibliotecarioView.limpiarCampos();
+        }catch(CampoVacioException ex1){
+            registrarBibliotecarioView.mostrarInformacion(ex1.getMessage());
+        }catch(TextoInvalidoException ex2){
+            registrarBibliotecarioView.mostrarInformacion(ex2.getMessage());
+        }catch(DatoInvalidoException ex3){
+            registrarBibliotecarioView.mostrarInformacion(ex3.getMessage());
+        }    
+    }
+    
+    public void validarCamposBibliotecario(String nombreCompleto, String cedula, String edadTexto, String codigoEmpleado)
+            throws CampoVacioException, TextoInvalidoException, DatoInvalidoException{
+        if (cedula == null || cedula.trim().isEmpty()) {
+            throw new CampoVacioException("msgBibliotecarioCedulaVacio");
+        }
+        if (nombreCompleto == null || nombreCompleto.trim().isEmpty()) {
+            throw new CampoVacioException("msgBibliotecarioNombreVacio");
+        }
+        if (edadTexto == null || edadTexto.trim().isEmpty()) {
+            throw new CampoVacioException("msgBibliotecarioEdadVacio");
+        }
+        if (codigoEmpleado == null || codigoEmpleado.trim().isEmpty()) {
+            throw new CampoVacioException("msgBibliotecarioCodigoVacio");
+        }
+        if (contieneNumeros(nombreCompleto)) {
+                throw new TextoInvalidoException("msgBibliotecarioNombreNumeros");
+           }
+        if (!esNumeroEntero(cedula.trim())) {
+            throw new DatoInvalidoException("msgBibliotecarioCedulaInvalida");
+        }
+        if (!esNumeroEntero(edadTexto.trim())) {
+            throw new DatoInvalidoException("msgBibliotecarioEdadInvalida");
+        }
     }
 
     public void configurarEventosRegistrarBibliotecario() {
@@ -59,16 +98,24 @@ public class BibliotecarioController {
     }
 
     public void buscarBibliotecario() {
-        String codigoEmpleado = buscarBibliotecarioView.getTxtCodigo().getText();
-        Bibliotecario bibliotecario = bibliotecarioDAO.buscar(codigoEmpleado);
+        try{
+            String codigoEmpleado = buscarBibliotecarioView.getTxtCodigo().getText();
+            if (codigoEmpleado == null || codigoEmpleado.trim().isEmpty()) {
+                throw new CampoVacioException("msgBibliotecarioCodigoVacio");
+            }
+            Bibliotecario bibliotecario = bibliotecarioDAO.buscar(codigoEmpleado.trim());
 
-        if (bibliotecario != null) {
-            buscarBibliotecarioView.getTxtNombre().setText(bibliotecario.getNombre());
-            buscarBibliotecarioView.getTxtCedula().setText(bibliotecario.getCedula());
-            buscarBibliotecarioView.getTxtEdad().setText(String.valueOf(bibliotecario.getEdad()));
-        } else {
-            buscarBibliotecarioView.mostrarInformacion("msgBibliotecarioNoEncontrado");
+            if (bibliotecario != null) {
+                buscarBibliotecarioView.getTxtNombre().setText(bibliotecario.getNombre());
+                buscarBibliotecarioView.getTxtCedula().setText(bibliotecario.getCedula());
+                buscarBibliotecarioView.getTxtEdad().setText(String.valueOf(bibliotecario.getEdad()));
+            } else {
+                buscarBibliotecarioView.mostrarInformacion("msgBibliotecarioNoEncontrado");
+            }
+        }catch (CampoVacioException ex1) {
+            buscarBibliotecarioView.mostrarInformacion(ex1.getMessage());
         }
+        
     }
 
     public void configurarEventosBuscarBibliotecario() {
@@ -81,16 +128,24 @@ public class BibliotecarioController {
     }
 
     public void buscarBibliotecarioActualizar() {
-        String codigoEmpleado = actualizarBibliotecarioView.getTxtCodigo().getText();
-        Bibliotecario bibliotecario = bibliotecarioDAO.buscar(codigoEmpleado);
+        try{
+            String codigoEmpleado = actualizarBibliotecarioView.getTxtCodigo().getText();
+            if (codigoEmpleado == null || codigoEmpleado.trim().isEmpty()) {
+                throw new CampoVacioException("msgBibliotecarioCodigoVacio");
+            }
+            Bibliotecario bibliotecario = bibliotecarioDAO.buscar(codigoEmpleado.trim());
 
-        if (bibliotecario != null) {
-            actualizarBibliotecarioView.getTxtNombre().setText(bibliotecario.getNombre());
-            actualizarBibliotecarioView.getTxtCedula().setText(bibliotecario.getCedula());
-            actualizarBibliotecarioView.getTxtEdad().setText(String.valueOf(bibliotecario.getEdad()));
-        } else {
-            actualizarBibliotecarioView.mostrarInformacion("msgBibliotecarioNoEncontrado");
+            if (bibliotecario != null) {
+                actualizarBibliotecarioView.getTxtNombre().setText(bibliotecario.getNombre());
+                actualizarBibliotecarioView.getTxtCedula().setText(bibliotecario.getCedula());
+                actualizarBibliotecarioView.getTxtEdad().setText(String.valueOf(bibliotecario.getEdad()));
+            } else {
+                actualizarBibliotecarioView.mostrarInformacion("msgBibliotecarioNoEncontrado");
+            }
+        }catch (CampoVacioException ex1) {
+            actualizarBibliotecarioView.mostrarInformacion(ex1.getMessage());
         }
+        
     }
 
     public void configurarEventosBuscarActualizar() {
@@ -103,14 +158,28 @@ public class BibliotecarioController {
     }
 
     public void actualizarBibliotecario() {
-        String codigoEmpleado = actualizarBibliotecarioView.getTxtCodigo().getText();
-        String nombreCompleto = actualizarBibliotecarioView.getTxtNombre().getText();
-        String cedula = actualizarBibliotecarioView.getTxtCedula().getText();
-        int edad = Integer.parseInt(actualizarBibliotecarioView.getTxtEdad().getText());
+        try{
+            String nombreCompleto = actualizarBibliotecarioView.getTxtNombre().getText();
+            String cedula = actualizarBibliotecarioView.getTxtCedula().getText();
+            String edadTexto = actualizarBibliotecarioView.getTxtEdad().getText();
+            String codigoEmpleado = actualizarBibliotecarioView.getTxtCodigo().getText();
+            
+            validarCamposBibliotecario(nombreCompleto, cedula, edadTexto, codigoEmpleado);
+            
+            int edad = Integer.parseInt(edadTexto.trim());
+            Bibliotecario bibliotecario = new Bibliotecario(nombreCompleto, cedula, edad, codigoEmpleado);
+            bibliotecarioDAO.actualizar(codigoEmpleado, bibliotecario);
+            actualizarBibliotecarioView.mostrarInformacion("msgBibliotecarioActualizado");
+        }catch(CampoVacioException ex1){
+            actualizarBibliotecarioView.mostrarInformacion(ex1.getMessage());
+        }catch(TextoInvalidoException ex2){
+            actualizarBibliotecarioView.mostrarInformacion(ex2.getMessage());
+        }catch(DatoInvalidoException ex3){
+            actualizarBibliotecarioView.mostrarInformacion(ex3.getMessage());
+        }    
+        
 
-        Bibliotecario bibliotecario = new Bibliotecario(nombreCompleto, cedula, edad, codigoEmpleado);
-        bibliotecarioDAO.actualizar(codigoEmpleado, bibliotecario);
-        actualizarBibliotecarioView.mostrarInformacion("msgBibliotecarioActualizado");
+        
     }
 
     public void configurarEventosActualizarBibliotecario() {
@@ -123,16 +192,25 @@ public class BibliotecarioController {
     }
 
     public void buscarBibliotecarioEliminar() {
-        String codigoEmpleado = eliminarBibliotecarioView.getTxtCodigo().getText();
-        Bibliotecario bibliotecario = bibliotecarioDAO.buscar(codigoEmpleado);
+        try{
+            String codigoEmpleado = eliminarBibliotecarioView.getTxtCodigo().getText();
+            if (codigoEmpleado == null || codigoEmpleado.trim().isEmpty()) {
+                throw new CampoVacioException("msgBibliotecarioCodigoVacio");
+            }
+            Bibliotecario bibliotecario = bibliotecarioDAO.buscar(codigoEmpleado.trim());
 
-        if (bibliotecario != null) {
-            eliminarBibliotecarioView.getTxtNombre().setText(bibliotecario.getNombre());
-            eliminarBibliotecarioView.getTxtCedula().setText(bibliotecario.getCedula());
-            eliminarBibliotecarioView.getTxtEdad().setText(String.valueOf(bibliotecario.getEdad()));
-        } else {
-            eliminarBibliotecarioView.mostrarInformacion("msgBibliotecarioNoEncontrado");
+            if (bibliotecario != null) {
+                eliminarBibliotecarioView.getTxtNombre().setText(bibliotecario.getNombre());
+                eliminarBibliotecarioView.getTxtCedula().setText(bibliotecario.getCedula());
+                eliminarBibliotecarioView.getTxtEdad().setText(String.valueOf(bibliotecario.getEdad()));
+            } else {
+                eliminarBibliotecarioView.mostrarInformacion("msgBibliotecarioNoEncontrado");
+            }
+        }catch (CampoVacioException ex1) {
+            eliminarBibliotecarioView.mostrarInformacion(ex1.getMessage());
         }
+        
+        
     }
 
     public void configurarEventosBuscarEliminar() {
@@ -145,12 +223,20 @@ public class BibliotecarioController {
     }
 
     public void eliminarBibliotecario() {
-        String codigoEmpleado = eliminarBibliotecarioView.getTxtCodigo().getText();
-        boolean confirmado = eliminarBibliotecarioView.confirmarEliminacion("msgBibliotecarioConfirmarEliminar");
-        if(confirmado){
-            bibliotecarioDAO.eliminar(codigoEmpleado);
-            eliminarBibliotecarioView.mostrarInformacion("msgBibliotecarioEliminado");
+        try{
+            String codigoEmpleado = eliminarBibliotecarioView.getTxtCodigo().getText();
+            if (codigoEmpleado == null || codigoEmpleado.trim().isEmpty()) {
+                throw new CampoVacioException("msgBibliotecarioCodigoVacio");
+            }
+            boolean confirmado = eliminarBibliotecarioView.confirmarEliminacion("msgBibliotecarioConfirmarEliminar");
+            if (confirmado) {
+                bibliotecarioDAO.eliminar(codigoEmpleado.trim());
+                eliminarBibliotecarioView.mostrarInformacion("msgBibliotecarioEliminado");
+            }
+        }catch (CampoVacioException ex1) {
+            eliminarBibliotecarioView.mostrarInformacion(ex1.getMessage());
         }
+        
     }
 
     public void configurarEventosEliminarBibliotecario() {
@@ -179,5 +265,28 @@ public class BibliotecarioController {
                 listarBibliotecarios();
             }
         });
+    }
+    
+    public boolean contieneNumeros(String texto){
+        for(int i=0; i< texto.length(); i++){
+            char caracter= texto.charAt(i);
+            if(Character.isDigit(caracter)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean esNumeroEntero(String texto){
+        if(texto.isEmpty()){
+            return false;
+        }
+        for(int i=0; i<texto.length(); i++){
+            char caracter= texto.charAt(i);
+            if(!Character.isDigit(caracter)){
+                return false;
+            }
+        }
+        return true;
     }
 }
