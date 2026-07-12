@@ -68,12 +68,12 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="141" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="txtCedula" alignment="0" max="32767" attributes="0"/>
-                              <Component id="cmbLibro" pref="117" max="32767" attributes="0"/>
-                              <Component id="cmbBibliotecario" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="txtCedula" max="32767" attributes="0"/>
+                              <Component id="cmbLibro" alignment="0" pref="181" max="32767" attributes="0"/>
+                              <Component id="cmbBibliotecario" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">

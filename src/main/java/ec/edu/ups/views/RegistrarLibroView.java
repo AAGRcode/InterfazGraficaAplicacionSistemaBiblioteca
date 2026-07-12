@@ -26,6 +26,7 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
      */
     public RegistrarLibroView() {
         initComponents();
+        cargarCategorias();
     }
 
     public JButton getBtnCancelar() {
@@ -52,14 +53,6 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
         this.txtAnioPublicacion = txtAnioPublicacion;
     }
 
-    public JTextField getTxtCategoria() {
-        return txtCategoria;
-    }
-
-    public void setTxtCategoria(JTextField txtCategoria) {
-        this.txtCategoria = txtCategoria;
-    }
-
     public JTextField getTxtCodigo() {
         return txtCodigo;
     }
@@ -84,6 +77,16 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
     public void setCmbAutor(JComboBox<String> cmbAutor) {
         this.cmbAutor = cmbAutor;
     }
+    
+    public JComboBox<String> getCmbCategoria() {
+        return cmbCategoria;
+    }
+
+    public void setCmbCategoria(JComboBox<String> cmbCategoria) {
+        this.cmbCategoria = cmbCategoria;
+    }
+    
+    
     public void cargarAutores(List<Autor> autores) {
         DefaultComboBoxModel<Autor> modelo = new DefaultComboBoxModel<>();
         for (Autor autor : autores) {
@@ -92,6 +95,16 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
         cmbAutor.setModel((javax.swing.ComboBoxModel) modelo);
     }
 
+    private void cargarCategorias() {
+        String[] categorias = {
+            "Fantasia", "Ciencia Ficcion", "Novela", "Suspenso", "Thriller",
+            "Romance", "Terror", "Distopia", "Biografias", "Autobiografias",
+            "Historia", "Ensayo", "Poesia", "Literatura Infantil", "Libros Academicos",
+            "Teatro", "Libros de Autoayuda", "Libro"
+        };
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>(categorias);
+        cmbCategoria.setModel(modelo);
+    }
     
 
     public void mostrarInformacion(String mensaje){
@@ -101,7 +114,6 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
 
     public void limpiarCampos() {
         txtAnioPublicacion.setText("");
-        txtCategoria.setText("");
         txtCodigo.setText("");
         txtTitulo.setText("");
     }
@@ -134,7 +146,6 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
         lblCodigoLibro = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         txtTitulo = new javax.swing.JTextField();
-        txtCategoria = new javax.swing.JTextField();
         lblTitulo = new javax.swing.JLabel();
         lblCategoria = new javax.swing.JLabel();
         lblAnioPublicacion = new javax.swing.JLabel();
@@ -143,6 +154,7 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
         cmbAutor = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        cmbCategoria = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(223, 237, 246));
         setClosable(true);
@@ -175,9 +187,6 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
         txtTitulo.setForeground(new java.awt.Color(46, 58, 70));
         txtTitulo.addActionListener(this::txtTituloActionPerformed);
 
-        txtCategoria.setForeground(new java.awt.Color(46, 58, 70));
-        txtCategoria.addActionListener(this::txtCategoriaActionPerformed);
-
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(46, 58, 70));
         lblTitulo.setText("Titulo");
@@ -204,72 +213,71 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
         jLabel2.setBackground(new java.awt.Color(240, 247, 251));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/biblioteca/imagen/Cancelar.png"))); // NOI18N
 
+        cmbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(112, 112, 112)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRegistrar)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCancelar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblCategoria)
                     .addComponent(lblAnioPublicacion)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(lblTitulo)
                         .addComponent(lblCodigoLibro)
-                        .addComponent(lblAutor))
-                    .addComponent(btnRegistrar))
+                        .addComponent(lblAutor)))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                            .addComponent(txtTitulo)
-                            .addComponent(txtCategoria)
-                            .addComponent(txtAnioPublicacion)
-                            .addComponent(cmbAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+                    .addComponent(txtTitulo)
+                    .addComponent(txtAnioPublicacion)
+                    .addComponent(cmbAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCodigoLibro))
+                .addGap(35, 35, 35)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitulo)
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAutor)
+                    .addComponent(cmbAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCategoria)
+                    .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAnioPublicacion)
+                    .addComponent(txtAnioPublicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblCodigoLibro))
-                        .addGap(35, 35, 35)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTitulo)
-                            .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblAutor)
-                            .addComponent(cmbAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(34, 34, 34)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCategoria)
-                            .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(42, 42, 42)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblAnioPublicacion)
-                            .addComponent(txtAnioPublicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(42, 42, 42)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnRegistrar)
-                                .addComponent(btnCancelar))
-                            .addComponent(jLabel2))))
-                .addContainerGap(48, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnRegistrar)
+                        .addComponent(btnCancelar))
+                    .addComponent(jLabel2))
+                .addGap(58, 58, 58))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -280,9 +288,7 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -291,10 +297,6 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
     private void txtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTituloActionPerformed
-
-    private void txtCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCategoriaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCategoriaActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
@@ -318,6 +320,7 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<String> cmbAutor;
+    private javax.swing.JComboBox<String> cmbCategoria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -327,7 +330,6 @@ public class RegistrarLibroView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblCodigoLibro;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtAnioPublicacion;
-    private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables

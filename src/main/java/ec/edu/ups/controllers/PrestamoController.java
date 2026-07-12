@@ -2,6 +2,8 @@ package ec.edu.ups.controllers;
 
 import ec.edu.ups.biblioteca.dao.PrestamoDAO;
 import ec.edu.ups.biblioteca.dao.UsuarioDAO;
+import ec.edu.ups.biblioteca.exceptions.CampoVacioException;
+import ec.edu.ups.biblioteca.exceptions.DatoInvalidoException;
 import ec.edu.ups.models.Bibliotecario;
 import ec.edu.ups.models.Libro;
 import ec.edu.ups.models.Prestamo;
@@ -47,32 +49,40 @@ public class PrestamoController {
     }
     
     public void registrarPrestamo() {
-        
-        String cedula = registrarPrestamoView.getTxtCedula().getText();
-        Usuario usuario = usuarioDAO.buscar(cedula);
-        Libro libro = (Libro) registrarPrestamoView.getCmbLibro().getSelectedItem();
-        Bibliotecario bibliotecario = (Bibliotecario) registrarPrestamoView.getCmbBibliotecario().getSelectedItem();
-        String dia = (String) registrarPrestamoView.getCmbDia().getSelectedItem();
-        String mes = (String) registrarPrestamoView.getCmbMes().getSelectedItem();
-        String anio = (String) registrarPrestamoView.getCmbAño().getSelectedItem();
-        String fechaDevolucion;
-        if (idiomaActual.getLanguage().equals("en")){
-            fechaDevolucion = mes+ "/" + dia + "/" + anio;
-        }else {
-            fechaDevolucion = dia + "/" + mes + "/" + anio;
-        }
-        
-        
-
-        if (usuario != null) {
+        try{
+            String cedula = registrarPrestamoView.getTxtCedula().getText();
+            if (cedula == null || cedula.trim().isEmpty()) {
+                throw new CampoVacioException("msgPrestamoCedulaVacio");
+            }
+            if (!esNumeroEntero(cedula.trim())) {
+                throw new DatoInvalidoException("msgPrestamoCedulaInvalida");
+            }
+            Usuario usuario = usuarioDAO.buscar(cedula.trim());
+            Libro libro = (Libro) registrarPrestamoView.getCmbLibro().getSelectedItem();
+            Bibliotecario bibliotecario = (Bibliotecario) registrarPrestamoView.getCmbBibliotecario().getSelectedItem();
+            String dia = (String) registrarPrestamoView.getCmbDia().getSelectedItem();
+            String mes = (String) registrarPrestamoView.getCmbMes().getSelectedItem();
+            String anio = (String) registrarPrestamoView.getCmbAño().getSelectedItem();
+            String fechaDevolucion = dia + "/" + mes + "/" + anio;
+            if (usuario != null) {
             Prestamo prestamo = new Prestamo(0, libro, usuario, bibliotecario, fechaDevolucion);
             prestamoDAO.crear(prestamo);
             registrarPrestamoView.mostrarInformacion("msgPrestamoRegistrado");
             registrarPrestamoView.limpiarCampos();
             listarPrestamos();
-        } else {
-            registrarPrestamoView.mostrarInformacion("msgPrestamoUsuarioNoEncontrado");
+            } else {
+                registrarPrestamoView.mostrarInformacion("msgPrestamoUsuarioNoEncontrado");
+            }
+        }catch (CampoVacioException ex1) {
+            registrarPrestamoView.mostrarInformacion(ex1.getMessage());
+        } catch (DatoInvalidoException ex2) {
+            registrarPrestamoView.mostrarInformacion(ex2.getMessage());
         }
+        
+        
+        
+
+        
     }
 
     public void configurarEventosRegistrarPrestamo() {
@@ -85,20 +95,37 @@ public class PrestamoController {
     }
 
     public void buscarPrestamoDevolucion() {
-        int id = Integer.parseInt(registrarDevolucionView.getTxtCodigo().getText());
-        Prestamo prestamo = prestamoDAO.buscar(id);
+        try{
+            String idTexto = registrarDevolucionView.getTxtCodigo().getText();
 
-        if (prestamo != null) {
-            if (prestamo.isDevuelto()) {
-                registrarDevolucionView.mostrarInformacion("msgPrestamoYaDevuelto");
-            } else {
-                registrarDevolucionView.getTxtLibro().setText(prestamo.getLibro().getTitulo());
-                registrarDevolucionView.getTxtUsuario().setText(prestamo.getUsuario().toString());
-                registrarDevolucionView.getTxtDevolucion().setText(prestamo.getFechaDevolucion());
+            if (idTexto == null || idTexto.trim().isEmpty()) {
+                throw new CampoVacioException("msgPrestamoCodigoVacio");
             }
-        } else {
-            registrarDevolucionView.mostrarInformacion("msgPrestamoNoEncontrado");
+            if (!esNumeroEntero(idTexto.trim())) {
+                throw new DatoInvalidoException("msgPrestamoCodigoInvalido");
+            }
+
+            int id = Integer.parseInt(idTexto.trim());
+            Prestamo prestamo = prestamoDAO.buscar(id);
+
+            if (prestamo != null) {
+                if (prestamo.isDevuelto()) {
+                    registrarDevolucionView.mostrarInformacion("msgPrestamoYaDevuelto");
+                } else {
+                    registrarDevolucionView.getTxtLibro().setText(prestamo.getLibro().getTitulo());
+                    registrarDevolucionView.getTxtUsuario().setText(prestamo.getUsuario().toString());
+                    registrarDevolucionView.getTxtDevolucion().setText(prestamo.getFechaDevolucion());
+                }
+            } else {
+                registrarDevolucionView.mostrarInformacion("msgPrestamoNoEncontrado");
+            }
+        }catch (CampoVacioException ex1) {
+            registrarDevolucionView.mostrarInformacion(ex1.getMessage());
+        } catch (DatoInvalidoException ex2) {
+            registrarDevolucionView.mostrarInformacion(ex2.getMessage());
         }
+        
+        
     }
 
     public void configurarEventosBuscarDevolucion() {
@@ -111,17 +138,32 @@ public class PrestamoController {
     }
 
     public void registrarDevolucion() {
-        int id = Integer.parseInt(registrarDevolucionView.getTxtCodigo().getText());
-        Prestamo prestamo = prestamoDAO.buscar(id);
+        try{
+            String idTexto = registrarDevolucionView.getTxtCodigo().getText();
 
-        if (prestamo != null) {
-            prestamo.setDevuelto(true);
-            prestamoDAO.actualizar(id, prestamo);
-            registrarDevolucionView.mostrarInformacion("msgDevolucionRegistrad");
-            registrarDevolucionView.limpiarCampos();
-            listarPrestamos();
-        } else {
-            registrarDevolucionView.mostrarInformacion("msgPrestamoNoEncontrado");
+            if (idTexto == null || idTexto.trim().isEmpty()) {
+                throw new CampoVacioException("msgPrestamoCodigoVacio");
+            }
+            if (!esNumeroEntero(idTexto.trim())) {
+                throw new DatoInvalidoException("msgPrestamoCodigoInvalido");
+            }
+
+            int id = Integer.parseInt(idTexto.trim());
+            Prestamo prestamo = prestamoDAO.buscar(id);
+
+            if (prestamo != null) {
+                prestamo.setDevuelto(true);
+                prestamoDAO.actualizar(id, prestamo);
+                registrarDevolucionView.mostrarInformacion("msgDevolucionRegistrada");
+                registrarDevolucionView.limpiarCampos();
+                listarPrestamos();
+            } else {
+                registrarDevolucionView.mostrarInformacion("msgPrestamoNoEncontrado");
+            }
+        }catch (CampoVacioException ex1) {
+            registrarDevolucionView.mostrarInformacion(ex1.getMessage());
+        } catch (DatoInvalidoException ex2) {
+            registrarDevolucionView.mostrarInformacion(ex2.getMessage());
         }
     }
 
@@ -151,5 +193,17 @@ public class PrestamoController {
                 listarPrestamos();
             }
         });
+    }
+    public boolean esNumeroEntero(String texto){
+        if(texto.isEmpty()){
+            return false;
+        }
+        for(int i=0; i<texto.length(); i++){
+            char caracter= texto.charAt(i);
+            if(!Character.isDigit(caracter)){
+                return false;
+            }
+        }
+        return true;
     }
 }
