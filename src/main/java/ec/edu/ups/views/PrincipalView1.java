@@ -21,9 +21,12 @@ import ec.edu.ups.controllers.PrestamoController;
 import ec.edu.ups.controllers.UsuarioController;
 import ec.edu.ups.models.Autor;
 import ec.edu.ups.models.Bibliotecario;
+import ec.edu.ups.models.Categoria;
 import ec.edu.ups.models.Libro;
 import ec.edu.ups.models.Prestamo;
 import ec.edu.ups.models.Usuario;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -115,12 +118,29 @@ public class PrincipalView1 extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setExtendedState(MAXIMIZED_BOTH);
-        usuarioDAO = new UsuarioDAOMemoria();
-        bibliotecarioDAO = new BibliotecarioDAOMemoria();
-        autorDAO = new AutorDAOMemoria();
-        libroDAO = new LibroDAOMemoria();
-        prestamoDAO = new PrestamoDAOMemoria();
-        cargarDatosPrueba();
+        
+        Object[] opciones = {"Memoria", "Archivo"};
+        int seleccion = javax.swing.JOptionPane.showOptionDialog(this,
+            "Seleccione el mecanismo de persistencia",
+            "Persistencia",
+            javax.swing.JOptionPane.DEFAULT_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE,
+            null, opciones, opciones[0]);
+
+        if (seleccion == 1) {
+            autorDAO = new ec.edu.ups.biblioteca.dao.AutorDAOArchivo("autores.ups");
+            bibliotecarioDAO = new ec.edu.ups.biblioteca.dao.BibliotecarioDAOArchivo("bibliotecarios.ups");
+            usuarioDAO = new ec.edu.ups.biblioteca.dao.UsuarioDAOArchivo("usuarios.ups");
+            libroDAO = new ec.edu.ups.biblioteca.dao.LibroDAOArchivo("libros.ups", autorDAO);
+            prestamoDAO = new ec.edu.ups.biblioteca.dao.PrestamoDAOArchivo("prestamos.ups", libroDAO, usuarioDAO, bibliotecarioDAO);
+        } else {
+            usuarioDAO = new UsuarioDAOMemoria();
+            bibliotecarioDAO = new BibliotecarioDAOMemoria();
+            autorDAO = new AutorDAOMemoria();
+            libroDAO = new LibroDAOMemoria();
+            prestamoDAO = new PrestamoDAOMemoria();
+            cargarDatosPrueba();
+        }
 
         registrarUsuarioView = new RegistrarUsuarioView();
         buscarUsuarioView = new BuscarUsuarioView();
@@ -186,7 +206,7 @@ public class PrincipalView1 extends javax.swing.JFrame {
         desktopPane.add(registrarDevolucionView);
         desktopPane.add(listarPrestamoView);
 
-        prestamoController = new PrestamoController(prestamoDAO, usuarioDAO, registrarPrestamoView, registrarDevolucionView, listarPrestamoView);
+        prestamoController = new PrestamoController(prestamoDAO, usuarioDAO, libroDAO, registrarPrestamoView, registrarDevolucionView, listarPrestamoView);
         
     }
     private void cargarDatosPrueba() {
@@ -218,11 +238,11 @@ public class PrincipalView1 extends javax.swing.JFrame {
         usuarioDAO.crear(usuario3);
         usuarioDAO.crear(usuario4);
 
-        Libro libro1 = new Libro(1, "Cien años de soledad", "Novela", 1967, autor1);
-        Libro libro2 = new Libro(2, "La casa de los espiritus", "Novela", 1982, autor2);
-        Libro libro3 = new Libro(3, "La ciudad y los perros", "Novela", 1963, autor3);
-        Libro libro4 = new Libro(4, "Ficciones", "Cuento", 1944, autor4);
-        Libro libro5 = new Libro(5, "El amor en los tiempos del colera", "Novela", 1985, autor1);
+        Libro libro1 = new Libro(1, "Cien años de soledad", Categoria.NOVELA, 1967, autor1);
+        Libro libro2 = new Libro(2, "La casa de los espiritus", Categoria.NOVELA, 1982, autor2);
+        Libro libro3 = new Libro(3, "La ciudad y los perros", Categoria.NOVELA, 1963, autor3);
+        Libro libro4 = new Libro(4, "Ficciones", Categoria.CIENCIA_FICCION, 1944, autor4);
+        Libro libro5 = new Libro(5, "El amor en los tiempos del colera", Categoria.NOVELA, 1985, autor1);
 
         libroDAO.crear(libro1);
         libroDAO.crear(libro2);
@@ -554,7 +574,13 @@ public class PrincipalView1 extends javax.swing.JFrame {
     }//GEN-LAST:event_listarLibroActionPerformed
 
     private void registrarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarPrestamoActionPerformed
-        registrarPrestamoView.cargarLibros(libroDAO.listar());
+        List<Libro> disponibles = new ArrayList<>();
+        for (Libro libro : libroDAO.listar()) {
+            if (libro.isEstaDisponible()) {
+                disponibles.add(libro);
+            }
+        }
+        registrarPrestamoView.cargarLibros(disponibles);
         registrarPrestamoView.cargarBibliotecarios(bibliotecarioDAO.listar());
         registrarPrestamoView.setVisible(true);
         registrarPrestamoView.moveToFront();

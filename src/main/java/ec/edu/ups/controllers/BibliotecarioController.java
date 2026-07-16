@@ -2,6 +2,8 @@ package ec.edu.ups.controllers;
 
 import ec.edu.ups.biblioteca.dao.BibliotecarioDAO;
 import ec.edu.ups.biblioteca.exceptions.CampoVacioException;
+import ec.edu.ups.biblioteca.exceptions.CaracterInvalidoException;
+import ec.edu.ups.biblioteca.exceptions.CedulaInvalidaException;
 import ec.edu.ups.biblioteca.exceptions.DatoInvalidoException;
 import ec.edu.ups.biblioteca.exceptions.TextoInvalidoException;
 import ec.edu.ups.models.Bibliotecario;
@@ -60,11 +62,15 @@ public class BibliotecarioController {
             registrarBibliotecarioView.mostrarInformacion(ex2.getMessage());
         }catch(DatoInvalidoException ex3){
             registrarBibliotecarioView.mostrarInformacion(ex3.getMessage());
-        }    
+        }catch(CaracterInvalidoException ex4){
+            registrarBibliotecarioView.mostrarInformacion(ex4.getMessage());
+        }catch(CedulaInvalidaException ex5){
+            registrarBibliotecarioView.mostrarInformacion(ex5.getMessage());
+}
     }
     
     public void validarCamposBibliotecario(String nombreCompleto, String cedula, String edadTexto, String codigoEmpleado)
-            throws CampoVacioException, TextoInvalidoException, DatoInvalidoException{
+            throws CampoVacioException, TextoInvalidoException, DatoInvalidoException, CaracterInvalidoException, CedulaInvalidaException{
         if (cedula == null || cedula.trim().isEmpty()) {
             throw new CampoVacioException("msgBibliotecarioCedulaVacio");
         }
@@ -85,6 +91,15 @@ public class BibliotecarioController {
         }
         if (!esNumeroEntero(edadTexto.trim())) {
             throw new DatoInvalidoException("msgBibliotecarioEdadInvalida");
+        }
+        if (codigoEmpleado.trim().length() > 10) {
+            throw new DatoInvalidoException("msgBibliotecarioCodigoLongitud");
+        }
+        if(!caracterValido(nombreCompleto)){
+            throw new CaracterInvalidoException("msgBibliotecarioNombreLongitud");
+        }
+        if (!esCedulaValida(cedula.trim())) {
+        throw new CedulaInvalidaException("msgBibliotecarioCedulaNoValida");
         }
     }
 
@@ -176,7 +191,11 @@ public class BibliotecarioController {
             actualizarBibliotecarioView.mostrarInformacion(ex2.getMessage());
         }catch(DatoInvalidoException ex3){
             actualizarBibliotecarioView.mostrarInformacion(ex3.getMessage());
-        }    
+        }catch(CaracterInvalidoException ex4){
+            actualizarBibliotecarioView.mostrarInformacion(ex4.getMessage());
+        }catch(CedulaInvalidaException ex5){
+            actualizarBibliotecarioView.mostrarInformacion(ex5.getMessage());
+}   
         
 
         
@@ -288,5 +307,46 @@ public class BibliotecarioController {
             }
         }
         return true;
+    }
+    
+    public boolean caracterValido(String texto){
+        return texto.trim().length()<= 60;
+    }
+    
+    public boolean esCedulaValida(String cedula){
+        if (cedula.length() != 10) {
+            return false;
+        }
+        if (!esNumeroEntero(cedula)) {
+            return false;
+        }
+        int[] digitos = new int[10];
+        for (int i = 0; i < 10; i++) {
+            digitos[i] = Character.getNumericValue(cedula.charAt(i));
+        }
+        int codigoProvincia = digitos[0] * 10 + digitos[1];
+        if (codigoProvincia < 1 || codigoProvincia > 24) {
+            return false;
+        }
+        if (digitos[2] >= 6) {
+            return false;
+        }
+        int suma = 0;
+        for (int i = 0; i < 9; i++) {
+            int valor = digitos[i];
+            if (i % 2 == 0) {
+                valor = valor * 2;
+                if (valor > 9) {
+                    valor = valor - 9;
+                }
+            }
+            suma = suma + valor;
+        }
+        int decenaSuperior = ((suma / 10) + 1) * 10;
+        int digitoVerificador = decenaSuperior - suma;
+        if (digitoVerificador == 10) {
+            digitoVerificador = 0;
+        }
+        return digitoVerificador == digitos[9];
     }
 }

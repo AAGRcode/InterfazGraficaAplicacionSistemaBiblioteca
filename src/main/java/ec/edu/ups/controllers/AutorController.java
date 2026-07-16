@@ -2,6 +2,7 @@ package ec.edu.ups.controllers;
 
 import ec.edu.ups.biblioteca.dao.AutorDAO;
 import ec.edu.ups.biblioteca.exceptions.CampoVacioException;
+import ec.edu.ups.biblioteca.exceptions.CaracterInvalidoException;
 import ec.edu.ups.biblioteca.exceptions.DatoInvalidoException;
 import ec.edu.ups.biblioteca.exceptions.TextoInvalidoException;
 import ec.edu.ups.models.Autor;
@@ -60,11 +61,13 @@ public class AutorController {
             registrarAutorView.mostrarInformacion(ex2.getMessage());
         }catch(DatoInvalidoException ex3){
             registrarAutorView.mostrarInformacion(ex3.getMessage());
+        }catch(CaracterInvalidoException ex4){
+            registrarAutorView.mostrarInformacion(ex4.getMessage());
         }
     }
     
     public void validarCamposAutor(String codigoTexto, String nombreCompleto, String anioTexto)
-                throws CampoVacioException, TextoInvalidoException, DatoInvalidoException {
+                throws CampoVacioException, TextoInvalidoException, DatoInvalidoException, CaracterInvalidoException {
             if (codigoTexto == null || codigoTexto.trim().isEmpty()) {
                 throw new CampoVacioException("msgAutorCodigoVacio");
             }
@@ -83,6 +86,9 @@ public class AutorController {
             if (!esNumeroEntero(anioTexto.trim())) {
                 throw new DatoInvalidoException("msgAutorAnioInvalido");
             }
+            if(!caracterValido(nombreCompleto)){
+            throw new CaracterInvalidoException("msgAutorNombreLongitud");
+        }
             
         }
 
@@ -188,6 +194,8 @@ public class AutorController {
             actualizarAutorView.mostrarInformacion(ex2.getMessage());
         }catch(DatoInvalidoException ex3){
             actualizarAutorView.mostrarInformacion(ex3.getMessage());
+        }catch(CaracterInvalidoException ex4){
+            registrarAutorView.mostrarInformacion(ex4.getMessage());
         }
 
         
@@ -310,5 +318,9 @@ public class AutorController {
             }
         }
         return true;
+    }
+    
+    public boolean caracterValido(String texto){
+        return texto.trim().length()<= 60;
     }
 }
