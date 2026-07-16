@@ -200,7 +200,7 @@ public class LibroController {
         } catch (DatoInvalidoException ex3) {
             actualizarLibroView.mostrarInformacion(ex3.getMessage());
         }catch(CaracterInvalidoException ex4){
-            registrarLibroView.mostrarInformacion(ex4.getMessage());
+            actualizarLibroView.mostrarInformacion(ex4.getMessage());
         }
 
     }

@@ -177,7 +177,7 @@ public class PrestamoController {
             }
         }catch (CampoVacioException ex1) {
             registrarDevolucionView.mostrarInformacion(ex1.getMessage());
-        } catch (DatoInvalidoException ex2) {
+        }catch (DatoInvalidoException ex2) {
             registrarDevolucionView.mostrarInformacion(ex2.getMessage());
         }
     }
