@@ -87,8 +87,8 @@ public class UsuarioController {
             throw new CampoVacioException("msgUsuarioCorreoVacio");
         }
         if (contieneNumeros(nombreCompleto)) {
-                throw new TextoInvalidoException("msgUsuarioNombreNumeros");
-           }
+            throw new TextoInvalidoException("msgUsuarioNombreNumeros");
+        }
         if (!esNumeroEntero(cedula.trim())) {
             throw new DatoInvalidoException("msgUsuarioCedulaInvalida");
         }
@@ -208,11 +208,11 @@ public class UsuarioController {
         }catch(DatoInvalidoException ex3){
             actualizarUsuarioView.mostrarInformacion(ex3.getMessage());
         }catch(CaracterInvalidoException ex4){
-            registrarUsuarioView.mostrarInformacion(ex4.getMessage());
+            actualizarUsuarioView.mostrarInformacion(ex4.getMessage());
         }catch(CedulaInvalidaException ex5){
-        actualizarUsuarioView.mostrarInformacion(ex5.getMessage());
+            actualizarUsuarioView.mostrarInformacion(ex5.getMessage());
         }catch(CorreoInvalidoException ex6){
-        actualizarUsuarioView.mostrarInformacion(ex6.getMessage());
+            actualizarUsuarioView.mostrarInformacion(ex6.getMessage());
         }
     }
 
@@ -244,9 +244,9 @@ public class UsuarioController {
             } else {
                 eliminarUsuarioView.mostrarInformacion("msgUsuarioNoEncontrado");
             }
-        }catch (CampoVacioException ex1) {
+        }catch(CampoVacioException ex1) {
             eliminarUsuarioView.mostrarInformacion(ex1.getMessage());
-        } catch (DatoInvalidoException ex2) {
+        }catch(DatoInvalidoException ex2) {
             eliminarUsuarioView.mostrarInformacion(ex2.getMessage());
         } 
     }
@@ -276,7 +276,7 @@ public class UsuarioController {
             }
         }catch (CampoVacioException ex1) {
             eliminarUsuarioView.mostrarInformacion(ex1.getMessage());
-        } catch (DatoInvalidoException ex2) {
+        }catch (DatoInvalidoException ex2) {
             eliminarUsuarioView.mostrarInformacion(ex2.getMessage());
         }    
     }

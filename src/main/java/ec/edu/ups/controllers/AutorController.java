@@ -195,7 +195,7 @@ public class AutorController {
         }catch(DatoInvalidoException ex3){
             actualizarAutorView.mostrarInformacion(ex3.getMessage());
         }catch(CaracterInvalidoException ex4){
-            registrarAutorView.mostrarInformacion(ex4.getMessage());
+            actualizarAutorView.mostrarInformacion(ex4.getMessage());
         }
 
         
