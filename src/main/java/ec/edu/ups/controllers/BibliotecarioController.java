@@ -5,6 +5,7 @@ import ec.edu.ups.biblioteca.exceptions.CampoVacioException;
 import ec.edu.ups.biblioteca.exceptions.CaracterInvalidoException;
 import ec.edu.ups.biblioteca.exceptions.CedulaInvalidaException;
 import ec.edu.ups.biblioteca.exceptions.DatoInvalidoException;
+import ec.edu.ups.biblioteca.exceptions.FormatoInvalidoException;
 import ec.edu.ups.biblioteca.exceptions.TextoInvalidoException;
 import ec.edu.ups.models.Bibliotecario;
 import ec.edu.ups.views.ActualizarBibliotecarioView;
@@ -43,34 +44,36 @@ public class BibliotecarioController {
     }
 
     public void registrarBibliotecario() {
-        try{
+        try {
             String nombreCompleto = registrarBibliotecarioView.getTxtNombre().getText();
             String cedula = registrarBibliotecarioView.getTxtCedula().getText();
             String edadTexto = registrarBibliotecarioView.getTxtEdad().getText();
             String codigoEmpleado = registrarBibliotecarioView.getTxtCodigoEmpleado().getText();
-            
+
             validarCamposBibliotecario(nombreCompleto, cedula, edadTexto, codigoEmpleado);
-            
+
             int edad = Integer.parseInt(edadTexto.trim());
             Bibliotecario bibliotecario = new Bibliotecario(nombreCompleto, cedula, edad, codigoEmpleado);
             bibliotecarioDAO.crear(bibliotecario);
             registrarBibliotecarioView.mostrarInformacion("msgBibliotecarioRegistrado");
             registrarBibliotecarioView.limpiarCampos();
-        }catch(CampoVacioException ex1){
+        }catch(CampoVacioException ex1) {
             registrarBibliotecarioView.mostrarInformacion(ex1.getMessage());
-        }catch(TextoInvalidoException ex2){
+        }catch(TextoInvalidoException ex2) {
             registrarBibliotecarioView.mostrarInformacion(ex2.getMessage());
-        }catch(DatoInvalidoException ex3){
+        }catch(DatoInvalidoException ex3) {
             registrarBibliotecarioView.mostrarInformacion(ex3.getMessage());
-        }catch(CaracterInvalidoException ex4){
+        }catch(CaracterInvalidoException ex4) {
             registrarBibliotecarioView.mostrarInformacion(ex4.getMessage());
-        }catch(CedulaInvalidaException ex5){
+        }catch(CedulaInvalidaException ex5) {
             registrarBibliotecarioView.mostrarInformacion(ex5.getMessage());
-}
+        }catch(FormatoInvalidoException ex6){
+            registrarBibliotecarioView.mostrarInformacion(ex6.getMessage());
+        }
     }
     
     public void validarCamposBibliotecario(String nombreCompleto, String cedula, String edadTexto, String codigoEmpleado)
-            throws CampoVacioException, TextoInvalidoException, DatoInvalidoException, CaracterInvalidoException, CedulaInvalidaException{
+            throws CampoVacioException, TextoInvalidoException, DatoInvalidoException, CaracterInvalidoException, CedulaInvalidaException, FormatoInvalidoException{
         if (cedula == null || cedula.trim().isEmpty()) {
             throw new CampoVacioException("msgBibliotecarioCedulaVacio");
         }
@@ -100,6 +103,9 @@ public class BibliotecarioController {
         }
         if (!esCedulaValida(cedula.trim())) {
         throw new CedulaInvalidaException("msgBibliotecarioCedulaNoValida");
+        }
+        if(!iniciaConEMP(codigoEmpleado)){
+            throw new FormatoInvalidoException("msgBibliotecarioCodigoFormato");
         }
     }
 
@@ -195,7 +201,9 @@ public class BibliotecarioController {
             actualizarBibliotecarioView.mostrarInformacion(ex4.getMessage());
         }catch(CedulaInvalidaException ex5){
             actualizarBibliotecarioView.mostrarInformacion(ex5.getMessage());
-}   
+        }catch(FormatoInvalidoException ex6){
+            actualizarBibliotecarioView.mostrarInformacion(ex6.getMessage());
+        }   
         
 
         
@@ -348,5 +356,9 @@ public class BibliotecarioController {
             digitoVerificador = 0;
         }
         return digitoVerificador == digitos[9];
+    }
+    
+    public boolean iniciaConEMP(String texto) {
+        return texto.trim().toUpperCase().startsWith("EMP");
     }
 }
