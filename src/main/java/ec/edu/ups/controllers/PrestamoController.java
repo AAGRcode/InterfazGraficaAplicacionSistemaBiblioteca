@@ -1,9 +1,11 @@
 package ec.edu.ups.controllers;
 
+import ec.edu.ups.biblioteca.dao.LibroDAO;
 import ec.edu.ups.biblioteca.dao.PrestamoDAO;
 import ec.edu.ups.biblioteca.dao.UsuarioDAO;
 import ec.edu.ups.biblioteca.exceptions.CampoVacioException;
 import ec.edu.ups.biblioteca.exceptions.DatoInvalidoException;
+import ec.edu.ups.biblioteca.exceptions.FechaInvalidaException;
 import ec.edu.ups.models.Bibliotecario;
 import ec.edu.ups.models.Libro;
 import ec.edu.ups.models.Prestamo;
@@ -21,16 +23,18 @@ import javax.swing.event.InternalFrameEvent;
 public class PrestamoController {
     private PrestamoDAO prestamoDAO;
     private UsuarioDAO usuarioDAO;
+    private LibroDAO libroDAO;
     private RegistrarPrestamoView registrarPrestamoView;
     private RegistrarDevolucionView registrarDevolucionView;
     private ListarPrestamoView listarPrestamoView;
     private Locale idiomaActual = new Locale("es","EC");
 
-    public PrestamoController(PrestamoDAO prestamoDAO, UsuarioDAO usuarioDAO,
+    public PrestamoController(PrestamoDAO prestamoDAO, UsuarioDAO usuarioDAO, LibroDAO libroDAO,
             RegistrarPrestamoView registrarPrestamoView, RegistrarDevolucionView registrarDevolucionView,
             ListarPrestamoView listarPrestamoView) {
         this.prestamoDAO = prestamoDAO;
         this.usuarioDAO = usuarioDAO;
+        this.libroDAO = libroDAO;
         this.registrarPrestamoView = registrarPrestamoView;
         this.registrarDevolucionView = registrarDevolucionView;
         this.listarPrestamoView = listarPrestamoView;
@@ -63,10 +67,21 @@ public class PrestamoController {
             String dia = (String) registrarPrestamoView.getCmbDia().getSelectedItem();
             String mes = (String) registrarPrestamoView.getCmbMes().getSelectedItem();
             String anio = (String) registrarPrestamoView.getCmbAño().getSelectedItem();
+            if (dia == null || mes == null || anio == null) {
+                throw new CampoVacioException("msgPrestamoFechaVacia");
+            }
+            int diaInt = Integer.parseInt(dia);
+            int mesInt = Integer.parseInt(mes);
+            int anioInt = Integer.parseInt(anio);
+            if (!esFechaValida(diaInt, mesInt, anioInt)) {
+                throw new FechaInvalidaException("msgPrestamoFechaInvalida");
+            }
             String fechaDevolucion = dia + "/" + mes + "/" + anio;
             if (usuario != null) {
             Prestamo prestamo = new Prestamo(0, libro, usuario, bibliotecario, fechaDevolucion);
             prestamoDAO.crear(prestamo);
+            libro.setEstaDisponible(false);
+            libroDAO.actualizar(libro.getCodigo(), libro);
             registrarPrestamoView.mostrarInformacion("msgPrestamoRegistrado");
             registrarPrestamoView.limpiarCampos();
             listarPrestamos();
@@ -77,12 +92,9 @@ public class PrestamoController {
             registrarPrestamoView.mostrarInformacion(ex1.getMessage());
         } catch (DatoInvalidoException ex2) {
             registrarPrestamoView.mostrarInformacion(ex2.getMessage());
-        }
-        
-        
-        
-
-        
+        }catch(FechaInvalidaException ex3){
+            registrarPrestamoView.mostrarInformacion(ex3.getMessage());
+        } 
     }
 
     public void configurarEventosRegistrarPrestamo() {
@@ -154,6 +166,9 @@ public class PrestamoController {
             if (prestamo != null) {
                 prestamo.setDevuelto(true);
                 prestamoDAO.actualizar(id, prestamo);
+                Libro libro = prestamo.getLibro();
+                libro.setEstaDisponible(true);
+                libroDAO.actualizar(libro.getCodigo(), libro);
                 registrarDevolucionView.mostrarInformacion("msgDevolucionRegistrada");
                 registrarDevolucionView.limpiarCampos();
                 listarPrestamos();
@@ -205,5 +220,21 @@ public class PrestamoController {
             }
         }
         return true;
+    }
+    
+    public boolean esBisiesto(int anio) {
+        return (anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0);
+    }
+
+    public boolean esFechaValida(int dia, int mes, int anio) {
+        if (mes < 1 || mes > 12) {
+            return false;
+        }
+        int[] diasPorMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        int diasEnEsteMes = diasPorMes[mes - 1];
+        if (mes == 2 && esBisiesto(anio)) {
+            diasEnEsteMes = 29;
+        }
+        return dia >= 1 && dia <= diasEnEsteMes;
     }
 }

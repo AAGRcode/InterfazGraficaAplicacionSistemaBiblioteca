@@ -5,6 +5,7 @@
 package ec.edu.ups.views;
 
 import ec.edu.ups.models.Autor;
+import ec.edu.ups.models.Categoria;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -84,14 +85,7 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
     public void setCmbAutor(JComboBox<String> cmbAutor) {
         this.cmbAutor = cmbAutor;
     }
-
-    public JComboBox<String> getCmbCategoria() {
-        return cmbCategoria;
-    }
-
-    public void setCmbCategoria(JComboBox<String> cmbCategoria) {
-        this.cmbCategoria = cmbCategoria;
-    }
+ 
     
     
     public void cargarAutores(List<Autor> autores) {
@@ -102,16 +96,35 @@ public class ActualizarLibroView extends javax.swing.JInternalFrame {
         cmbAutor.setModel((javax.swing.ComboBoxModel) modelo);
     }
     
-     private void cargarCategorias() {
-        String[] categorias = {
-            "Fantasia", "Ciencia Ficcion", "Novela", "Suspenso", "Thriller",
-            "Romance", "Terror", "Distopia", "Biografias", "Autobiografias",
-            "Historia", "Ensayo", "Poesia", "Literatura Infantil", "Libros Academicos",
-            "Teatro", "Libros de Autoayuda", "Libro"
-        };
-        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>(categorias);
-        cmbCategoria.setModel(modelo);
+     public void cargarCategorias() {
+        DefaultComboBoxModel modelo = (DefaultComboBoxModel) cmbCategoria.getModel();
+        modelo.removeAllElements();
+        modelo.addElement(Categoria.FANTASIA);
+        modelo.addElement(Categoria.CIENCIA_FICCION);
+        modelo.addElement(Categoria.NOVELA);
+        modelo.addElement(Categoria.SUSPENSO);
+        modelo.addElement(Categoria.THRILLER);
+        modelo.addElement(Categoria.ROMANCE);
+        modelo.addElement(Categoria.TERROR);
+        modelo.addElement(Categoria.DISTOPIA);
+        modelo.addElement(Categoria.BIOGRAFIAS);
+        modelo.addElement(Categoria.AUTOBIOGRAFIAS);
+        modelo.addElement(Categoria.HISTORIA);
+        modelo.addElement(Categoria.ENSAYO);
+        modelo.addElement(Categoria.POESIA);
+        modelo.addElement(Categoria.LITERATURA_INFANTIL);
+        modelo.addElement(Categoria.LIBROS_ACADEMICOS);
+        modelo.addElement(Categoria.TEATRO);
+        modelo.addElement(Categoria.LIBROS_AUTOAYUDA);
     }
+     
+     public JComboBox<String> getCmbCategoria() { 
+        return cmbCategoria; 
+    }
+    public void setCmbCategoria(JComboBox<String> cmbCategoria) { 
+        this.cmbCategoria = cmbCategoria; 
+    }
+    
 
     
     public void mostrarInformacion(String mensaje) {

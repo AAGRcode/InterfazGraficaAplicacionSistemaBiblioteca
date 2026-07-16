@@ -2,6 +2,9 @@ package ec.edu.ups.controllers;
 
 import ec.edu.ups.biblioteca.dao.UsuarioDAO;
 import ec.edu.ups.biblioteca.exceptions.CampoVacioException;
+import ec.edu.ups.biblioteca.exceptions.CaracterInvalidoException;
+import ec.edu.ups.biblioteca.exceptions.CedulaInvalidaException;
+import ec.edu.ups.biblioteca.exceptions.CorreoInvalidoException;
 import ec.edu.ups.biblioteca.exceptions.DatoInvalidoException;
 import ec.edu.ups.biblioteca.exceptions.TextoInvalidoException;
 import ec.edu.ups.models.Usuario;
@@ -60,11 +63,17 @@ public class UsuarioController {
             registrarUsuarioView.mostrarInformacion(ex2.getMessage());
         }catch(DatoInvalidoException ex3){
             registrarUsuarioView.mostrarInformacion(ex3.getMessage());
-        } 
+        }catch(CaracterInvalidoException ex4){
+            registrarUsuarioView.mostrarInformacion(ex4.getMessage());
+        }catch(CedulaInvalidaException ex5){
+            registrarUsuarioView.mostrarInformacion(ex5.getMessage());
+        }catch(CorreoInvalidoException ex6){
+            registrarUsuarioView.mostrarInformacion(ex6.getMessage());
+        }
     }
     
     public void validarCamposUsuario(String nombreCompleto, String cedula, String edadTexto, String correoElectronico)
-            throws CampoVacioException, TextoInvalidoException, DatoInvalidoException{
+            throws CampoVacioException, TextoInvalidoException, DatoInvalidoException, CaracterInvalidoException, CedulaInvalidaException, CorreoInvalidoException{
         if (cedula == null || cedula.trim().isEmpty()) {
             throw new CampoVacioException("msgUsuarioCedulaVacio");
         }
@@ -86,6 +95,19 @@ public class UsuarioController {
         if (!esNumeroEntero(edadTexto.trim())) {
             throw new DatoInvalidoException("msgUsuarioEdadInvalida");
         }
+        if(!caracterValido(nombreCompleto)){
+            throw new CaracterInvalidoException("msgUsuarioNombreLongitud");
+        }
+        if(!caracterValido(correoElectronico)){
+            throw new CaracterInvalidoException("msgUsuarioCorreoLongitud");
+        }
+        if (!esCedulaValida(cedula.trim())) {
+            throw new CedulaInvalidaException("msgUsuarioCedulaNoValida");
+        }
+        if (!esCorreoValido(correoElectronico)) {
+            throw new CorreoInvalidoException("msgUsuarioCorreoNoValido");
+        }
+        
     }
 
     public void configurarEventosRegistrarUsuario() {
@@ -185,7 +207,13 @@ public class UsuarioController {
             actualizarUsuarioView.mostrarInformacion(ex2.getMessage());
         }catch(DatoInvalidoException ex3){
             actualizarUsuarioView.mostrarInformacion(ex3.getMessage());
-        } 
+        }catch(CaracterInvalidoException ex4){
+            registrarUsuarioView.mostrarInformacion(ex4.getMessage());
+        }catch(CedulaInvalidaException ex5){
+        actualizarUsuarioView.mostrarInformacion(ex5.getMessage());
+        }catch(CorreoInvalidoException ex6){
+        actualizarUsuarioView.mostrarInformacion(ex6.getMessage());
+        }
     }
 
     public void configurarEventosActualizarUsuario() {
@@ -303,4 +331,52 @@ public class UsuarioController {
         }
         return true;
     }
+    
+    public boolean caracterValido(String texto){
+        return texto.trim().length()<= 60;
+    }
+    
+    public boolean esCedulaValida(String cedula){
+        if (cedula.length() != 10) {
+            return false;
+        }
+        if (!esNumeroEntero(cedula)) {
+            return false;
+        }
+        int[] digitos = new int[10];
+        for (int i = 0; i < 10; i++) {
+            digitos[i] = Character.getNumericValue(cedula.charAt(i));
+        }
+        int codigoProvincia = digitos[0] * 10 + digitos[1];
+        if (codigoProvincia < 1 || codigoProvincia > 24) {
+            return false;
+        }
+        if (digitos[2] >= 6) {
+            return false;
+        }
+        int suma = 0;
+        for (int i = 0; i < 9; i++) {
+            int valor = digitos[i];
+            if (i % 2 == 0) {
+                valor = valor * 2;
+                if (valor > 9) {
+                    valor = valor - 9;
+                }
+            }
+            suma = suma + valor;
+        }
+        int decenaSuperior = ((suma / 10) + 1) * 10;
+        int digitoVerificador = decenaSuperior - suma;
+        if (digitoVerificador == 10) {
+            digitoVerificador = 0;
+        }
+        return digitoVerificador == digitos[9];
+    }
+    
+    public boolean esCorreoValido(String correo){
+    if (correo == null || correo.trim().isEmpty()) {
+        return false;
+    }
+    return correo.trim().contains("@");
+}
 }

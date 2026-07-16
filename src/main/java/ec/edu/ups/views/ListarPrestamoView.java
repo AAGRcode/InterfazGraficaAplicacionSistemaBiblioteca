@@ -47,19 +47,19 @@ public class ListarPrestamoView extends javax.swing.JInternalFrame {
     }
 
     public void cargarDatos(List<Prestamo> prestamos) {
-        modeloPrestamo.setRowCount(0);
-        for (Prestamo prestamo : prestamos) {
-            Object[] fila = {
-                prestamo.getId(),
-                prestamo.getLibro().getTitulo(),
-                prestamo.getUsuario().getNombreCompleto(),
-                prestamo.getBibliotecario().getNombre(),
-                formatearFecha(prestamo.getFechaDevolucion()),
-                prestamo.isDevuelto() ? "Si" : "No"
-            };
-            modeloPrestamo.addRow(fila);
-        }
+    modeloPrestamo.setRowCount(0);
+    for (Prestamo prestamo : prestamos) {
+        Object[] fila = {
+            prestamo.getId(),
+            prestamo.getLibro().getTitulo(),
+            prestamo.getUsuario().getNombreCompleto(),
+            prestamo.getBibliotecario().getNombre(),
+            formatearFecha(prestamo.getFechaDevolucion()),
+            prestamo.getEstado()
+        };
+        modeloPrestamo.addRow(fila);
     }
+}
     
     private String formatearFecha(String fecha) {
         String[] partes = fecha.split("/");

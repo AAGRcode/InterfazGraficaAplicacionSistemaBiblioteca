@@ -2,9 +2,11 @@ package ec.edu.ups.controllers;
 
 import ec.edu.ups.biblioteca.dao.LibroDAO;
 import ec.edu.ups.biblioteca.exceptions.CampoVacioException;
+import ec.edu.ups.biblioteca.exceptions.CaracterInvalidoException;
 import ec.edu.ups.biblioteca.exceptions.DatoInvalidoException;
 import ec.edu.ups.biblioteca.exceptions.TextoInvalidoException;
 import ec.edu.ups.models.Autor;
+import ec.edu.ups.models.Categoria;
 import ec.edu.ups.models.Libro;
 import ec.edu.ups.views.ActualizarLibroView;
 import ec.edu.ups.views.BuscarLibroView;
@@ -48,7 +50,7 @@ public class LibroController {
             String nombre = registrarLibroView.getTxtTitulo().getText();
             String anioTexto = registrarLibroView.getTxtAnioPublicacion().getText();
             Autor autor = (Autor) registrarLibroView.getCmbAutor().getSelectedItem();
-            String categoria = (String) registrarLibroView.getCmbCategoria().getSelectedItem();
+            Categoria categoria = (Categoria) registrarLibroView.getCmbCategoria().getSelectedItem();
 
             validarCamposLibro(codigoTexto, nombre, anioTexto);
 
@@ -64,12 +66,14 @@ public class LibroController {
             registrarLibroView.mostrarInformacion(ex2.getMessage());
         } catch (DatoInvalidoException ex3) {
             registrarLibroView.mostrarInformacion(ex3.getMessage());
+        }catch(CaracterInvalidoException ex4){
+            registrarLibroView.mostrarInformacion(ex4.getMessage());
         }
 
     }
 
     public void validarCamposLibro(String codigoTexto, String nombre, String anioTexto)
-            throws CampoVacioException, TextoInvalidoException, DatoInvalidoException {
+            throws CampoVacioException, TextoInvalidoException, DatoInvalidoException, CaracterInvalidoException {
         if (codigoTexto == null || codigoTexto.trim().isEmpty()) {
             throw new CampoVacioException("msgLibroCodigoVacio");
         }
@@ -87,6 +91,9 @@ public class LibroController {
         }
         if (!esNumeroEntero(anioTexto.trim())) {
             throw new DatoInvalidoException("msgLibroAnioInvalido");
+        }
+        if(!caracterValido(nombre)){
+            throw new CaracterInvalidoException("msgLibroTituloLongitud");
         }
     }
 
@@ -113,7 +120,7 @@ public class LibroController {
             if (libro != null) {
                 buscarLibroView.getTxtTitulo().setText(libro.getTitulo());
                 buscarLibroView.getTxtAutor().setText(libro.getAutor().getNombre());
-                buscarLibroView.getTxtCategoria().setText(libro.getCategoria());
+                buscarLibroView.getTxtCategoria().setText(libro.getCategoria().toString());
                 buscarLibroView.getTxtAnioPublicacion().setText(String.valueOf(libro.getAnioPublicacion()));
 
             } else {
@@ -177,8 +184,8 @@ public class LibroController {
             String codigoTexto = actualizarLibroView.getTxtCodigo().getText();
             String nombre = actualizarLibroView.getTxtTitulo().getText();
             String anioTexto = actualizarLibroView.getTxtAnioPublicacion().getText();
-            Autor autor = (Autor) registrarLibroView.getCmbAutor().getSelectedItem();
-            String categoria = (String) actualizarLibroView.getCmbCategoria().getSelectedItem();
+            Autor autor = (Autor) actualizarLibroView.getCmbAutor().getSelectedItem();
+            Categoria categoria = (Categoria) actualizarLibroView.getCmbCategoria().getSelectedItem();
 
             validarCamposLibro(codigoTexto, nombre, anioTexto);
             int codigo = Integer.parseInt(codigoTexto.trim());
@@ -192,6 +199,8 @@ public class LibroController {
             actualizarLibroView.mostrarInformacion(ex2.getMessage());
         } catch (DatoInvalidoException ex3) {
             actualizarLibroView.mostrarInformacion(ex3.getMessage());
+        }catch(CaracterInvalidoException ex4){
+            registrarLibroView.mostrarInformacion(ex4.getMessage());
         }
 
     }
@@ -219,7 +228,7 @@ public class LibroController {
             if (libro != null) {
                 eliminarLibroView.getTxtTitulo().setText(libro.getTitulo());
                 eliminarLibroView.getTxtAutor().setText(libro.getAutor().getNombre());
-                eliminarLibroView.getTxtCategoria().setText(libro.getCategoria());
+                eliminarLibroView.getTxtCategoria().setText(libro.getCategoria().toString());
                 eliminarLibroView.getTxtAnioPublicacion().setText(String.valueOf(libro.getAnioPublicacion()));
             } else {
                 eliminarLibroView.mostrarInformacion("msgLibroNoEncontrado");
@@ -311,5 +320,9 @@ public class LibroController {
             }
         }
         return true;
+    }
+    
+    public boolean caracterValido(String texto){
+        return texto.trim().length()<= 60;
     }
 }
