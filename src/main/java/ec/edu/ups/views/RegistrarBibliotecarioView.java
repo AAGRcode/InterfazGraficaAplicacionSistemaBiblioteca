@@ -149,6 +149,7 @@ public class RegistrarBibliotecarioView extends javax.swing.JInternalFrame {
         txtEdad.setForeground(new java.awt.Color(46, 58, 70));
 
         txtCodigoEmpleado.setForeground(new java.awt.Color(46, 58, 70));
+        txtCodigoEmpleado.setText("EMP");
 
         lblCedula.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCedula.setForeground(new java.awt.Color(46, 58, 70));
